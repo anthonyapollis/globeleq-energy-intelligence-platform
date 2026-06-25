@@ -1,0 +1,330 @@
+{
+  "name": "pl_globeleq_daily_energy_intelligence",
+  "properties": {
+    "description": "Globeleq Energy Intelligence Platform — full end-to-end daily pipeline: ADLS ingestion → Databricks Bronze/Silver/Gold → ML inference → Power BI refresh → Teams notification.",
+    "activities": [
+      {
+        "name": "Set Pipeline Start Time",
+        "type": "SetVariable",
+        "dependsOn": [],
+        "userProperties": [],
+        "typeProperties": {
+          "variableName": "pipeline_run_id",
+          "value": {
+            "value": "@pipeline().RunId",
+            "type": "Expression"
+          }
+        }
+      },
+      {
+        "name": "Validate Raw Files Exist",
+        "type": "GetMetadata",
+        "dependsOn": [
+          { "activity": "Set Pipeline Start Time", "dependencyConditions": ["Succeeded"] }
+        ],
+        "policy": { "timeout": "0.00:05:00", "retry": 2 },
+        "linkedServiceName": { "referenceName": "ls_adls_globeleq", "type": "LinkedServiceReference" },
+        "typeProperties": {
+          "dataset": { "referenceName": "ds_adls_raw_container", "type": "DatasetReference" },
+          "fieldList": ["exists", "itemName", "lastModified"],
+          "storeSettings": {
+            "type": "AzureBlobFSReadSettings",
+            "recursive": false
+          }
+        }
+      },
+      {
+        "name": "Copy DimPlant from SQL",
+        "type": "Copy",
+        "dependsOn": [
+          { "activity": "Validate Raw Files Exist", "dependencyConditions": ["Succeeded"] }
+        ],
+        "policy": { "timeout": "0.01:00:00", "retry": 3, "retryIntervalInSeconds": 30 },
+        "typeProperties": {
+          "source": {
+            "type": "AzureSqlSource",
+            "sqlReaderQuery": "SELECT * FROM dw.DimPlant",
+            "queryTimeout": "02:00:00"
+          },
+          "sink": {
+            "type": "DelimitedTextSink",
+            "storeSettings": {
+              "type": "AzureBlobFSWriteSettings"
+            },
+            "formatSettings": {
+              "type": "DelimitedTextWriteSettings",
+              "quoteAllText": true,
+              "fileExtension": ".csv"
+            }
+          },
+          "enableStaging": false
+        },
+        "inputs": [
+          { "referenceName": "ds_sql_dim_plant", "type": "DatasetReference" }
+        ],
+        "outputs": [
+          { "referenceName": "ds_adls_dim_plant_csv", "type": "DatasetReference" }
+        ]
+      },
+      {
+        "name": "Copy Facts from SQL — ForEach",
+        "type": "ForEach",
+        "dependsOn": [
+          { "activity": "Copy DimPlant from SQL", "dependencyConditions": ["Succeeded"] }
+        ],
+        "typeProperties": {
+          "isSequential": false,
+          "batchCount": 4,
+          "items": {
+            "value": "@variables('fact_table_names')",
+            "type": "Expression"
+          },
+          "activities": [
+            {
+              "name": "Copy Fact Table",
+              "type": "Copy",
+              "typeProperties": {
+                "source": {
+                  "type": "AzureSqlSource",
+                  "sqlReaderQuery": {
+                    "value": "@concat('SELECT * FROM dw.', item())",
+                    "type": "Expression"
+                  }
+                },
+                "sink": {
+                  "type": "DelimitedTextSink",
+                  "storeSettings": { "type": "AzureBlobFSWriteSettings" },
+                  "formatSettings": {
+                    "type": "DelimitedTextWriteSettings",
+                    "quoteAllText": true,
+                    "fileExtension": ".csv"
+                  }
+                }
+              },
+              "inputs": [
+                { "referenceName": "ds_sql_generic", "type": "DatasetReference" }
+              ],
+              "outputs": [
+                {
+                  "referenceName": "ds_adls_fact_generic",
+                  "type": "DatasetReference",
+                  "parameters": { "tableName": "@item()" }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "name": "Databricks Bronze Ingest",
+        "type": "DatabricksNotebook",
+        "dependsOn": [
+          { "activity": "Copy Facts from SQL — ForEach", "dependencyConditions": ["Succeeded"] }
+        ],
+        "policy": { "timeout": "1.00:00:00", "retry": 1, "retryIntervalInSeconds": 300 },
+        "linkedServiceName": {
+          "referenceName": "ls_databricks_globeleq",
+          "type": "LinkedServiceReference"
+        },
+        "typeProperties": {
+          "notebookPath": "/Repos/anthony.apollis@gmail.com/globeleq/notebooks/01_bronze_ingest",
+          "baseParameters": {
+            "pipeline_run_id": { "value": "@pipeline().RunId", "type": "Expression" }
+          },
+          "libraries": [
+            { "pypi": { "package": "delta-spark==3.1.0" } }
+          ]
+        }
+      },
+      {
+        "name": "Databricks Silver Transform",
+        "type": "DatabricksNotebook",
+        "dependsOn": [
+          { "activity": "Databricks Bronze Ingest", "dependencyConditions": ["Succeeded"] }
+        ],
+        "policy": { "timeout": "2.00:00:00", "retry": 1, "retryIntervalInSeconds": 300 },
+        "linkedServiceName": {
+          "referenceName": "ls_databricks_globeleq",
+          "type": "LinkedServiceReference"
+        },
+        "typeProperties": {
+          "notebookPath": "/Repos/anthony.apollis@gmail.com/globeleq/notebooks/02_silver_transform",
+          "baseParameters": {
+            "pipeline_run_id": { "value": "@pipeline().RunId", "type": "Expression" }
+          }
+        }
+      },
+      {
+        "name": "Databricks Gold KPIs",
+        "type": "DatabricksNotebook",
+        "dependsOn": [
+          { "activity": "Databricks Silver Transform", "dependencyConditions": ["Succeeded"] }
+        ],
+        "policy": { "timeout": "1.00:00:00", "retry": 1, "retryIntervalInSeconds": 300 },
+        "linkedServiceName": {
+          "referenceName": "ls_databricks_globeleq",
+          "type": "LinkedServiceReference"
+        },
+        "typeProperties": {
+          "notebookPath": "/Repos/anthony.apollis@gmail.com/globeleq/notebooks/03_gold_kpis",
+          "baseParameters": {
+            "pipeline_run_id": { "value": "@pipeline().RunId", "type": "Expression" }
+          }
+        }
+      },
+      {
+        "name": "Check ML Retrain Gate",
+        "type": "IfCondition",
+        "dependsOn": [
+          { "activity": "Databricks Gold KPIs", "dependencyConditions": ["Succeeded"] }
+        ],
+        "typeProperties": {
+          "expression": {
+            "value": "@equals(dayOfWeek(utcNow()), 7)",
+            "type": "Expression"
+          },
+          "ifTrueActivities": [
+            {
+              "name": "Databricks ML Training",
+              "type": "DatabricksNotebook",
+              "typeProperties": {
+                "notebookPath": "/Repos/anthony.apollis@gmail.com/globeleq/notebooks/04_ml_energy_intelligence",
+                "baseParameters": {
+                  "pipeline_run_id": { "value": "@pipeline().RunId", "type": "Expression" },
+                  "mode": "retrain"
+                }
+              },
+              "linkedServiceName": {
+                "referenceName": "ls_databricks_globeleq",
+                "type": "LinkedServiceReference"
+              },
+              "policy": { "timeout": "3.00:00:00", "retry": 0 }
+            }
+          ],
+          "ifFalseActivities": [
+            {
+              "name": "Databricks ML Inference Only",
+              "type": "DatabricksNotebook",
+              "typeProperties": {
+                "notebookPath": "/Repos/anthony.apollis@gmail.com/globeleq/notebooks/04_ml_energy_intelligence",
+                "baseParameters": {
+                  "pipeline_run_id": { "value": "@pipeline().RunId", "type": "Expression" },
+                  "mode": "inference"
+                }
+              },
+              "linkedServiceName": {
+                "referenceName": "ls_databricks_globeleq",
+                "type": "LinkedServiceReference"
+              },
+              "policy": { "timeout": "0.30:00:00", "retry": 1 }
+            }
+          ]
+        }
+      },
+      {
+        "name": "Refresh Power BI Dataset",
+        "type": "WebActivity",
+        "dependsOn": [
+          { "activity": "Check ML Retrain Gate", "dependencyConditions": ["Succeeded"] }
+        ],
+        "policy": { "timeout": "0.01:00:00", "retry": 2 },
+        "typeProperties": {
+          "url": "https://api.powerbi.com/v1.0/myorg/groups/@{variables('pbi_workspace_id')}/datasets/@{variables('pbi_dataset_id')}/refreshes",
+          "method": "POST",
+          "headers": {
+            "Content-Type": "application/json",
+            "Authorization": {
+              "value": "@concat('Bearer ', activity('Get PBI Token').output.access_token)",
+              "type": "Expression"
+            }
+          },
+          "body": "{\"notifyOption\":\"MailOnFailure\"}"
+        }
+      },
+      {
+        "name": "Notify Teams on Success",
+        "type": "WebActivity",
+        "dependsOn": [
+          { "activity": "Refresh Power BI Dataset", "dependencyConditions": ["Succeeded"] }
+        ],
+        "policy": { "timeout": "0.00:05:00", "retry": 1 },
+        "typeProperties": {
+          "url": "@variables('teams_webhook_url')",
+          "method": "POST",
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "value": "@concat('{\"@type\":\"MessageCard\",\"@context\":\"http://schema.org/extensions\",\"themeColor\":\"00B4D8\",\"summary\":\"Pipeline Succeeded\",\"sections\":[{\"activityTitle\":\"Globeleq Daily Pipeline — SUCCESS\",\"activitySubtitle\":\"', formatDateTime(utcNow(),'yyyy-MM-dd HH:mm'), ' UTC\",\"facts\":[{\"name\":\"Run ID\",\"value\":\"', pipeline().RunId, '\"},{\"name\":\"Duration\",\"value\":\"See ADF Monitor\"}]}]}')",
+            "type": "Expression"
+          }
+        }
+      },
+      {
+        "name": "Notify Teams on Failure",
+        "type": "WebActivity",
+        "dependsOn": [
+          { "activity": "Databricks Bronze Ingest",     "dependencyConditions": ["Failed"] },
+          { "activity": "Databricks Silver Transform",  "dependencyConditions": ["Failed"] },
+          { "activity": "Databricks Gold KPIs",         "dependencyConditions": ["Failed"] }
+        ],
+        "policy": { "timeout": "0.00:05:00", "retry": 1 },
+        "typeProperties": {
+          "url": "@variables('teams_webhook_url')",
+          "method": "POST",
+          "headers": { "Content-Type": "application/json" },
+          "body": {
+            "value": "@concat('{\"@type\":\"MessageCard\",\"@context\":\"http://schema.org/extensions\",\"themeColor\":\"FF0000\",\"summary\":\"Pipeline FAILED\",\"sections\":[{\"activityTitle\":\"Globeleq Daily Pipeline — FAILED\",\"activitySubtitle\":\"', formatDateTime(utcNow(),'yyyy-MM-dd HH:mm'), ' UTC\",\"facts\":[{\"name\":\"Run ID\",\"value\":\"', pipeline().RunId, '\"}]}]}')",
+            "type": "Expression"
+          }
+        }
+      }
+    ],
+    "variables": {
+      "pipeline_run_id":     { "type": "String", "defaultValue": "" },
+      "fact_table_names":    {
+        "type": "Array",
+        "defaultValue": [
+          "FactPlantOperationsDaily",
+          "FactBatteryOperationDaily",
+          "FactEnergySalesMonthly",
+          "FactFXRateMonthly",
+          "FactOutage",
+          "FactMaintenanceWorkOrder",
+          "FactConstructionProgressMonthly",
+          "FactHSEIncident"
+        ]
+      },
+      "pbi_workspace_id":    { "type": "String", "defaultValue": "YOUR_PBI_WORKSPACE_GUID" },
+      "pbi_dataset_id":      { "type": "String", "defaultValue": "YOUR_PBI_DATASET_GUID" },
+      "teams_webhook_url":   { "type": "String", "defaultValue": "YOUR_TEAMS_WEBHOOK_URL" }
+    },
+    "annotations": [
+      "Globeleq",
+      "EnergyIntelligence",
+      "DeltaLake",
+      "Databricks",
+      "DailyPipeline"
+    ]
+  },
+  "triggers": [
+    {
+      "name": "tr_daily_0200_sast",
+      "type": "ScheduleTrigger",
+      "properties": {
+        "description": "Daily at 02:00 SAST (00:00 UTC) — runs after overnight data landing",
+        "runtimeState": "Started",
+        "pipelines": [
+          { "pipelineReference": { "referenceName": "pl_globeleq_daily_energy_intelligence" } }
+        ],
+        "typeProperties": {
+          "recurrence": {
+            "frequency": "Day",
+            "interval": 1,
+            "startTime": "2025-01-01T00:00:00Z",
+            "timeZone": "UTC",
+            "schedule": { "hours": [0], "minutes": [0] }
+          }
+        }
+      }
+    }
+  ]
+}

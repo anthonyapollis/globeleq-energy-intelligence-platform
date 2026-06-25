@@ -1,0 +1,20 @@
+﻿OrganisationKey,OrganisationName,OrganisationType
+1,Globeleq,Developer / Owner / Operator
+2,British International Investment (BII),Shareholder
+3,Norfund,Shareholder
+4,Eskom,Off-taker / Utility
+5,Egyptian Electricity and Transmission Company (EETC),Off-taker / Utility
+6,Government of Côte d’Ivoire,Government / Concession Counterparty
+7,ENEO,Off-taker / Utility
+8,Government of Cameroon,Government / Co-owner
+9,Cameroon National Grid,Off-taker / Grid
+10,Kenya Power,Off-taker / Utility
+11,EDM,Off-taker / Utility
+12,Tanzania National Grid,Off-taker / Grid
+13,Al Tawakol GILA,Co-shareholder / O&M Partner
+14,Kenya National Grid,Off-taker / Grid
+15,Geothermal Development Company (GDC),Steam Supplier
+16,Toyota Tsusho Corporation,EPC Contractor
+17,African Development Bank,Lender
+18,Trade and Development Bank,Lender
+19,Finnfund,Lender

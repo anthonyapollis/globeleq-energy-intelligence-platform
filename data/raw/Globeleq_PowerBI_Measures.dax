@@ -1,0 +1,200 @@
+-- Globeleq Power BI measures
+-- Create these measures in a dedicated table named _Measures.
+
+Installed Capacity MW :=
+SUM ( 'DimPlant'[NameplateCapacity] )
+
+Operating Capacity MW :=
+CALCULATE (
+    [Installed Capacity MW],
+    'DimPlant'[ProjectStatus] = "Operating"
+)
+
+Capacity Under Construction MW :=
+CALCULATE (
+    [Installed Capacity MW],
+    'DimPlant'[ProjectStatus] = "In Construction"
+)
+
+Net Generation MWh :=
+SUM ( 'FactPlantOperationsDaily'[NetGenerationMWh] )
+
+Net Generation GWh :=
+DIVIDE ( [Net Generation MWh], 1000 )
+
+Energy Exported MWh :=
+SUM ( 'FactPlantOperationsDaily'[EnergyExportedMWh] )
+
+Energy Exported GWh :=
+DIVIDE ( [Energy Exported MWh], 1000 )
+
+Weighted Availability % :=
+DIVIDE (
+    SUMX (
+        'FactPlantOperationsDaily',
+        'FactPlantOperationsDaily'[AvailabilityPct]
+            * RELATED ( 'DimPlant'[NameplateCapacity] )
+    ),
+    SUMX (
+        'FactPlantOperationsDaily',
+        RELATED ( 'DimPlant'[NameplateCapacity] )
+    )
+)
+
+Weighted Capacity Factor % :=
+DIVIDE (
+    SUMX (
+        'FactPlantOperationsDaily',
+        'FactPlantOperationsDaily'[CapacityFactorPct]
+            * RELATED ( 'DimPlant'[NameplateCapacity] )
+    ),
+    SUMX (
+        'FactPlantOperationsDaily',
+        RELATED ( 'DimPlant'[NameplateCapacity] )
+    )
+)
+
+Curtailment % :=
+DIVIDE (
+    SUMX (
+        'FactPlantOperationsDaily',
+        'FactPlantOperationsDaily'[EnergyExportedMWh]
+            * 'FactPlantOperationsDaily'[CurtailmentPct]
+    ),
+    [Energy Exported MWh]
+)
+
+Forced Outage Hours :=
+CALCULATE (
+    SUM ( 'FactOutage'[DurationHours] ),
+    'FactOutage'[OutageType] = "Forced"
+)
+
+Planned Outage Hours :=
+CALCULATE (
+    SUM ( 'FactOutage'[DurationHours] ),
+    'FactOutage'[OutageType] = "Planned"
+)
+
+Estimated Energy Lost MWh :=
+SUM ( 'FactOutage'[EstimatedEnergyLostMWh] )
+
+Outage Count :=
+COUNTROWS ( 'FactOutage' )
+
+Forced Outage Count :=
+CALCULATE (
+    [Outage Count],
+    'FactOutage'[OutageType] = "Forced"
+)
+
+MTTR Hours :=
+AVERAGEX (
+    FILTER ( 'FactOutage', 'FactOutage'[OutageType] = "Forced" ),
+    'FactOutage'[DurationHours]
+)
+
+Maintenance Cost ZAR :=
+SUM ( 'FactMaintenanceWorkOrder'[TotalMaintenanceCostZAR] )
+
+Open Work Orders :=
+CALCULATE (
+    COUNTROWS ( 'FactMaintenanceWorkOrder' ),
+    'FactMaintenanceWorkOrder'[WorkOrderStatus] IN { "Open", "In Progress" }
+)
+
+Critical Open Work Orders :=
+CALCULATE (
+    [Open Work Orders],
+    'FactMaintenanceWorkOrder'[Priority] = "Critical"
+)
+
+Average Work Order Closure Days :=
+AVERAGEX (
+    FILTER (
+        'FactMaintenanceWorkOrder',
+        NOT ISBLANK ( 'FactMaintenanceWorkOrder'[ClosedDate] )
+    ),
+    DATEDIFF (
+        'FactMaintenanceWorkOrder'[OpenedDate],
+        'FactMaintenanceWorkOrder'[ClosedDate],
+        DAY
+    )
+)
+
+Revenue ZAR :=
+SUM ( 'FactEnergySalesMonthly'[RevenueZAR] )
+
+Energy Sold MWh :=
+SUM ( 'FactEnergySalesMonthly'[EnergySoldMWh] )
+
+Realised Revenue per MWh ZAR :=
+DIVIDE ( [Revenue ZAR], [Energy Sold MWh] )
+
+Settlement Collection % :=
+DIVIDE (
+    SUMX (
+        'FactEnergySalesMonthly',
+        'FactEnergySalesMonthly'[RevenueZAR]
+            * 'FactEnergySalesMonthly'[SettlementCollectionPct]
+    ),
+    [Revenue ZAR]
+)
+
+Scope 1 Emissions tCO2e :=
+SUM ( 'FactPlantOperationsDaily'[Scope1EmissionsTonnesCO2e] )
+
+CO2 Avoided Tonnes :=
+SUM ( 'FactPlantOperationsDaily'[CO2AvoidedTonnes] )
+
+Emissions Intensity tCO2e per MWh :=
+DIVIDE (
+    [Scope 1 Emissions tCO2e],
+    [Energy Exported MWh]
+)
+
+BESS Energy Charged MWh :=
+SUM ( 'FactBatteryOperationDaily'[EnergyChargedMWh] )
+
+BESS Energy Discharged MWh :=
+SUM ( 'FactBatteryOperationDaily'[EnergyDischargedMWh] )
+
+BESS Round Trip Efficiency % :=
+DIVIDE (
+    [BESS Energy Discharged MWh],
+    [BESS Energy Charged MWh]
+)
+
+Construction Actual Progress % :=
+AVERAGE ( 'FactConstructionProgressMonthly'[ActualProgressPct] )
+
+Construction Schedule Variance % :=
+AVERAGE ( 'FactConstructionProgressMonthly'[ScheduleVariancePct] )
+
+Construction Cost Variance ZAR :=
+SUM ( 'FactConstructionProgressMonthly'[CostVarianceZAR] )
+
+HSE Incident Count :=
+COUNTROWS ( 'FactHSEIncident' )
+
+Lost Time Injury Count :=
+CALCULATE (
+    [HSE Incident Count],
+    'FactHSEIncident'[IncidentType] = "Lost Time Injury"
+)
+
+Lost Work Days :=
+SUM ( 'FactHSEIncident'[LostWorkDays] )
+
+Renewable Generation MWh :=
+CALCULATE (
+    [Net Generation MWh],
+    'DimPlant'[PrimaryTechnologyName]
+        IN { "Solar PV", "Solar PV + BESS", "Wind", "Geothermal" }
+)
+
+Renewable Generation Share % :=
+DIVIDE (
+    [Renewable Generation MWh],
+    [Net Generation MWh]
+)

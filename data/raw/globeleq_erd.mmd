@@ -1,0 +1,30 @@
+erDiagram
+    DimGeography ||--o{ DimPlant : locates
+    DimPlant ||--o{ DimAgreement : governed_by
+    DimOrganisation ||--o{ DimAgreement : counterparty
+    DimPlant ||--o{ BridgePlantOrganisation : has_role
+    DimOrganisation ||--o{ BridgePlantOrganisation : performs_role
+    DimPlant ||--o{ BridgePlantTechnology : uses
+    DimTechnology ||--o{ BridgePlantTechnology : classifies
+    DimPlant ||--o{ DimAsset : contains
+
+    DimDate ||--o{ FactPlantOperationsDaily : dates
+    DimPlant ||--o{ FactPlantOperationsDaily : operates
+
+    DimDate ||--o{ FactBatteryOperationDaily : dates
+    DimPlant ||--o{ FactBatteryOperationDaily : stores
+
+    DimDate ||--o{ FactEnergySalesMonthly : periods
+    DimPlant ||--o{ FactEnergySalesMonthly : sells
+
+    DimPlant ||--o{ FactOutage : experiences
+    DimAsset ||--o{ FactOutage : affects
+
+    DimPlant ||--o{ FactMaintenanceWorkOrder : requires
+    DimAsset ||--o{ FactMaintenanceWorkOrder : maintained
+
+    DimDate ||--o{ FactConstructionProgressMonthly : reports
+    DimPlant ||--o{ FactConstructionProgressMonthly : constructs
+
+    DimDate ||--o{ FactHSEIncident : records
+    DimPlant ||--o{ FactHSEIncident : occurs_at

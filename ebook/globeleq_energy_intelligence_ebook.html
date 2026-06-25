@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Globeleq Energy Intelligence Platform — Portfolio Ebook</title>
+<style>
+  :root {
+    --dark-blue: #14443B;
+    --amber:     #F7941D;
+    --cyan:      #00B4D8;
+    --light-bg:  #EAF6F3;
+    --mid-bg:    #C8E8E1;
+    --green:     #27AE60;
+    --red:       #C0392B;
+    --text:      #0e2b25;
+    --muted:     #4a6860;
+    --white:     #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #f4f7fb; color: var(--text); line-height: 1.7; }
+
+  /* ── Navigation ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--dark-blue); padding: 0 2rem;
+    display: flex; align-items: center; height: 56px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+  .nav-logo { color: var(--amber); font-weight: 800; font-size: 1.1rem; letter-spacing: 1px; }
+  .nav-links { margin-left: auto; display: flex; gap: 1.4rem; }
+  .nav-links a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.85rem;
+    transition: color 0.2s; }
+  .nav-links a:hover { color: var(--cyan); }
+
+  /* ── Hero ── */
+  .hero {
+    background: linear-gradient(135deg, var(--dark-blue) 0%, #003d73 60%, #004d8c 100%);
+    padding: 120px 4rem 80px;
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2300B4D8' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.4;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(247,148,29,0.18); color: var(--amber);
+    border: 1px solid var(--amber); border-radius: 20px;
+    padding: 4px 18px; font-size: 0.78rem; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-size: 3rem; color: var(--white); font-weight: 800;
+    line-height: 1.15; margin-bottom: 1rem;
+  }
+  .hero h1 span { color: var(--cyan); }
+  .hero p { font-size: 1.2rem; color: rgba(255,255,255,0.75); max-width: 700px; margin: 0 auto 2.5rem; }
+  .hero-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem; }
+  .tag {
+    background: rgba(0,180,216,0.15); color: var(--cyan);
+    border: 1px solid rgba(0,180,216,0.4); border-radius: 20px;
+    padding: 5px 14px; font-size: 0.8rem; font-weight: 600;
+  }
+
+  /* ── KPI strip ── */
+  .kpi-strip {
+    background: var(--amber);
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    text-align: center;
+  }
+  .kpi-item { padding: 1.4rem 1rem; border-right: 1px solid rgba(255,255,255,0.3); }
+  .kpi-item:last-child { border-right: none; }
+  .kpi-num { font-size: 2.2rem; font-weight: 900; color: var(--dark-blue); }
+  .kpi-label { font-size: 0.72rem; color: rgba(0,39,76,0.85); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* ── Layout ── */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+  section { padding: 5rem 0; }
+  section:nth-child(even) { background: var(--light-bg); }
+
+  /* ── Section headers ── */
+  .section-eyebrow {
+    display: inline-block; background: var(--dark-blue); color: var(--cyan);
+    padding: 3px 14px; border-radius: 4px; font-size: 0.72rem;
+    font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0.8rem;
+  }
+  h2.section-title { font-size: 2rem; color: var(--dark-blue); margin-bottom: 1rem; }
+  h2.section-title span { color: var(--amber); }
+  .section-intro { font-size: 1.05rem; color: var(--muted); max-width: 720px; margin-bottom: 2.5rem; }
+
+  /* ── Cards ── */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 1.5rem; }
+  .card {
+    background: var(--white); border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,39,76,0.08);
+    padding: 1.8rem; border-top: 4px solid var(--cyan);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,39,76,0.14); }
+  .card-icon { font-size: 2rem; margin-bottom: 0.8rem; }
+  .card h3 { font-size: 1.1rem; color: var(--dark-blue); margin-bottom: 0.5rem; }
+  .card p { font-size: 0.9rem; color: var(--muted); }
+  .card.amber-top { border-top-color: var(--amber); }
+  .card.green-top { border-top-color: var(--green); }
+
+  /* ── Architecture diagram ── */
+  .arch-diagram {
+    background: var(--dark-blue); border-radius: 16px; padding: 2.5rem;
+    color: var(--white); margin: 2rem 0;
+  }
+  .arch-row { display: flex; align-items: stretch; gap: 1.2rem; margin-bottom: 1.2rem; }
+  .arch-layer {
+    flex: 1; background: rgba(255,255,255,0.07); border-radius: 10px;
+    padding: 1.2rem; border-left: 4px solid var(--cyan); text-align: center;
+  }
+  .arch-layer.amber { border-left-color: var(--amber); }
+  .arch-layer.green { border-left-color: var(--green); }
+  .arch-layer.gold  { border-left-color: #FFD700; }
+  .arch-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 2px; color: var(--cyan); margin-bottom: 0.4rem; }
+  .arch-layer.amber .arch-label { color: var(--amber); }
+  .arch-layer.green .arch-label { color: var(--green); }
+  .arch-layer.gold  .arch-label { color: #FFD700; }
+  .arch-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.3rem; }
+  .arch-sub { font-size: 0.78rem; color: rgba(255,255,255,0.6); }
+  .arch-arrow { display: flex; align-items: center; color: var(--amber); font-size: 1.4rem; font-weight: 700; }
+
+  /* ── Pipeline flow ── */
+  .pipeline-flow {
+    display: flex; align-items: center; flex-wrap: wrap;
+    gap: 0; margin: 2rem 0; justify-content: center;
+  }
+  .pipe-step {
+    background: var(--white); border: 2px solid var(--mid-bg);
+    border-radius: 10px; padding: 1rem 1.4rem; text-align: center;
+    min-width: 130px; box-shadow: 0 2px 8px rgba(0,39,76,0.07);
+  }
+  .pipe-step .pipe-num {
+    background: var(--dark-blue); color: var(--white);
+    border-radius: 50%; width: 26px; height: 26px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.8rem; font-weight: 700; margin: 0 auto 0.5rem;
+  }
+  .pipe-step .pipe-title { font-size: 0.85rem; font-weight: 700; color: var(--dark-blue); }
+  .pipe-step .pipe-sub   { font-size: 0.72rem; color: var(--muted); }
+  .pipe-arrow { font-size: 1.5rem; color: var(--amber); padding: 0 0.3rem; font-weight: 700; }
+
+  /* ── ML model table ── */
+  .ml-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
+  .ml-table thead tr { background: var(--dark-blue); color: var(--white); }
+  .ml-table th { padding: 12px 14px; text-align: left; font-weight: 700; }
+  .ml-table td { padding: 11px 14px; border-bottom: 1px solid #ddeaf5; }
+  .ml-table tbody tr:nth-child(even) { background: var(--light-bg); }
+  .ml-table tbody tr:hover { background: var(--mid-bg); }
+  .badge {
+    display: inline-block; padding: 3px 10px; border-radius: 12px;
+    font-size: 0.72rem; font-weight: 700;
+  }
+  .badge-blue  { background: #e8f0fe; color: var(--dark-blue); }
+  .badge-amber { background: #fff3e0; color: #b45309; }
+  .badge-green { background: #e8f5e9; color: var(--green); }
+  .badge-cyan  { background: #e0f7fa; color: #00838f; }
+
+  /* ── Plant table ── */
+  .plant-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 1.5rem; }
+  .plant-table th { background: var(--dark-blue); color: var(--white); padding: 10px 12px; text-align: left; }
+  .plant-table td { padding: 9px 12px; border-bottom: 1px solid #ddeaf5; }
+  .plant-table tbody tr:nth-child(even) { background: var(--light-bg); }
+  .avail-high { color: var(--green); font-weight: 700; }
+  .avail-mid  { color: var(--amber); font-weight: 700; }
+  .avail-low  { color: var(--red);   font-weight: 700; }
+  .tech-solar  { background: #fff9c4; color: #7c6f00; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem; }
+  .tech-wind   { background: #e3f2fd; color: #1565c0; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem; }
+  .tech-gas    { background: #fce4ec; color: #880e4f; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem; }
+  .tech-geo    { background: #e8f5e9; color: #2e7d32; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem; }
+
+  /* ── Inline chart canvas ── */
+  .chart-wrap { background: var(--white); border-radius: 12px; padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0,39,76,0.08); margin: 1.5rem 0; }
+  .chart-title { font-weight: 700; color: var(--dark-blue); margin-bottom: 1rem; font-size: 1rem; }
+  canvas { max-width: 100%; }
+
+  /* ── Quote block ── */
+  .quote-block {
+    border-left: 4px solid var(--amber); background: var(--white);
+    padding: 1.2rem 1.8rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0;
+    box-shadow: 0 2px 8px rgba(0,39,76,0.06);
+  }
+  .quote-block p { font-size: 1.05rem; font-style: italic; color: var(--dark-blue); }
+  .quote-block cite { font-size: 0.8rem; color: var(--muted); }
+
+  /* ── Code block ── */
+  pre {
+    background: var(--dark-blue); color: #a8d8ea;
+    padding: 1.4rem; border-radius: 10px; overflow-x: auto;
+    font-size: 0.82rem; line-height: 1.6; margin: 1rem 0;
+  }
+  pre .kw  { color: var(--cyan); }
+  pre .fn  { color: var(--amber); }
+  pre .str { color: #a8e6a3; }
+  pre .cm  { color: #8a9bb0; }
+
+  /* ── Two-column ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+  @media (max-width: 768px) { .two-col { grid-template-columns: 1fr; } .kpi-strip { grid-template-columns: repeat(2,1fr); } }
+
+  /* ── Metric highlight ── */
+  .metric-row { display: flex; flex-wrap: wrap; gap: 1rem; margin: 1.5rem 0; }
+  .metric-box {
+    background: var(--white); border-radius: 10px; padding: 1.2rem 1.6rem;
+    border-top: 3px solid var(--cyan); box-shadow: 0 2px 10px rgba(0,39,76,0.07);
+    flex: 1; min-width: 160px; text-align: center;
+  }
+  .metric-box.amber { border-top-color: var(--amber); }
+  .metric-box.green { border-top-color: var(--green); }
+  .metric-box.dark  { background: var(--dark-blue); border-top-color: var(--cyan); }
+  .metric-box .m-val { font-size: 1.9rem; font-weight: 900; color: var(--dark-blue); }
+  .metric-box.dark .m-val { color: var(--cyan); }
+  .metric-box .m-lbl { font-size: 0.72rem; color: var(--muted); text-transform: uppercase;
+    font-weight: 600; letter-spacing: 0.5px; }
+  .metric-box.dark .m-lbl { color: rgba(255,255,255,0.6); }
+
+  /* ── Timeline ── */
+  .timeline { border-left: 3px solid var(--cyan); padding-left: 1.5rem; margin: 1.5rem 0; }
+  .tl-item { margin-bottom: 1.5rem; position: relative; }
+  .tl-item::before {
+    content: ''; position: absolute; left: -1.95rem; top: 5px;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--amber); border: 3px solid var(--white);
+    box-shadow: 0 0 0 2px var(--cyan);
+  }
+  .tl-date { font-size: 0.75rem; font-weight: 700; color: var(--cyan); text-transform: uppercase; letter-spacing: 1px; }
+  .tl-title { font-weight: 700; color: var(--dark-blue); font-size: 0.95rem; }
+  .tl-text  { font-size: 0.875rem; color: var(--muted); }
+
+  /* ── Footer ── */
+  footer {
+    background: var(--dark-blue); color: rgba(255,255,255,0.6);
+    text-align: center; padding: 3rem 2rem; font-size: 0.85rem;
+  }
+  footer strong { color: var(--amber); }
+  footer a { color: var(--cyan); text-decoration: none; }
+
+  /* ── Print / PDF ── */
+  @media print {
+    nav { display: none; }
+    .hero { padding-top: 3rem; }
+    section { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <span class="nav-logo">GLOBELEQ EIP</span>
+  <div class="nav-links">
+    <a href="#overview">Overview</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#data">Data</a>
+    <a href="#pipeline">Pipeline</a>
+    <a href="#ml">ML Models</a>
+    <a href="#results">Results</a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-badge">Portfolio Project &nbsp;|&nbsp; Azure Databricks &nbsp;|&nbsp; Batch Mode 2026</div>
+  <h1>Globeleq <span>Energy Intelligence</span><br>Platform</h1>
+  <p>A full-stack Azure data engineering and machine learning pipeline built on 3 million rows of synthetic SCADA telemetry from 19 African power plants — powering predictive operations, revenue forecasting, and ESG reporting.</p>
+  <div class="hero-tags">
+    <span class="tag">Azure Databricks</span>
+    <span class="tag">Delta Lake</span>
+    <span class="tag">Azure Data Factory</span>
+    <span class="tag">MLflow</span>
+    <span class="tag">XGBoost</span>
+    <span class="tag">LightGBM</span>
+    <span class="tag">Random Forest</span>
+    <span class="tag">Isolation Forest</span>
+    <span class="tag">PySpark</span>
+    <span class="tag">Power BI</span>
+    <span class="tag">Python</span>
+    <span class="tag">SQL Server</span>
+  </div>
+</div>
+
+<!-- ── KPI STRIP ── -->
+<div class="kpi-strip">
+  <div class="kpi-item"><div class="kpi-num">3.02M</div><div class="kpi-label">Total Rows Generated</div></div>
+  <div class="kpi-item"><div class="kpi-num">19</div><div class="kpi-label">African Power Plants</div></div>
+  <div class="kpi-item"><div class="kpi-num">5</div><div class="kpi-label">ML Models in Registry</div></div>
+  <div class="kpi-item"><div class="kpi-num">R0.5B+</div><div class="kpi-label">Annual Portfolio Revenue</div></div>
+  <div class="kpi-item"><div class="kpi-num">95.8%</div><div class="kpi-label">Portfolio Availability</div></div>
+</div>
+
+<!-- ══════════════════ SECTION 1: OVERVIEW ══════════════════ -->
+<section id="overview">
+  <div class="container">
+    <div class="section-eyebrow">Chapter 1</div>
+    <h2 class="section-title">Why This Project <span>Matters</span></h2>
+    <p class="section-intro">
+      Globeleq operates utility-scale power plants across six African nations. Each plant generates
+      megawatts of electricity and terabytes of SCADA data. Without a unified data platform, these
+      operational signals sit in siloed plant historians — invisible to the portfolio managers,
+      revenue analysts, and maintenance planners who need them most.
+    </p>
+
+    <div class="quote-block">
+      <p>"We are powering Africa's growth by developing and operating utility-scale power plants."</p>
+      <cite>— Globeleq mission statement</cite>
+    </div>
+
+    <div class="two-col">
+      <div>
+        <h3 style="color:var(--dark-blue);margin-bottom:1rem;">The Business Problem</h3>
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-date">Operational Challenge</div>
+            <div class="tl-title">Fragmented SCADA Data</div>
+            <div class="tl-text">19 plants across 8 countries run different OEM control systems. Data lives in local historians with no cross-portfolio visibility.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">Commercial Challenge</div>
+            <div class="tl-title">Revenue Leakage</div>
+            <div class="tl-text">Curtailment, settlement delays, and FX exposure erode contracted revenue. No real-time collection rate monitoring.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">Maintenance Challenge</div>
+            <div class="tl-title">Reactive Maintenance</div>
+            <div class="tl-text">Forced outages cost on average 18 hours of lost generation per event. No predictive signal to dispatch maintenance proactively.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">ESG Challenge</div>
+            <div class="tl-title">Emissions Reporting</div>
+            <div class="tl-text">Investors and DFIs require GHG scope 1/2 data. Manual aggregation from plant logs is error-prone and slow.</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 style="color:var(--dark-blue);margin-bottom:1rem;">The Solution</h3>
+        <div class="card-grid" style="grid-template-columns:1fr;">
+          <div class="card">
+            <div class="card-icon">&#9889;</div>
+            <h3>Real-Time SCADA Intelligence</h3>
+            <p>15-minute sensor telemetry ingested via ADF into Delta Lake Bronze — available for analysis within 30 minutes of generation.</p>
+          </div>
+          <div class="card amber-top">
+            <div class="card-icon">&#128200;</div>
+            <h3>Predictive ML Suite</h3>
+            <p>Five models covering yield forecasting, forced outage risk, maintenance cost, anomaly detection, and revenue projection.</p>
+          </div>
+          <div class="card green-top">
+            <div class="card-icon">&#127758;</div>
+            <h3>ESG Automation</h3>
+            <p>Automated CO₂ avoided, Scope 1 emissions, renewable generation share — updated daily, investor-ready monthly.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ SECTION 2: PORTFOLIO ══════════════════ -->
+<section style="background:#fff;" id="portfolio">
+  <div class="container">
+    <div class="section-eyebrow">Chapter 2</div>
+    <h2 class="section-title">The <span>Portfolio</span></h2>
+    <p class="section-intro">19 operating and in-construction plants spanning Northern, Western, Eastern and Southern Africa — Solar PV, Wind, Natural Gas, Heavy Fuel Oil and Geothermal technologies.</p>
+
+    <div class="metric-row">
+      <div class="metric-box"><div class="m-val">1,875 MW</div><div class="m-lbl">Total Installed Capacity</div></div>
+      <div class="metric-box amber"><div class="m-val">485 MW</div><div class="m-lbl">Under Construction</div></div>
+      <div class="metric-box green"><div class="m-val">67%</div><div class="m-lbl">Renewable Capacity</div></div>
+      <div class="metric-box dark"><div class="m-val">8 Countries</div><div class="m-lbl">Across Africa</div></div>
+    </div>
+
+    <table class="plant-table">
+      <thead>
+        <tr>
+          <th>#</th><th>Plant Name</th><th>Country</th><th>Technology</th>
+          <th>Capacity</th><th>Offtaker</th><th>Agreement</th><th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>ARC Solar Power</td><td>Egypt</td><td><span class="tech-solar">Solar PV</span></td><td>66 MWp</td><td>EETC</td><td>PPA 25yr</td><td class="avail-high">Operating</td></tr>
+        <tr><td>2</td><td>Aries Solar Power</td><td>South Africa</td><td><span class="tech-solar">Solar PV</span></td><td>11 MWp</td><td>Eskom</td><td>PPA 20yr</td><td class="avail-high">Operating</td></tr>
+        <tr><td>3</td><td>Azito Power</td><td>Côte d'Ivoire</td><td><span class="tech-gas">Natural Gas</span></td><td>713 MW</td><td>Govt of CdI</td><td>Concession 20yr</td><td class="avail-high">Operating</td></tr>
+        <tr><td>4</td><td>Boshof Solar Power</td><td>South Africa</td><td><span class="tech-solar">Solar PV</span></td><td>66 MWp</td><td>Eskom</td><td>PPA 20yr</td><td class="avail-high">Operating</td></tr>
+        <tr><td>5</td><td>Cuamba Solar + BESS</td><td>Mozambique</td><td><span class="tech-solar">Solar PV+BESS</span></td><td>19 MWp / 7 MWh</td><td>—</td><td>—</td><td class="avail-high">Operating</td></tr>
+        <tr><td>6</td><td>De Aar Solar Power</td><td>South Africa</td><td><span class="tech-solar">Solar PV</span></td><td>50 MWp</td><td>Eskom</td><td>PPA 20yr</td><td class="avail-high">Operating</td></tr>
+        <tr><td>7</td><td>Dibamba Power</td><td>Cameroon</td><td><span class="tech-gas">Heavy Fuel Oil</span></td><td>88 MW</td><td>ENEO</td><td>Tolling 20yr</td><td class="avail-high">Operating</td></tr>
+        <tr><td>8</td><td>Droogfontein Solar</td><td>South Africa</td><td><span class="tech-solar">Solar PV</span></td><td>50 MWp</td><td>Eskom</td><td>PPA 20yr</td><td class="avail-high">Operating</td></tr>
+        <tr><td>9</td><td>Jeffreys Bay Wind</td><td>South Africa</td><td><span class="tech-wind">Wind</span></td><td>138 MW</td><td>—</td><td>—</td><td class="avail-high">Operating</td></tr>
+        <tr><td>10</td><td>Klipheuwel Wind Farm</td><td>South Africa</td><td><span class="tech-wind">Wind</span></td><td>27 MW</td><td>—</td><td>—</td><td class="avail-high">Operating</td></tr>
+        <tr><td>11</td><td>Konkoonsies Solar</td><td>South Africa</td><td><span class="tech-solar">Solar PV</span></td><td>11 MWp</td><td>Eskom</td><td>PPA 20yr</td><td class="avail-high">Operating</td></tr>
+        <tr><td>12</td><td>Kribi Power</td><td>Cameroon</td><td><span class="tech-gas">Natural Gas</span></td><td>216 MW</td><td>National Grid</td><td>PPA 20yr</td><td class="avail-high">Operating</td></tr>
+        <tr><td>13</td><td>Malindi Solar Power</td><td>Kenya</td><td><span class="tech-solar">Solar PV</span></td><td>52 MWp</td><td>Kenya Power</td><td>PPA 20yr</td><td class="avail-high">Operating</td></tr>
+        <tr><td>14</td><td>Mocuba Solar</td><td>Mozambique</td><td><span class="tech-solar">Solar PV</span></td><td>41 MWp</td><td>EDM</td><td>PPA 25yr</td><td class="avail-high">Operating</td></tr>
+        <tr><td>15</td><td>Songas</td><td>Tanzania</td><td><span class="tech-gas">Natural Gas</span></td><td>190 MW</td><td>National Grid</td><td>PPA 20yr</td><td class="avail-high">Operating</td></tr>
+        <tr><td>16</td><td>Soutpan Solar</td><td>South Africa</td><td><span class="tech-solar">Solar PV</span></td><td>31 MWp</td><td>Eskom</td><td>PPA 20yr</td><td class="avail-high">Operating</td></tr>
+        <tr><td>17</td><td>Winnergy Solar</td><td>Egypt</td><td><span class="tech-solar">Solar PV</span></td><td>25 MWp</td><td>EETC</td><td>PPA 25yr</td><td class="avail-high">Operating</td></tr>
+        <tr><td>18</td><td>Central Térmica Temane</td><td>Mozambique</td><td><span class="tech-gas">Natural Gas</span></td><td>450 MW</td><td>EDM</td><td>Tolling 25yr</td><td class="avail-mid">In Construction</td></tr>
+        <tr><td>19</td><td>Menengai Geothermal</td><td>Kenya</td><td><span class="tech-geo">Geothermal</span></td><td>35 MW</td><td>KPLC</td><td>—</td><td class="avail-mid">In Construction</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════════════ SECTION 3: ARCHITECTURE ══════════════════ -->
+<section id="architecture">
+  <div class="container">
+    <div class="section-eyebrow">Chapter 3</div>
+    <h2 class="section-title">Platform <span>Architecture</span></h2>
+    <p class="section-intro">
+      A classic Azure Medallion Architecture: raw data lands in Bronze Delta tables via ADF,
+      is cleansed and enriched in Silver, and aggregated into executive-ready Gold KPIs and
+      an ML feature store.
+    </p>
+
+    <div class="arch-diagram">
+      <div style="text-align:center;margin-bottom:1.5rem;">
+        <span style="font-size:1.2rem;font-weight:800;color:var(--cyan);">MEDALLION ARCHITECTURE — AZURE DATABRICKS</span>
+      </div>
+
+      <!-- Row 1: Sources -->
+      <div class="arch-row">
+        <div class="arch-layer amber">
+          <div class="arch-label">Source</div>
+          <div class="arch-title">SCADA / Plant Historians</div>
+          <div class="arch-sub">15-min telemetry · OEM protocols · ModBus/DNP3</div>
+        </div>
+        <div class="arch-layer amber">
+          <div class="arch-label">Source</div>
+          <div class="arch-title">SQL Server DW</div>
+          <div class="arch-sub">Dim/Fact tables · GlobeleqEnergyDW · 12 tables</div>
+        </div>
+        <div class="arch-layer amber">
+          <div class="arch-label">Source</div>
+          <div class="arch-title">External Feeds</div>
+          <div class="arch-sub">FX rates · Weather API · Regulator filings</div>
+        </div>
+      </div>
+
+      <div style="text-align:center;font-size:1.4rem;color:var(--amber);margin:0.3rem 0;">&#8595; Azure Data Factory — Copy Activities + ForEach + WebActivity &#8595;</div>
+
+      <!-- Row 2: Bronze -->
+      <div class="arch-row">
+        <div class="arch-layer" style="border-left-color:#cd7f32;">
+          <div class="arch-label" style="color:#cd7f32;">Bronze Layer</div>
+          <div class="arch-title">Raw Delta Tables</div>
+          <div class="arch-sub">schema enforcement · audit columns · no transforms · 3M+ rows</div>
+        </div>
+        <div class="arch-layer" style="border-left-color:#cd7f32;flex:0.5;">
+          <div class="arch-label" style="color:#cd7f32;">Storage</div>
+          <div class="arch-title">ADLS Gen2</div>
+          <div class="arch-sub">abfss://raw@<br>globeleqdatalake</div>
+        </div>
+      </div>
+
+      <div style="text-align:center;font-size:1.4rem;color:var(--amber);margin:0.3rem 0;">&#8595; Databricks Notebook 02 — Silver Transform &#8595;</div>
+
+      <!-- Row 3: Silver -->
+      <div class="arch-row">
+        <div class="arch-layer">
+          <div class="arch-label">Silver Layer</div>
+          <div class="arch-title">scada_hourly</div>
+          <div class="arch-sub">15-min → hourly agg · DQ scoring · joined to dim_plant</div>
+        </div>
+        <div class="arch-layer">
+          <div class="arch-label">Silver Layer</div>
+          <div class="arch-title">fact_plant_ops_daily</div>
+          <div class="arch-sub">rolling 7d/30d · lag features · cleaned types</div>
+        </div>
+        <div class="arch-layer">
+          <div class="arch-label">Silver Layer</div>
+          <div class="arch-title">fact_outage / maint</div>
+          <div class="arch-sub">IsForced · MTTR · overdue flags · enriched joins</div>
+        </div>
+      </div>
+
+      <div style="text-align:center;font-size:1.4rem;color:var(--amber);margin:0.3rem 0;">&#8595; Databricks Notebook 03 — Gold KPIs &#8595;</div>
+
+      <!-- Row 4: Gold -->
+      <div class="arch-row">
+        <div class="arch-layer gold">
+          <div class="arch-label">Gold Layer</div>
+          <div class="arch-title">portfolio_daily_kpis</div>
+          <div class="arch-sub">DoD delta · renewable share · emissions intensity</div>
+        </div>
+        <div class="arch-layer gold">
+          <div class="arch-label">Gold Layer</div>
+          <div class="arch-title">plant_monthly_kpis</div>
+          <div class="arch-sub">EBITDA proxy · MTTR · collection rate · ranking</div>
+        </div>
+        <div class="arch-layer gold">
+          <div class="arch-label">Gold Layer</div>
+          <div class="arch-title">ml_feature_store_daily</div>
+          <div class="arch-sub">lag features · rolling windows · outage target labels</div>
+        </div>
+      </div>
+
+      <div style="text-align:center;font-size:1.4rem;color:var(--amber);margin:0.3rem 0;">&#8595; Notebook 04 — ML Training &amp; Inference &#8595;</div>
+
+      <!-- Row 5: Output -->
+      <div class="arch-row">
+        <div class="arch-layer green">
+          <div class="arch-label">Consume</div>
+          <div class="arch-title">Power BI</div>
+          <div class="arch-sub">30 DAX measures · Databricks SQL endpoint · scheduled refresh</div>
+        </div>
+        <div class="arch-layer green">
+          <div class="arch-label">Consume</div>
+          <div class="arch-title">MLflow Registry</div>
+          <div class="arch-sub">5 models · versioned · staging → production promotion</div>
+        </div>
+        <div class="arch-layer green">
+          <div class="arch-label">Consume</div>
+          <div class="arch-title">Teams / Email</div>
+          <div class="arch-sub">Pipeline success/fail webhook · anomaly alerts · daily digest</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ SECTION 4: DATA ══════════════════ -->
+<section id="data" style="background:#fff;">
+  <div class="container">
+    <div class="section-eyebrow">Chapter 4</div>
+    <h2 class="section-title">The <span>Data</span> — 3.02 Million Rows</h2>
+    <p class="section-intro">
+      Synthetic data was generated using physically-motivated models: solar irradiance calculations
+      based on plant latitude and day of year, Weibull wind speed distributions with AR(1) temporal
+      correlation, and Poisson forced-outage arrival processes for thermal plants.
+    </p>
+
+    <div class="metric-row">
+      <div class="metric-box dark"><div class="m-val">2,981,664</div><div class="m-lbl">SCADA Telemetry Rows (15-min)</div></div>
+      <div class="metric-box"><div class="m-val">34,713</div><div class="m-lbl">Daily Operations Rows</div></div>
+      <div class="metric-box amber"><div class="m-val">1,656</div><div class="m-lbl">Outage Event Rows</div></div>
+      <div class="metric-box green"><div class="m-val">3,878</div><div class="m-lbl">Maintenance Work Orders</div></div>
+    </div>
+
+    <div class="two-col">
+      <div>
+        <h3 style="color:var(--dark-blue);margin-bottom:1rem;">SCADA Telemetry Schema</h3>
+        <pre><span class="cm">-- 15-minute SCADA fact table (2.98M rows)</span>
+<span class="kw">CREATE TABLE</span> <span class="fn">scada_telemetry_15min</span> (
+  Timestamp             <span class="str">TIMESTAMP</span>,
+  PlantKey              <span class="str">INT</span>,
+  PlantCode             <span class="str">VARCHAR(10)</span>,
+  Technology            <span class="str">VARCHAR(30)</span>,
+  ActivePowerMW         <span class="str">DOUBLE</span>,     <span class="cm">-- MW</span>
+  ReactivePowerMVAR     <span class="str">DOUBLE</span>,
+  GridFrequencyHz       <span class="str">DOUBLE</span>,     <span class="cm">-- ~50 Hz</span>
+  AmbientTemperatureC   <span class="str">DOUBLE</span>,
+  SolarIrradianceWm2    <span class="str">DOUBLE</span>,     <span class="cm">-- solar only</span>
+  WindSpeedMs           <span class="str">DOUBLE</span>,     <span class="cm">-- wind only</span>
+  InverterEfficiencyPct <span class="str">DOUBLE</span>,
+  TransformerTempC      <span class="str">DOUBLE</span>,
+  CurtailmentFactor     <span class="str">DOUBLE</span>,
+  CumulativeEnergyMWh   <span class="str">DOUBLE</span>,
+  AlarmCode             <span class="str">VARCHAR(20)</span>, <span class="cm">-- NORMAL/OUTAGE/CURTAILMENT</span>
+  DataQualityFlag       <span class="str">VARCHAR(10)</span>  <span class="cm">-- GOOD/SUSPECT/BAD</span>
+)
+<span class="kw">PARTITIONED BY</span> (PlantKey)</pre>
+      </div>
+      <div>
+        <h3 style="color:var(--dark-blue);margin-bottom:1rem;">Data Quality Rules</h3>
+        <div class="card-grid" style="grid-template-columns:1fr;">
+          <div class="card">
+            <h3>Schema Enforcement</h3>
+            <p>Delta Lake enforces column types at Bronze ingestion. Reject-on-schema-mismatch prevents silent null propagation.</p>
+          </div>
+          <div class="card amber-top">
+            <h3>SUSPECT Tagging</h3>
+            <p>15-min readings during forced outages tagged <code>DataQualityFlag='SUSPECT'</code> — excluded from KPI denominators.</p>
+          </div>
+          <div class="card green-top">
+            <h3>Deduplication</h3>
+            <p>Silver layer drops exact duplicates on <code>(Timestamp, PlantKey)</code> using Delta <code>dropDuplicates()</code> before merge.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-wrap">
+      <div class="chart-title">Simulated Generation Profile — Solar vs Wind vs Gas (hourly avg, 2024)</div>
+      <canvas id="genChart" height="80"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ SECTION 5: PIPELINE ══════════════════ -->
+<section id="pipeline">
+  <div class="container">
+    <div class="section-eyebrow">Chapter 5</div>
+    <h2 class="section-title">ADF Pipeline — <span>Daily Automation</span></h2>
+    <p class="section-intro">
+      The Azure Data Factory pipeline runs at 02:00 SAST every night, copying new data from SQL Server
+      and ADLS Gen2, executing the four Databricks notebooks in sequence, conditionally retraining
+      ML models on Saturdays, refreshing Power BI, and posting a Teams webhook.
+    </p>
+
+    <div class="pipeline-flow">
+      <div class="pipe-step">
+        <div class="pipe-num">1</div>
+        <div class="pipe-title">Set Variables</div>
+        <div class="pipe-sub">RunId · timestamps</div>
+      </div>
+      <div class="pipe-arrow">&#8594;</div>
+      <div class="pipe-step">
+        <div class="pipe-num">2</div>
+        <div class="pipe-title">GetMetadata</div>
+        <div class="pipe-sub">Validate raw files in ADLS</div>
+      </div>
+      <div class="pipe-arrow">&#8594;</div>
+      <div class="pipe-step">
+        <div class="pipe-num">3</div>
+        <div class="pipe-title">Copy Dims</div>
+        <div class="pipe-sub">SQL → ADLS CSV</div>
+      </div>
+      <div class="pipe-arrow">&#8594;</div>
+      <div class="pipe-step">
+        <div class="pipe-num">4</div>
+        <div class="pipe-title">ForEach Facts</div>
+        <div class="pipe-sub">8 fact tables in parallel</div>
+      </div>
+      <div class="pipe-arrow">&#8594;</div>
+      <div class="pipe-step">
+        <div class="pipe-num">5</div>
+        <div class="pipe-title">Bronze NB</div>
+        <div class="pipe-sub">Databricks 01_bronze</div>
+      </div>
+      <div class="pipe-arrow">&#8594;</div>
+      <div class="pipe-step">
+        <div class="pipe-num">6</div>
+        <div class="pipe-title">Silver NB</div>
+        <div class="pipe-sub">Databricks 02_silver</div>
+      </div>
+      <div class="pipe-arrow">&#8594;</div>
+      <div class="pipe-step">
+        <div class="pipe-num">7</div>
+        <div class="pipe-title">Gold NB</div>
+        <div class="pipe-sub">Databricks 03_gold</div>
+      </div>
+      <div class="pipe-arrow">&#8594;</div>
+      <div class="pipe-step">
+        <div class="pipe-num">8</div>
+        <div class="pipe-title">ML Gate</div>
+        <div class="pipe-sub">Saturday = retrain else inference</div>
+      </div>
+      <div class="pipe-arrow">&#8594;</div>
+      <div class="pipe-step">
+        <div class="pipe-num">9</div>
+        <div class="pipe-title">PBI Refresh</div>
+        <div class="pipe-sub">Power BI REST API</div>
+      </div>
+      <div class="pipe-arrow">&#8594;</div>
+      <div class="pipe-step">
+        <div class="pipe-num">10</div>
+        <div class="pipe-title">Teams Alert</div>
+        <div class="pipe-sub">Success / failure webhook</div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div>
+        <h3 style="color:var(--dark-blue);margin-bottom:1rem;">Key Design Decisions</h3>
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-date">Parallelism</div>
+            <div class="tl-title">ForEach with batchCount=4</div>
+            <div class="tl-text">8 fact tables copy in parallel batches of 4, cutting ingestion time from ~40 min to ~12 min.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">Saturday Gate</div>
+            <div class="tl-title">IfCondition for ML Retraining</div>
+            <div class="tl-text">Full model retraining runs weekly (Saturday only) using <code>dayOfWeek(utcNow())==7</code> — daily runs execute inference only to save cluster cost.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">Error Handling</div>
+            <div class="tl-title">Failure Branch to Teams</div>
+            <div class="tl-text">Any notebook failure triggers a red Teams card with run ID, timestamp, and direct ADF Monitor link.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">Secrets</div>
+            <div class="tl-title">Azure Key Vault + Databricks Scope</div>
+            <div class="tl-text">Service principal credentials, PBI tokens, and Teams webhook URLs are resolved at runtime from Key Vault — never hard-coded.</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 style="color:var(--dark-blue);margin-bottom:1rem;">Trigger Configuration</h3>
+        <pre><span class="cm">// tr_daily_0200_sast</span>
+{
+  <span class="str">"type"</span>: <span class="str">"ScheduleTrigger"</span>,
+  <span class="str">"recurrence"</span>: {
+    <span class="str">"frequency"</span>: <span class="str">"Day"</span>,
+    <span class="str">"interval"</span>: 1,
+    <span class="str">"startTime"</span>: <span class="str">"2025-01-01T00:00:00Z"</span>,
+    <span class="str">"schedule"</span>: {
+      <span class="str">"hours"</span>: [0],   <span class="cm">// 00:00 UTC = 02:00 SAST</span>
+      <span class="str">"minutes"</span>: [0]
+    }
+  }
+}</pre>
+        <h3 style="color:var(--dark-blue);margin:1.5rem 0 0.8rem;">Linked Services</h3>
+        <table class="ml-table" style="font-size:0.8rem;">
+          <thead><tr><th>Name</th><th>Type</th><th>Auth</th></tr></thead>
+          <tbody>
+            <tr><td>ls_adls_globeleq</td><td>ADLS Gen2</td><td>Service Principal + KV</td></tr>
+            <tr><td>ls_databricks_globeleq</td><td>Databricks</td><td>MSI Token</td></tr>
+            <tr><td>ls_sql_globeleq</td><td>Azure SQL</td><td>Managed Identity</td></tr>
+            <tr><td>ls_powerbi</td><td>Power BI REST</td><td>OAuth2 Bearer</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ SECTION 6: ML MODELS ══════════════════ -->
+<section id="ml" style="background:#fff;">
+  <div class="container">
+    <div class="section-eyebrow">Chapter 6</div>
+    <h2 class="section-title">Machine Learning <span>Suite</span></h2>
+    <p class="section-intro">
+      Five models address distinct business questions across the plant lifecycle — from
+      15-minute yield prediction to monthly revenue forecasting. All models are tracked in
+      MLflow, versioned in the Model Registry, and refreshed weekly.
+    </p>
+
+    <table class="ml-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Model</th>
+          <th>Algorithm</th>
+          <th>Target</th>
+          <th>Key Metrics</th>
+          <th>Business Use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>1</strong></td>
+          <td><strong>Energy Yield Forecaster</strong></td>
+          <td><span class="badge badge-blue">XGBoost Regressor</span></td>
+          <td>NetGenerationMWh (t+1 day)</td>
+          <td>R²=0.94 · MAE=18 MWh · MAPE=4.2%</td>
+          <td>Grid scheduling &amp; energy trading</td>
+        </tr>
+        <tr>
+          <td><strong>2</strong></td>
+          <td><strong>Forced Outage Predictor</strong></td>
+          <td><span class="badge badge-amber">LightGBM Classifier</span></td>
+          <td>Forced outage within 7 days</td>
+          <td>AUC=0.82 · AP=0.61 · F1=0.58</td>
+          <td>Predictive maintenance dispatch</td>
+        </tr>
+        <tr>
+          <td><strong>3</strong></td>
+          <td><strong>Maintenance Cost Estimator</strong></td>
+          <td><span class="badge badge-cyan">Random Forest</span></td>
+          <td>Monthly maintenance cost (ZAR)</td>
+          <td>R²=0.89 · MAE=R12k · OOB=0.87</td>
+          <td>OPEX budgeting &amp; planning</td>
+        </tr>
+        <tr>
+          <td><strong>4</strong></td>
+          <td><strong>Curtailment Anomaly Detector</strong></td>
+          <td><span class="badge badge-green">Isolation Forest</span></td>
+          <td>Anomalous curtailment months</td>
+          <td>Anomaly rate=5% · Contamination=0.05</td>
+          <td>Grid congestion &amp; inverter alerts</td>
+        </tr>
+        <tr>
+          <td><strong>5</strong></td>
+          <td><strong>Portfolio Revenue Forecaster</strong></td>
+          <td><span class="badge badge-amber">LightGBM Regressor</span></td>
+          <td>Portfolio revenue ZAR (t+1 month)</td>
+          <td>R²=0.93 · MAE=R2.8M · MAPE=3.1%</td>
+          <td>Investor &amp; cash-flow reporting</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="two-col" style="margin-top:2.5rem;">
+      <div>
+        <h3 style="color:var(--dark-blue);margin-bottom:1rem;">Model 1: Energy Yield Forecaster</h3>
+        <p style="color:var(--muted);font-size:0.9rem;margin-bottom:1rem;">
+          XGBoost regressor trained on 80/20 split of 34,713 plant-day records.
+          Features include 7-day and 30-day rolling averages, lag-1 and lag-7 generation,
+          plant capacity, technology encoding, and seasonality (month).
+        </p>
+        <pre><span class="fn">xgb_params</span> = {
+  <span class="str">"n_estimators"</span>    : 500,
+  <span class="str">"max_depth"</span>       : 6,
+  <span class="str">"learning_rate"</span>   : 0.05,
+  <span class="str">"subsample"</span>       : 0.8,
+  <span class="str">"colsample_bytree"</span>: 0.8,
+  <span class="str">"min_child_weight"</span>: 5,
+  <span class="str">"reg_alpha"</span>       : 0.1,
+  <span class="str">"reg_lambda"</span>      : 1.0,
+}
+<span class="cm"># Top features: Gen_Lag1 > AvailabilityPct
+# > GenMWh_7d > NameplateCapacity > Month</span></pre>
+      </div>
+      <div>
+        <h3 style="color:var(--dark-blue);margin-bottom:1rem;">Model 2: Forced Outage Predictor</h3>
+        <p style="color:var(--muted);font-size:0.9rem;margin-bottom:1rem;">
+          LightGBM binary classifier with class balancing (<code>scale_pos_weight</code>).
+          Threshold optimised to 0.35 to maximise recall — better to dispatch a maintenance
+          crew unnecessarily than to miss a real fault.
+        </p>
+        <pre><span class="cm"># Class imbalance: only ~8% of days have
+# a forced outage in the next 7 days</span>
+<span class="fn">lgb_params</span> = {
+  <span class="str">"scale_pos_weight"</span>: scale_pos,  <span class="cm"># ~11x</span>
+  <span class="str">"class_weight"</span>    : <span class="str">"balanced"</span>,
+  <span class="str">"num_leaves"</span>      : 31,
+  <span class="str">"min_child_samples"</span>: 30,
+  <span class="str">"early_stopping"</span>  : 50,
+}
+<span class="cm"># Optimised threshold: 0.35 (not 0.50)
+# Top features: AvailabilityPct, ForcedOut_Lag7</span></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ SECTION 7: RESULTS ══════════════════ -->
+<section id="results">
+  <div class="container">
+    <div class="section-eyebrow">Chapter 7</div>
+    <h2 class="section-title">Portfolio <span>Results</span> (2020–2024)</h2>
+    <p class="section-intro">Key insights derived from 5 years of synthetic operational data across the Globeleq portfolio.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">&#9728;</div>
+        <h3>Solar Fleet — 89% of Plants</h3>
+        <p>11 solar plants deliver 22–24% capacity factors across Africa's high-irradiance zones. Egypt plants (ARC, Winnergy) achieve the most consistent generation with minimal seasonal swing.</p>
+      </div>
+      <div class="card amber-top">
+        <div class="card-icon">&#127788;</div>
+        <h3>Wind — Highest Capacity Factor</h3>
+        <p>Jeffreys Bay (JBAY, 138 MW) achieves ~38% capacity factor — nearly double the solar fleet average. South Africa's coastal wind corridor is among the best in the continent.</p>
+      </div>
+      <div class="card green-top">
+        <div class="card-icon">&#9881;</div>
+        <h3>Gas Baseload — Revenue Anchor</h3>
+        <p>Azito (713 MW, Côte d'Ivoire) alone generates more revenue than the entire South African solar fleet combined, operating at ~78% capacity factor 24/7.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#128197;</div>
+        <h3>Availability: 95.8% Portfolio Avg</h3>
+        <p>Weighted portfolio availability exceeded 95% in 4 of 5 years. Planned annual maintenance windows account for ~3% of downtime; forced outages for the remaining ~1.2%.</p>
+      </div>
+      <div class="card amber-top">
+        <div class="card-icon">&#127807;</div>
+        <h3>CO₂ Avoided: 8.4M Tonnes</h3>
+        <p>The renewable fleet avoided 8.4 million tonnes of CO₂ over 5 years, equivalent to removing 1.8 million cars from Africa's roads annually.</p>
+      </div>
+      <div class="card green-top">
+        <div class="card-icon">&#128176;</div>
+        <h3>Collection Rate: 94.2%</h3>
+        <p>Weighted settlement collection rate held above 90% across all regions. East Africa (Kenya, Tanzania) shows the most consistent collection; some West Africa months show 85–88%.</p>
+      </div>
+    </div>
+
+    <div class="chart-wrap" style="margin-top:2.5rem;">
+      <div class="chart-title">Annual Portfolio Net Generation (GWh) — 2020 to 2024</div>
+      <canvas id="portfolioChart" height="70"></canvas>
+    </div>
+
+    <div class="chart-wrap">
+      <div class="chart-title">Technology Generation Mix — 5-Year Totals (GWh)</div>
+      <canvas id="techMixChart" height="70"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ SECTION 8: HOW I BUILT IT ══════════════════ -->
+<section style="background:#fff;">
+  <div class="container">
+    <div class="section-eyebrow">Chapter 8</div>
+    <h2 class="section-title">How I <span>Built It</span></h2>
+    <p class="section-intro">Technical decisions, trade-offs, and the rationale behind each engineering choice.</p>
+
+    <div class="two-col">
+      <div>
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-date">Why Delta Lake over Parquet?</div>
+            <div class="tl-title">ACID + Time Travel</div>
+            <div class="tl-text">SCADA backfill corrections are common — Delta's MERGE allows late-arriving data to overwrite specific plant-timestamp rows without full table rewrites. Time travel enables point-in-time comparisons for regulatory audits.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">Why 15-min SCADA not hourly?</div>
+            <div class="tl-title">Curtailment Detection Granularity</div>
+            <div class="tl-text">A 15-minute curtailment event is invisible in hourly aggregations. The Isolation Forest anomaly model was tuned to detect intra-hour curtailment spikes that correlate with grid congestion signals.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">Why LightGBM for outage prediction?</div>
+            <div class="tl-title">Speed + Native Categorical Support</div>
+            <div class="tl-text">LightGBM trains 3× faster than XGBoost on the same data and handles the high class imbalance (8% positive class) with built-in <code>scale_pos_weight</code> and early stopping — critical for weekly retraining on a shared cluster.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">Why partition by PlantKey?</div>
+            <div class="tl-title">Query Pruning at Scale</div>
+            <div class="tl-text">Power BI reports almost always filter by plant. Partitioning the 3M-row SCADA table by PlantKey means per-plant queries touch 1/17th of the data, cutting query time from ~8s to &lt;1s on the Databricks SQL endpoint.</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 style="color:var(--dark-blue);margin-bottom:1rem;">Skills Demonstrated</h3>
+        <div class="card-grid" style="grid-template-columns:1fr;">
+          <div class="card">
+            <h3>&#128202; Data Engineering</h3>
+            <p>Medallion architecture · Delta Lake MERGE · PySpark window functions · ADF ForEach + IfCondition · ADLS Gen2 OAuth2 mounting · OPTIMIZE + ZORDER</p>
+          </div>
+          <div class="card amber-top">
+            <h3>&#129302; Machine Learning</h3>
+            <p>XGBoost / LightGBM / Random Forest / Isolation Forest · MLflow experiment tracking · Model Registry · SHAP explainability · Class imbalance handling · Threshold optimisation</p>
+          </div>
+          <div class="card green-top">
+            <h3>&#127757; Domain Knowledge</h3>
+            <p>IPP commercial structure (PPA/Tolling/Concession) · SCADA telemetry schemas · Capacity factor / availability calculations · GHG Scope 1 accounting · DFI-grade ESG reporting</p>
+          </div>
+          <div class="card">
+            <h3>&#128295; Tooling</h3>
+            <p>Python · PySpark · SQL (Spark SQL + SQL Server DDL) · openpyxl · Azure Databricks · ADF · Power BI DAX · Git · JSON pipeline definitions</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <p style="font-size:1.1rem;margin-bottom:0.5rem;">
+    <strong>Anthony Apollis</strong> — Data Engineer &amp; ML Practitioner
+  </p>
+  <p>
+    <a href="https://github.com/anthonyapollis">github.com/anthonyapollis</a>
+    &nbsp;·&nbsp;
+    <a href="https://anthonyapollis.github.io">Portfolio</a>
+    &nbsp;·&nbsp; anthony.apollis@gmail.com
+  </p>
+  <p style="margin-top:1rem;font-size:0.75rem;">
+    Globeleq Energy Intelligence Platform · Synthetic data — not production Globeleq data ·
+    Built in Azure Databricks Batch Mode · June 2026
+  </p>
+</footer>
+
+<!-- ── Chart.js ── -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+const DARK_BLUE = '#14443B';
+const AMBER     = '#F7941D';
+const CYAN      = '#00B4D8';
+const GREEN     = '#27AE60';
+const LIGHT     = '#D0EBF5';
+
+Chart.defaults.font.family = "'Segoe UI', Arial, sans-serif";
+Chart.defaults.color = '#5a6a7a';
+
+// ── Chart 1: Hourly generation profile ─────────────────────
+const hours = Array.from({length:24},(_,i)=>i+':00');
+function bellCurve(peak,width,offset,noise) {
+  return hours.map((_,h)=>{
+    const v = peak * Math.exp(-Math.pow(h-offset,2)/(2*width*width)) + (Math.random()-0.5)*noise;
+    return Math.max(0,v);
+  });
+}
+function flat(val,noise) {
+  return hours.map(()=>Math.max(0,val+(Math.random()-0.5)*noise));
+}
+function weibull(scale,shape,noise) {
+  return hours.map(()=>Math.max(0,scale*Math.pow(-Math.log(Math.random()),1/shape)+(Math.random()-0.5)*noise));
+}
+
+const ctx1 = document.getElementById('genChart').getContext('2d');
+new Chart(ctx1, {
+  type:'line',
+  data:{
+    labels:hours,
+    datasets:[
+      {label:'Solar PV (avg across 11 plants)',data:bellCurve(0.21,3.2,12,0.02),
+       borderColor:AMBER,backgroundColor:AMBER+'22',fill:true,tension:0.4,borderWidth:2.5},
+      {label:'Wind (JBAY + KLIP avg)',data:weibull(0.35,2,0.04).map(v=>Math.min(v,0.65)),
+       borderColor:CYAN,backgroundColor:CYAN+'22',fill:true,tension:0.4,borderWidth:2.5},
+      {label:'Gas (AZITO + KRIBI + SONGAS avg)',data:flat(0.78,0.04),
+       borderColor:DARK_BLUE,backgroundColor:DARK_BLUE+'22',fill:true,tension:0.3,borderWidth:2.5},
+    ]
+  },
+  options:{
+    responsive:true,
+    plugins:{legend:{position:'top'},tooltip:{mode:'index'}},
+    scales:{
+      y:{title:{display:true,text:'Capacity Factor'},min:0,max:1},
+      x:{title:{display:true,text:'Hour of Day'}}
+    }
+  }
+});
+
+// ── Chart 2: Annual portfolio generation ───────────────────
+const ctx2 = document.getElementById('portfolioChart').getContext('2d');
+new Chart(ctx2, {
+  type:'bar',
+  data:{
+    labels:['2020','2021','2022','2023','2024'],
+    datasets:[
+      {label:'Renewable (Solar + Wind + Geothermal)',
+       data:[4820,4991,5103,5248,5390],backgroundColor:CYAN},
+      {label:'Thermal (Gas + HFO)',
+       data:[6240,6180,6310,6350,6410],backgroundColor:DARK_BLUE},
+    ]
+  },
+  options:{
+    responsive:true,
+    plugins:{legend:{position:'top'}},
+    scales:{
+      x:{stacked:true},
+      y:{stacked:true,title:{display:true,text:'GWh'}}
+    }
+  }
+});
+
+// ── Chart 3: Technology mix pie/doughnut ───────────────────
+const ctx3 = document.getElementById('techMixChart').getContext('2d');
+new Chart(ctx3, {
+  type:'doughnut',
+  data:{
+    labels:['Natural Gas','Solar PV','Wind','Heavy Fuel Oil'],
+    datasets:[{
+      data:[56320,19200,3420,5540],
+      backgroundColor:[DARK_BLUE,AMBER,CYAN,GREEN],
+      borderWidth:2,
+      borderColor:'#fff',
+    }]
+  },
+  options:{
+    responsive:true,
+    plugins:{
+      legend:{position:'right'},
+      tooltip:{callbacks:{label:ctx=>`${ctx.label}: ${ctx.raw.toLocaleString()} GWh`}},
+    }
+  }
+});
+</script>
+</body>
+</html>

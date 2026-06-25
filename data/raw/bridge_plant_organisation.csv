@@ -1,0 +1,44 @@
+﻿PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes
+1,1,1,Developer / Owner / Operator,,Brochure states Globeleq role at portfolio or plant level.
+2,1,5,Off-taker / Counterparty,,Agreement counterparty.
+3,2,1,Developer / Owner / Operator,,Brochure states Globeleq role at portfolio or plant level.
+4,2,4,Off-taker / Counterparty,,Agreement counterparty.
+5,3,1,Developer / Owner / Operator,,Brochure states Globeleq role at portfolio or plant level.
+6,3,6,Off-taker / Counterparty,,Agreement counterparty.
+7,4,1,Developer / Owner / Operator,,Brochure states Globeleq role at portfolio or plant level.
+8,4,4,Off-taker / Counterparty,,Agreement counterparty.
+9,5,1,Developer / Owner / Operator,,Brochure states Globeleq role at portfolio or plant level.
+10,6,1,Developer / Owner / Operator,,Brochure states Globeleq role at portfolio or plant level.
+11,6,4,Off-taker / Counterparty,,Agreement counterparty.
+12,7,1,Developer / Owner / Operator,,Brochure states Globeleq role at portfolio or plant level.
+13,7,7,Off-taker / Counterparty,,Agreement counterparty.
+14,8,1,Developer / Owner / Operator,,Brochure states Globeleq role at portfolio or plant level.
+15,8,4,Off-taker / Counterparty,,Agreement counterparty.
+16,9,1,Developer / Owner / Operator,,Brochure states Globeleq role at portfolio or plant level.
+17,10,1,Developer / Owner / Operator,,Brochure states Globeleq role at portfolio or plant level.
+18,11,1,Developer / Owner / Operator,,Brochure states Globeleq role at portfolio or plant level.
+19,11,4,Off-taker / Counterparty,,Agreement counterparty.
+20,12,1,Developer / Owner / Operator,,Brochure states Globeleq role at portfolio or plant level.
+21,12,9,Off-taker / Counterparty,,Agreement counterparty.
+22,13,1,Developer / Owner / Operator,,Brochure states Globeleq role at portfolio or plant level.
+23,13,10,Off-taker / Counterparty,,Agreement counterparty.
+24,14,1,Developer / Owner / Operator,,Brochure states Globeleq role at portfolio or plant level.
+25,14,11,Off-taker / Counterparty,,Agreement counterparty.
+26,15,1,Developer / Owner / Operator,,Brochure states Globeleq role at portfolio or plant level.
+27,15,12,Off-taker / Counterparty,,Agreement counterparty.
+28,16,1,Developer / Owner / Operator,,Brochure states Globeleq role at portfolio or plant level.
+29,16,4,Off-taker / Counterparty,,Agreement counterparty.
+30,17,1,Developer / Owner / Operator,,Brochure states Globeleq role at portfolio or plant level.
+31,17,5,Off-taker / Counterparty,,Agreement counterparty.
+32,18,1,Developer / Owner / Operator,,Brochure states Globeleq role at portfolio or plant level.
+33,18,11,Off-taker / Counterparty,,Agreement counterparty.
+34,19,1,Developer / Owner / Operator,,Brochure states Globeleq role at portfolio or plant level.
+35,19,14,Off-taker / Counterparty,,Agreement counterparty.
+36,17,13,Co-shareholder / O&M Partner,,Winnergy
+37,19,15,Steam Supplier,,Menengai
+38,19,16,EPC Contractor,,Menengai
+39,19,17,Lender,,Menengai
+40,19,18,Lender,,Menengai
+41,19,19,Lender,,Menengai
+42,7,8,Government Co-owner,,Dibamba
+43,12,8,Government Co-owner,,Kribi

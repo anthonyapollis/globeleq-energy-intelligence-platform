@@ -1,0 +1,7 @@
+﻿TechnologyKey,TechnologyName,TechnologyGroup,FuelType,IndicativeEmissionsFactorTCO2PerMWh
+1,Solar PV,Renewable,Solar,0.0
+2,Wind,Renewable,Wind,0.0
+3,Natural Gas,Thermal,Gas,0.4
+4,Heavy Fuel Oil,Thermal,HFO,0.7
+5,Battery Storage,Storage,BESS,0.0
+6,Geothermal,Renewable,Geothermal,0.05

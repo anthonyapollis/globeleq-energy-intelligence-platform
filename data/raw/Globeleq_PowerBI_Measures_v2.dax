@@ -1,0 +1,686 @@
+-- =============================================================
+-- Globeleq Energy Intelligence Platform — DAX Measures V2
+-- Create all measures in a dedicated table named _Measures.
+-- Use one-to-many, single-direction relationships:
+--   DimDate  → all dated fact tables
+--   DimTime  → FactMeterReadingHourly
+--   DimPlant → all plant-level fact tables
+--   DimMeter → FactMeterReadingHourly
+--   DimAsset → FactOutage, FactMaintenanceWorkOrder
+--   DimForecastModel → FactForecastDaily, FactForecastModelValidation
+--   DimForecastFeature → BridgeForecastModelFeature
+-- Do NOT create fact-to-fact relationships.
+-- =============================================================
+
+
+-- =============================================================
+-- PAGE 1 — EXECUTIVE PORTFOLIO OVERVIEW
+-- =============================================================
+
+Installed Capacity MW :=
+SUM ( 'DimPlant'[NameplateCapacity] )
+
+Operating Capacity MW :=
+CALCULATE (
+    [Installed Capacity MW],
+    'DimPlant'[ProjectStatus] = "Operating"
+)
+
+Capacity Under Construction MW :=
+CALCULATE (
+    [Installed Capacity MW],
+    'DimPlant'[ProjectStatus] = "In Construction"
+)
+
+Operating Plants :=
+CALCULATE (
+    DISTINCTCOUNT ( 'DimPlant'[PlantKey] ),
+    'DimPlant'[ProjectStatus] = "Operating"
+)
+
+Countries :=
+CALCULATE (
+    DISTINCTCOUNT ( 'DimGeography'[CountryName] ),
+    CROSSFILTER ( 'DimPlant'[GeographyKey], 'DimGeography'[GeographyKey], BOTH )
+)
+
+Net Generation MWh :=
+SUM ( 'FactPlantOperationsDaily'[NetGenerationMWh] )
+
+Net Generation GWh :=
+DIVIDE ( [Net Generation MWh], 1000 )
+
+Energy Exported MWh :=
+SUM ( 'FactPlantOperationsDaily'[EnergyExportedMWh] )
+
+Energy Exported GWh :=
+DIVIDE ( [Energy Exported MWh], 1000 )
+
+Renewable Generation MWh :=
+CALCULATE (
+    [Net Generation MWh],
+    'DimPlant'[PrimaryTechnologyName]
+        IN { "Solar PV", "Solar PV + BESS", "Wind", "Geothermal" }
+)
+
+Renewable Generation Share % :=
+DIVIDE (
+    [Renewable Generation MWh],
+    [Net Generation MWh]
+)
+
+Revenue ZAR :=
+SUM ( 'FactEnergySalesMonthly'[RevenueZAR] )
+
+Revenue ZAR (Millions) :=
+DIVIDE ( [Revenue ZAR], 1000000 )
+
+CO2 Avoided Tonnes :=
+SUM ( 'FactPlantOperationsDaily'[CO2AvoidedTonnes] )
+
+CO2 Avoided Mt :=
+DIVIDE ( [CO2 Avoided Tonnes], 1000000 )
+
+Scope 1 Emissions tCO2e :=
+SUM ( 'FactPlantOperationsDaily'[Scope1EmissionsTonnesCO2e] )
+
+Emissions Intensity tCO2e per MWh :=
+DIVIDE (
+    [Scope 1 Emissions tCO2e],
+    [Energy Exported MWh]
+)
+
+Capacity by Technology (Table) :=
+SUMMARIZE (
+    'DimPlant',
+    'DimPlant'[PrimaryTechnologyName],
+    "Capacity MW", SUM ( 'DimPlant'[NameplateCapacity] )
+)
+
+
+-- =============================================================
+-- PAGE 2 — PLANT OPERATIONS CONTROL ROOM
+-- =============================================================
+
+Weighted Availability % :=
+DIVIDE (
+    SUMX (
+        'FactPlantOperationsDaily',
+        'FactPlantOperationsDaily'[AvailabilityPct]
+            * RELATED ( 'DimPlant'[NameplateCapacity] )
+    ),
+    SUMX (
+        'FactPlantOperationsDaily',
+        RELATED ( 'DimPlant'[NameplateCapacity] )
+    )
+)
+
+Weighted Capacity Factor % :=
+DIVIDE (
+    SUMX (
+        'FactPlantOperationsDaily',
+        'FactPlantOperationsDaily'[CapacityFactorPct]
+            * RELATED ( 'DimPlant'[NameplateCapacity] )
+    ),
+    SUMX (
+        'FactPlantOperationsDaily',
+        RELATED ( 'DimPlant'[NameplateCapacity] )
+    )
+)
+
+Curtailment % :=
+DIVIDE (
+    SUMX (
+        'FactPlantOperationsDaily',
+        'FactPlantOperationsDaily'[EnergyExportedMWh]
+            * 'FactPlantOperationsDaily'[CurtailmentPct]
+    ),
+    [Energy Exported MWh]
+)
+
+Forced Outage Hours :=
+CALCULATE (
+    SUM ( 'FactOutage'[DurationHours] ),
+    'FactOutage'[OutageType] = "Forced"
+)
+
+Planned Outage Hours :=
+CALCULATE (
+    SUM ( 'FactOutage'[DurationHours] ),
+    'FactOutage'[OutageType] = "Planned"
+)
+
+Estimated Energy Lost MWh :=
+SUM ( 'FactOutage'[EstimatedEnergyLostMWh] )
+
+Outage Count :=
+COUNTROWS ( 'FactOutage' )
+
+Forced Outage Count :=
+CALCULATE (
+    [Outage Count],
+    'FactOutage'[OutageType] = "Forced"
+)
+
+-- Generation vs Expected (uses brochure annual figure annualised to daily)
+Expected Generation MWh (Brochure) :=
+SUMX (
+    'FactPlantOperationsDaily',
+    RELATED ( 'DimPlant'[BrochureAnnualGenerationGWh] ) * 1000 / 365
+)
+
+Generation vs Expected MWh :=
+[Net Generation MWh] - [Expected Generation MWh (Brochure)]
+
+Generation vs Expected % :=
+DIVIDE (
+    [Generation vs Expected MWh],
+    [Expected Generation MWh (Brochure)]
+)
+
+-- Alert: plant availability below 80% threshold
+Plants Below 80pct Availability :=
+CALCULATE (
+    COUNTROWS (
+        FILTER (
+            VALUES ( 'DimPlant'[PlantKey] ),
+            CALCULATE ( [Weighted Availability %] ) < 80
+        )
+    )
+)
+
+
+-- =============================================================
+-- PAGE 3 — FORECAST OPERATIONS
+-- =============================================================
+
+Selected Forecast MWh :=
+CALCULATE (
+    SUM ( 'FactForecastDaily'[ForecastedEnergyMWh] ),
+    RELATED ( 'DimForecastModel'[IsSelectedModel] ) = TRUE()
+)
+
+Forecast Lower Bound MWh :=
+CALCULATE (
+    SUM ( 'FactForecastDaily'[PredictionLowerMWh] ),
+    RELATED ( 'DimForecastModel'[IsSelectedModel] ) = TRUE()
+)
+
+Forecast Upper Bound MWh :=
+CALCULATE (
+    SUM ( 'FactForecastDaily'[PredictionUpperMWh] ),
+    RELATED ( 'DimForecastModel'[IsSelectedModel] ) = TRUE()
+)
+
+Forecast Error MWh :=
+[Net Generation MWh] - [Selected Forecast MWh]
+
+Forecast Error % :=
+DIVIDE (
+    [Forecast Error MWh],
+    NULLIF ( [Net Generation MWh], 0 )
+)
+
+Forecast RMSE (Selected) :=
+CALCULATE (
+    AVERAGE ( 'FactForecastModelValidation'[RMSE] ),
+    FILTER (
+        'FactForecastModelValidation',
+        'FactForecastModelValidation'[IsSelectedModel] = TRUE()
+    )
+)
+
+Forecast MAE (Selected) :=
+CALCULATE (
+    AVERAGE ( 'FactForecastModelValidation'[MAE] ),
+    FILTER (
+        'FactForecastModelValidation',
+        'FactForecastModelValidation'[IsSelectedModel] = TRUE()
+    )
+)
+
+Forecast sMAPE (Selected) :=
+CALCULATE (
+    AVERAGE ( 'FactForecastModelValidation'[sMAPE] ),
+    FILTER (
+        'FactForecastModelValidation',
+        'FactForecastModelValidation'[IsSelectedModel] = TRUE()
+    )
+)
+
+Forecast Bias % (Selected) :=
+CALCULATE (
+    AVERAGE ( 'FactForecastModelValidation'[TotalBiasPct] ),
+    FILTER (
+        'FactForecastModelValidation',
+        'FactForecastModelValidation'[IsSelectedModel] = TRUE()
+    )
+)
+
+Selected Model Name :=
+CALCULATE (
+    FIRSTNONBLANK ( 'DimForecastModel'[ModelName], 1 ),
+    'DimForecastModel'[IsSelectedModel] = TRUE()
+)
+
+
+-- =============================================================
+-- PAGE 4 — MODEL SCORECARD
+-- (All models, all plants — compare baseline / challenger / production-candidate)
+-- Selection logic: lowest RMSE; tie-breaker = lowest |TotalBiasPct|
+-- MAPE stored and displayed but NOT used for model selection.
+-- =============================================================
+
+Model MAE :=
+AVERAGE ( 'FactForecastModelValidation'[MAE] )
+
+Model RMSE :=
+AVERAGE ( 'FactForecastModelValidation'[RMSE] )
+
+Model MAPE :=
+AVERAGE ( 'FactForecastModelValidation'[MAPE] )
+
+Model sMAPE :=
+AVERAGE ( 'FactForecastModelValidation'[sMAPE] )
+
+Model R Squared :=
+AVERAGE ( 'FactForecastModelValidation'[RSquared] )
+
+Model Bias % :=
+AVERAGE ( 'FactForecastModelValidation'[TotalBiasPct] )
+
+Model Actual Total MWh :=
+SUM ( 'FactForecastModelValidation'[ActualTotalEnergyMWh] )
+
+Model Forecast Total MWh :=
+SUM ( 'FactForecastModelValidation'[ForecastTotalEnergyMWh] )
+
+-- Best model per plant (lowest RMSE, tied by |Bias|)
+Best Model Per Plant :=
+VAR CurrentPlant = SELECTEDVALUE ( 'DimPlant'[PlantKey] )
+VAR ModelScores =
+    CALCULATETABLE (
+        ADDCOLUMNS (
+            VALUES ( 'DimForecastModel'[ForecastModelKey] ),
+            "PlantRMSE",     CALCULATE ( AVERAGE ( 'FactForecastModelValidation'[RMSE] ),
+                                         'FactForecastModelValidation'[PlantKey] = CurrentPlant ),
+            "PlantBias",     ABS ( CALCULATE ( AVERAGE ( 'FactForecastModelValidation'[TotalBiasPct] ),
+                                               'FactForecastModelValidation'[PlantKey] = CurrentPlant ) )
+        ),
+        ALLSELECTED ( 'DimForecastModel' )
+    )
+RETURN
+    MINX ( TOPN ( 1, FILTER ( ModelScores, [PlantRMSE] = MINX ( ModelScores, [PlantRMSE] ) ),
+                  [PlantBias], ASC ),
+           [ForecastModelKey] )
+
+Models in Comparison :=
+DISTINCTCOUNT ( 'DimForecastModel'[ForecastModelKey] )
+
+
+-- =============================================================
+-- PAGE 5 — METER DATA QUALITY
+-- =============================================================
+
+Total Intervals :=
+COUNTROWS ( 'FactMeterReadingHourly' )
+
+Missing Intervals :=
+CALCULATE (
+    [Total Intervals],
+    'FactMeterReadingHourly'[IsMissing] = TRUE()
+)
+
+Outlier Intervals :=
+CALCULATE (
+    [Total Intervals],
+    'FactMeterReadingHourly'[IsOutlier] = TRUE()
+)
+
+Imputed Intervals :=
+CALCULATE (
+    [Total Intervals],
+    'FactMeterReadingHourly'[IsImputed] = TRUE()
+)
+
+Good Intervals :=
+CALCULATE (
+    [Total Intervals],
+    'FactMeterReadingHourly'[QualityStatus] = "GOOD"
+)
+
+Data Completeness % :=
+DIVIDE (
+    [Good Intervals],
+    [Total Intervals]
+)
+
+Imputed Intervals % :=
+DIVIDE (
+    [Imputed Intervals],
+    [Total Intervals]
+)
+
+Unresolved DQ Events :=
+CALCULATE (
+    COUNTROWS ( 'FactDataQualityEvent' ),
+    'FactDataQualityEvent'[ResolutionStatus] = "OPEN"
+)
+
+Total DQ Events :=
+COUNTROWS ( 'FactDataQualityEvent' )
+
+DQ Event Resolution % :=
+DIVIDE (
+    CALCULATE (
+        COUNTROWS ( 'FactDataQualityEvent' ),
+        'FactDataQualityEvent'[ResolutionStatus] IN { "RESOLVED", "ACCEPTED" }
+    ),
+    [Total DQ Events]
+)
+
+Raw vs Clean Energy Variance MWh :=
+SUMX (
+    'FactMeterReadingHourly',
+    ABS (
+        'FactMeterReadingHourly'[CleanEnergyMWh]
+        - COALESCE ( 'FactMeterReadingHourly'[RawEnergyMWh], 0 )
+    )
+)
+
+
+-- =============================================================
+-- PAGE 6 — WEATHER-NORMALISED PERFORMANCE
+-- =============================================================
+
+Actual Generation MWh :=
+SUM ( 'FactWeatherNormalisedPerf'[ActualGenerationMWh] )
+
+Weather Normalised Generation MWh :=
+SUM ( 'FactWeatherNormalisedPerf'[WeatherNormalisedGenerationMWh] )
+
+Weather Normalised Variance MWh :=
+[Actual Generation MWh] - [Weather Normalised Generation MWh]
+
+Weather Normalised Variance % :=
+DIVIDE (
+    [Weather Normalised Variance MWh],
+    NULLIF ( [Weather Normalised Generation MWh], 0 )
+)
+
+Average Residual Z-Score :=
+AVERAGEX (
+    'FactWeatherNormalisedPerf',
+    ABS ( 'FactWeatherNormalisedPerf'[ResidualZScore] )
+)
+
+Exception Days :=
+CALCULATE (
+    COUNTROWS ( 'FactWeatherNormalisedPerf' ),
+    'FactWeatherNormalisedPerf'[IsExceptionDay] = TRUE()
+)
+
+Exception Day Rate % :=
+DIVIDE (
+    [Exception Days],
+    COUNTROWS ( 'FactWeatherNormalisedPerf' )
+)
+
+-- Weather-normalised performance ratio (actual / normalised)
+P50 Performance Ratio :=
+DIVIDE (
+    [Actual Generation MWh],
+    NULLIF ( [Weather Normalised Generation MWh], 0 )
+)
+
+
+-- =============================================================
+-- PAGE 7 — MAINTENANCE AND RELIABILITY
+-- =============================================================
+
+Maintenance Cost ZAR :=
+SUM ( 'FactMaintenanceWorkOrder'[TotalMaintenanceCostZAR] )
+
+Maintenance Cost ZAR (Millions) :=
+DIVIDE ( [Maintenance Cost ZAR], 1000000 )
+
+Open Work Orders :=
+CALCULATE (
+    COUNTROWS ( 'FactMaintenanceWorkOrder' ),
+    'FactMaintenanceWorkOrder'[WorkOrderStatus] IN { "Open", "In Progress" }
+)
+
+Critical Open Work Orders :=
+CALCULATE (
+    [Open Work Orders],
+    'FactMaintenanceWorkOrder'[Priority] = "Critical"
+)
+
+Work Orders Overdue :=
+CALCULATE (
+    COUNTROWS ( 'FactMaintenanceWorkOrder' ),
+    'FactMaintenanceWorkOrder'[WorkOrderStatus] IN { "Open", "In Progress" },
+    'FactMaintenanceWorkOrder'[TargetCloseDate] < TODAY ()
+)
+
+Average Work Order Closure Days :=
+AVERAGEX (
+    FILTER (
+        'FactMaintenanceWorkOrder',
+        NOT ISBLANK ( 'FactMaintenanceWorkOrder'[ClosedDate] )
+    ),
+    DATEDIFF (
+        'FactMaintenanceWorkOrder'[OpenedDate],
+        'FactMaintenanceWorkOrder'[ClosedDate],
+        DAY
+    )
+)
+
+MTTR Hours :=
+AVERAGEX (
+    FILTER ( 'FactOutage', 'FactOutage'[OutageType] = "Forced" ),
+    'FactOutage'[DurationHours]
+)
+
+Preventive Maintenance Cost ZAR :=
+CALCULATE (
+    [Maintenance Cost ZAR],
+    'FactMaintenanceWorkOrder'[WorkOrderType] IN { "Preventive", "Predictive" }
+)
+
+Corrective Maintenance Cost ZAR :=
+CALCULATE (
+    [Maintenance Cost ZAR],
+    'FactMaintenanceWorkOrder'[WorkOrderType] = "Corrective"
+)
+
+Preventive vs Total Maintenance % :=
+DIVIDE (
+    [Preventive Maintenance Cost ZAR],
+    NULLIF ( [Maintenance Cost ZAR], 0 )
+)
+
+Work Order Count :=
+COUNTROWS ( 'FactMaintenanceWorkOrder' )
+
+Maintenance Cost per MW ZAR :=
+DIVIDE (
+    [Maintenance Cost ZAR],
+    [Operating Capacity MW]
+)
+
+
+-- =============================================================
+-- PAGE 8 — CONSTRUCTION PORTFOLIO
+-- =============================================================
+
+Construction Actual Progress % :=
+AVERAGE ( 'FactConstructionProgressMonthly'[ActualProgressPct] )
+
+Construction Planned Progress % :=
+AVERAGE ( 'FactConstructionProgressMonthly'[PlannedProgressPct] )
+
+Construction Schedule Variance % :=
+AVERAGE ( 'FactConstructionProgressMonthly'[ScheduleVariancePct] )
+
+Construction Approved Budget ZAR :=
+MAX ( 'FactConstructionProgressMonthly'[ApprovedBudgetZAR] )
+
+Construction Actual Cost ZAR :=
+MAX ( 'FactConstructionProgressMonthly'[ActualCostToDateZAR] )
+
+Construction Cost Variance ZAR :=
+SUM ( 'FactConstructionProgressMonthly'[CostVarianceZAR] )
+
+Construction Cost Variance % :=
+DIVIDE (
+    [Construction Cost Variance ZAR],
+    NULLIF ( [Construction Approved Budget ZAR], 0 )
+)
+
+MW Under Construction :=
+CALCULATE (
+    [Installed Capacity MW],
+    'DimPlant'[ProjectStatus] = "In Construction"
+)
+
+Construction Plants Count :=
+CALCULATE (
+    DISTINCTCOUNT ( 'DimPlant'[PlantKey] ),
+    'DimPlant'[ProjectStatus] = "In Construction"
+)
+
+-- Cost-to-completion (remaining budget)
+Cost to Completion ZAR :=
+[Construction Approved Budget ZAR] - [Construction Actual Cost ZAR]
+
+
+-- =============================================================
+-- PAGE 9 — ESG AND HSE
+-- =============================================================
+
+HSE Incident Count :=
+COUNTROWS ( 'FactHSEIncident' )
+
+Lost Time Injury Count :=
+CALCULATE (
+    [HSE Incident Count],
+    'FactHSEIncident'[IncidentType] = "Lost Time Injury"
+)
+
+Lost Work Days :=
+SUM ( 'FactHSEIncident'[LostWorkDays] )
+
+Environmental Incidents :=
+CALCULATE (
+    [HSE Incident Count],
+    'FactHSEIncident'[IncidentType] = "Environmental"
+)
+
+Near Miss Count :=
+CALCULATE (
+    [HSE Incident Count],
+    'FactHSEIncident'[IncidentType] = "Near Miss"
+)
+
+LTIFR (Lost Time Injury Frequency Rate) :=
+-- Standard: LTIs per 1 000 000 hours worked (proxy: 2 000 hrs/person/year × headcount)
+-- Using energy generated as proxy denominator for portfolio-level trend
+DIVIDE (
+    [Lost Time Injury Count] * 1000000,
+    SUMX ( 'FactPlantOperationsDaily', RELATED ( 'DimPlant'[NameplateCapacity] ) * 24 )
+)
+
+HSE Incidents per Plant :=
+DIVIDE (
+    [HSE Incident Count],
+    [Operating Plants]
+)
+
+Scope 1 Emissions tCO2e (ESG) :=
+SUM ( 'FactPlantOperationsDaily'[Scope1EmissionsTonnesCO2e] )
+
+Emissions Intensity tCO2e per MWh (ESG) :=
+DIVIDE (
+    [Scope 1 Emissions tCO2e (ESG)],
+    NULLIF ( [Energy Exported MWh], 0 )
+)
+
+CO2 Avoided Mt (ESG) :=
+DIVIDE ( SUM ( 'FactPlantOperationsDaily'[CO2AvoidedTonnes] ), 1000000 )
+
+Renewable Generation % (ESG) :=
+DIVIDE (
+    CALCULATE (
+        [Net Generation MWh],
+        'DimPlant'[PrimaryTechnologyName]
+            IN { "Solar PV", "Solar PV + BESS", "Wind", "Geothermal" }
+    ),
+    [Net Generation MWh]
+)
+
+-- GHG Scope 1 intensity year-over-year comparison
+Emissions Intensity vs Prior Year % :=
+VAR CurrentIntensity = [Emissions Intensity tCO2e per MWh (ESG)]
+VAR PriorYear =
+    CALCULATE (
+        [Emissions Intensity tCO2e per MWh (ESG)],
+        DATEADD ( 'DimDate'[FullDate], -1, YEAR )
+    )
+RETURN
+    DIVIDE ( CurrentIntensity - PriorYear, NULLIF ( PriorYear, 0 ) )
+
+
+-- =============================================================
+-- BESS (cross-page)
+-- =============================================================
+
+BESS Energy Charged MWh :=
+SUM ( 'FactBatteryOperationDaily'[EnergyChargedMWh] )
+
+BESS Energy Discharged MWh :=
+SUM ( 'FactBatteryOperationDaily'[EnergyDischargedMWh] )
+
+BESS Round Trip Efficiency % :=
+DIVIDE (
+    [BESS Energy Discharged MWh],
+    NULLIF ( [BESS Energy Charged MWh], 0 )
+)
+
+
+-- =============================================================
+-- COMMERCIAL (cross-page)
+-- =============================================================
+
+Energy Sold MWh :=
+SUM ( 'FactEnergySalesMonthly'[EnergySoldMWh] )
+
+Realised Revenue per MWh ZAR :=
+DIVIDE ( [Revenue ZAR], NULLIF ( [Energy Sold MWh], 0 ) )
+
+Settlement Collection % :=
+DIVIDE (
+    SUMX (
+        'FactEnergySalesMonthly',
+        'FactEnergySalesMonthly'[RevenueZAR]
+            * 'FactEnergySalesMonthly'[SettlementCollectionPct]
+    ),
+    NULLIF ( [Revenue ZAR], 0 )
+)
+
+Collected Revenue ZAR :=
+SUMX (
+    'FactEnergySalesMonthly',
+    'FactEnergySalesMonthly'[RevenueZAR]
+        * 'FactEnergySalesMonthly'[SettlementCollectionPct]
+)
+
+Revenue Year-over-Year % :=
+VAR CurrentRev = [Revenue ZAR]
+VAR PriorRev =
+    CALCULATE (
+        [Revenue ZAR],
+        DATEADD ( 'DimDate'[FullDate], -1, YEAR )
+    )
+RETURN
+    DIVIDE ( CurrentRev - PriorRev, NULLIF ( PriorRev, 0 ) )
