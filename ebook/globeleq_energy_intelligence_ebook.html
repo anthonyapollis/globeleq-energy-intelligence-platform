@@ -293,8 +293,8 @@
   <div class="kpi-item"><div class="kpi-num">3.02M</div><div class="kpi-label">Total Rows Generated</div></div>
   <div class="kpi-item"><div class="kpi-num">19</div><div class="kpi-label">African Power Plants</div></div>
   <div class="kpi-item"><div class="kpi-num">5</div><div class="kpi-label">ML Models in Registry</div></div>
-  <div class="kpi-item"><div class="kpi-num">R0.5B+</div><div class="kpi-label">Annual Portfolio Revenue</div></div>
-  <div class="kpi-item"><div class="kpi-num">95.8%</div><div class="kpi-label">Portfolio Availability</div></div>
+  <div class="kpi-item"><div class="kpi-num">R139M</div><div class="kpi-label">Annual Portfolio Revenue</div></div>
+  <div class="kpi-item"><div class="kpi-num">~92%</div><div class="kpi-label">Operating Fleet Availability</div></div>
 </div>
 
 <!-- ══════════════════ SECTION 1: OVERVIEW ══════════════════ -->
@@ -321,7 +321,7 @@
           <div class="tl-item">
             <div class="tl-date">Operational Challenge</div>
             <div class="tl-title">Fragmented SCADA Data</div>
-            <div class="tl-text">19 plants across 8 countries run different OEM control systems. Data lives in local historians with no cross-portfolio visibility.</div>
+            <div class="tl-text">19 plants across 7 countries run different OEM control systems. Data lives in local historians with no cross-portfolio visibility.</div>
           </div>
           <div class="tl-item">
             <div class="tl-date">Commercial Challenge</div>
@@ -372,10 +372,10 @@
     <p class="section-intro">19 operating and in-construction plants spanning Northern, Western, Eastern and Southern Africa — Solar PV, Wind, Natural Gas, Heavy Fuel Oil and Geothermal technologies.</p>
 
     <div class="metric-row">
-      <div class="metric-box"><div class="m-val">1,875 MW</div><div class="m-lbl">Total Installed Capacity</div></div>
+      <div class="metric-box"><div class="m-val">1,794 MW</div><div class="m-lbl">Operating Capacity</div></div>
       <div class="metric-box amber"><div class="m-val">485 MW</div><div class="m-lbl">Under Construction</div></div>
       <div class="metric-box green"><div class="m-val">67%</div><div class="m-lbl">Renewable Capacity</div></div>
-      <div class="metric-box dark"><div class="m-val">8 Countries</div><div class="m-lbl">Across Africa</div></div>
+      <div class="metric-box dark"><div class="m-val">7 Countries</div><div class="m-lbl">Across Africa</div></div>
     </div>
 
     <table class="plant-table">
@@ -752,15 +752,15 @@
           <td><strong>Energy Yield Forecaster</strong></td>
           <td><span class="badge badge-blue">XGBoost Regressor</span></td>
           <td>NetGenerationMWh (t+1 day)</td>
-          <td>R²=0.94 · MAE=18 MWh · MAPE=4.2%</td>
+          <td>R²=0.998 · MAE=62 MWh · RMSE=151 MWh</td>
           <td>Grid scheduling &amp; energy trading</td>
         </tr>
         <tr>
           <td><strong>2</strong></td>
-          <td><strong>Forced Outage Predictor</strong></td>
+          <td><strong>Plant Availability Tier Classifier</strong></td>
           <td><span class="badge badge-amber">LightGBM Classifier</span></td>
-          <td>Forced outage within 7 days</td>
-          <td>AUC=0.82 · AP=0.61 · F1=0.58</td>
+          <td>≥90% availability next month</td>
+          <td>AUC=0.85 · AP=0.97 · prospective</td>
           <td>Predictive maintenance dispatch</td>
         </tr>
         <tr>
@@ -768,7 +768,7 @@
           <td><strong>Maintenance Cost Estimator</strong></td>
           <td><span class="badge badge-cyan">Random Forest</span></td>
           <td>Monthly maintenance cost (ZAR)</td>
-          <td>R²=0.89 · MAE=R12k · OOB=0.87</td>
+          <td>R²=0.999 · MAE=R103 · OOB=0.999</td>
           <td>OPEX budgeting &amp; planning</td>
         </tr>
         <tr>
@@ -859,8 +859,8 @@
       </div>
       <div class="card">
         <div class="card-icon">&#128197;</div>
-        <h3>Availability: 95.8% Portfolio Avg</h3>
-        <p>Weighted portfolio availability exceeded 95% in 4 of 5 years. Planned annual maintenance windows account for ~3% of downtime; forced outages for the remaining ~1.2%.</p>
+        <h3>Availability: ~92% Operating Fleet</h3>
+        <p>Operating fleet (17 plants) averaged ~92% availability across 2020–2024. Planned annual maintenance windows account for ~5% of downtime; forced outages for the remaining ~3%.</p>
       </div>
       <div class="card amber-top">
         <div class="card-icon">&#127807;</div>

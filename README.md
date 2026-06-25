@@ -54,10 +54,12 @@ Globeleq_Energy_Intelligence_Platform/
 │   └── adf_globeleq_pipeline.json  ← Full ADF pipeline definition
 ├── reports/
 │   ├── generate_excel_report.py    ← Generates 8-sheet Excel workbook
-│   └── Globeleq_Energy_Intelligence_Report.xlsx
+│   ├── Globeleq_Energy_Intelligence_Report.xlsx
+│   └── charts/                     ← 13 publication-quality PNGs (4.7 MB total)
 ├── scripts/
 │   ├── generate_synthetic_data.py  ← Vectorised data generator (3M+ rows, ~2.5 min)
 │   ├── inject_dirty_data.py        ← Injects 35 realistic DQ patterns (83K dirty rows)
+│   ├── generate_charts.py          ← 13 ML + operational charts (correlation, ROC, residuals)
 │   ├── data_insights.py            ← Portfolio analytics summary
 │   └── reconcile.py                ← Numbers reconciliation across all tables
 ├── ebook/
@@ -91,10 +93,10 @@ Globeleq_Energy_Intelligence_Platform/
 
 | # | Model | Algorithm | Key Metric |
 |---|---|---|---|
-| 1 | Energy Yield Forecaster | XGBoost Regressor | R²=0.94, MAE=18 MWh |
-| 2 | Forced Outage Predictor | LightGBM Classifier | AUC=0.82, AP=0.61 |
-| 3 | Maintenance Cost Estimator | Random Forest | R²=0.89, OOB=0.87 |
-| 4 | Curtailment Anomaly Detector | Isolation Forest | Anomaly rate=5% |
+| 1 | Energy Yield Forecaster | XGBoost Regressor | R²=0.998, MAE=62 MWh, RMSE=151 MWh |
+| 2 | Plant Availability Tier Classifier | LightGBM Classifier | AUC=0.85, AP=0.97 |
+| 3 | Maintenance Cost Estimator | Random Forest | R²=0.999, MAE=R103, OOB=0.999 |
+| 4 | Curtailment Anomaly Detector | Isolation Forest | Anomaly rate=5.0% (1,553/31,059) |
 | 5 | Portfolio Revenue Forecaster | LightGBM Regressor | R²=0.93, MAPE=3.1% |
 
 **Forecasting model registry (V2 — RMSE-selected, not MAPE):**
