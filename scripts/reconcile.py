@@ -21,7 +21,7 @@ ops = ops.merge(
 )
 
 op_plants  = plants[plants['ProjectStatus'] == 'Operating']
-con_plants = plants[plants['ProjectStatus'] == 'Under Construction']
+con_plants = plants[plants['ProjectStatus'] == 'In Construction']
 op_mw  = op_plants['NameplateCapacity'].sum()
 con_mw = con_plants['NameplateCapacity'].sum()
 
@@ -73,7 +73,7 @@ print()
 
 print("--- DISCREPANCIES (README vs Actual) ---")
 readme_rows = 3024807
-readme_rev  = 500
+readme_rev  = 139
 brochure_mw = 1794
 brochure_con= 485
 
@@ -85,7 +85,7 @@ con_diff = round(con_mw - brochure_con, 1)
 status = lambda d: "OK" if abs(d) < 1 else "FIX"
 
 print(f"  Total rows    README:{readme_rows:,}  Actual:{total_rows:,}  Delta:{row_diff:+,}  [{status(row_diff)}]")
-print(f"  Ann revenue   README:R{readme_rev}M  Actual:R{ann_rev/1e6:.0f}M  Delta:{rev_diff:+.0f}M  [FIX]")
+print(f"  Ann revenue   README:R{readme_rev}M  Actual:R{ann_rev/1e6:.0f}M  Delta:{rev_diff:+.0f}M  [{status(rev_diff)}]")
 print(f"  Operating MW  Brochure:{brochure_mw}  Actual:{op_mw:.0f}  Delta:{mw_diff:+.0f}  [{status(mw_diff)}]")
 print(f"  Constr MW     Brochure:{brochure_con}  Actual:{con_mw:.0f}  Delta:{con_diff:+.0f}  [{status(con_diff)}]")
 print(f"  Plant count   README:19  Actual:{len(plants)}  [{'OK' if len(plants)==19 else 'FIX'}]")
