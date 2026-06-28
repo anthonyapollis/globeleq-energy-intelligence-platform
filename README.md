@@ -30,7 +30,7 @@ commercial decision-making.
 - **Azure Databricks** — PySpark notebooks, Delta Lake, MLflow
 - **Azure Data Factory** — Copy Activities, ForEach, IfCondition, Teams webhook
 - **Azure Data Lake Gen2** — ADLS raw/bronze/silver/gold containers
-- **Azure SQL Server** — GlobeleqEnergyDW (22 tables: 12 core + 10 V2 upgrade)
+- **Azure SQL Server** — GlobeleqEnergyDW (27 tables: 17 core + 10 V2 upgrade · 6 BI views)
 - **Python** — Data generation, ML (XGBoost, LightGBM, sklearn), dirty-data injection
 - **Power BI** — 111 DAX measures across 9 report pages, Databricks SQL endpoint
 - **openpyxl** — 8-sheet Excel report with charts
@@ -65,8 +65,8 @@ Globeleq_Energy_Intelligence_Platform/
 ├── ebook/
 │   └── globeleq_energy_intelligence_ebook.html
 └── data/raw/
-    ├── globeleq_energy_dw.sql              ← Core DDL: 12 tables, DimDate 2020–2035
-    ├── globeleq_energy_dw_v2_upgrade.sql   ← V2: 10 new tables, 6 BI views
+    ├── globeleq_energy_dw.sql              ← Core DDL: 17 tables (9 dims + 2 bridges + 6 facts + DimDate)
+    ├── globeleq_energy_dw_v2_upgrade.sql   ← V2: 10 tables + 6 BI views (bi schema)
     ├── Globeleq_PowerBI_Measures.dax       ← Original 32 measures
     └── Globeleq_PowerBI_Measures_v2.dax    ← V2: 111 measures, 9 report pages
 ```

@@ -1,4 +1,5 @@
 erDiagram
+    %% ── Core schema (dw) ─────────────────────────────────────────
     DimGeography ||--o{ DimPlant : locates
     DimPlant ||--o{ DimAgreement : governed_by
     DimOrganisation ||--o{ DimAgreement : counterparty
@@ -19,12 +20,36 @@ erDiagram
 
     DimPlant ||--o{ FactOutage : experiences
     DimAsset ||--o{ FactOutage : affects
+    DimDate  ||--o{ FactOutage : dates
 
     DimPlant ||--o{ FactMaintenanceWorkOrder : requires
     DimAsset ||--o{ FactMaintenanceWorkOrder : maintained
+    DimDate  ||--o{ FactMaintenanceWorkOrder : scheduled
 
-    DimDate ||--o{ FactConstructionProgressMonthly : reports
+    DimDate  ||--o{ FactConstructionProgressMonthly : reports
     DimPlant ||--o{ FactConstructionProgressMonthly : constructs
 
-    DimDate ||--o{ FactHSEIncident : records
+    DimDate  ||--o{ FactHSEIncident : records
     DimPlant ||--o{ FactHSEIncident : occurs_at
+
+    DimDate  ||--o{ FactFXRateMonthly : periods
+
+    %% ── V2 schema (dw + bi) ──────────────────────────────────────
+    DimPlant ||--o{ DimMeter : has
+    DimMeter ||--o{ FactMeterReadingHourly : measures
+    DimTime  ||--o{ FactMeterReadingHourly : time_of_day
+    DimDate  ||--o{ FactMeterReadingHourly : dates
+
+    FactMeterReadingHourly ||--o{ FactDataQualityEvent : triggers
+    DimDate ||--o{ FactDataQualityEvent : dates
+
+    DimForecastModel ||--o{ FactForecastDaily : produced_by
+    DimDate          ||--o{ FactForecastDaily : dates
+    DimPlant         ||--o{ FactForecastDaily : targets
+
+    DimForecastModel   ||--o{ FactForecastModelValidation : scored_in
+    DimForecastModel   ||--o{ BridgeForecastModelFeature : uses
+    DimForecastFeature ||--o{ BridgeForecastModelFeature : contributes
+
+    DimDate  ||--o{ FactWeatherNormalisedPerf : dates
+    DimPlant ||--o{ FactWeatherNormalisedPerf : normalised_for

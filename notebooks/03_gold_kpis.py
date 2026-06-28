@@ -259,6 +259,32 @@ print(f"ml_feature_store_daily: {feature_store.count():,} rows")
 # MAGIC %md ### 7. Gold Layer Validation Summary
 
 # COMMAND ----------
+# ── Section 7: OPTIMIZE + ZORDER ──────────────────────────────────────────────
+# Delta Lake: compact small files and co-locate data for the most common
+# filter patterns (PlantKey first — nearly every PBI query filters by plant).
+# Run after every full load; skip on incremental if row delta < 5%.
+
+print("Optimising Delta tables...")
+
+OPTIMIZE_TARGETS = [
+    ("fact_plant_operations_gold",   ["PlantKey", "DateKey"]),
+    ("fact_ml_feature_store",        ["PlantKey", "DateKey"]),
+    ("fact_portfolio_kpis_monthly",  ["PlantKey"]),
+    ("dim_plant_gold",               ["PlantKey"]),
+]
+
+for tbl, zorder_cols in OPTIMIZE_TARGETS:
+    full = f"{GOLD_DB}.{tbl}"
+    cols = ", ".join(zorder_cols)
+    try:
+        spark.sql(f"OPTIMIZE {full} ZORDER BY ({cols})")
+        print(f"  OPTIMIZE ZORDER {full} BY ({cols}) — done")
+    except Exception as e:
+        print(f"  OPTIMIZE {full} — skipped: {e}")
+
+print("Delta optimisation complete.\n")
+
+# COMMAND ----------
 gold_tables = spark.sql(f"SHOW TABLES IN {GOLD_DB}").collect()
 summary = [(t["tableName"],
             spark.sql(f"SELECT COUNT(*) FROM {GOLD_DB}.{t['tableName']}").collect()[0][0])
