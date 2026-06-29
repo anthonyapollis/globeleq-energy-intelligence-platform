@@ -1,7 +1,7 @@
 # Globeleq Energy Intelligence Platform
 
 **Full-stack Azure Databricks data engineering + ML portfolio project**
-Synthetic SCADA telemetry from 19 African IPP power plants · 3M+ rows · 5 ML models
+Synthetic SCADA telemetry from 19 African IPP power plants · 3M+ rows · 8 ML models
 
 ---
 
@@ -49,7 +49,7 @@ Globeleq_Energy_Intelligence_Platform/
 │   ├── 01_bronze_ingest.py         ← ADF-triggered, raw CSV → Delta Bronze
 │   ├── 02_silver_transform.py      ← Type casting, enrichment, rolling windows
 │   ├── 03_gold_kpis.py             ← Executive KPIs, ML feature store
-│   └── 04_ml_energy_intelligence.py← 5 ML models + MLflow tracking
+│   └── 04_ml_energy_intelligence.py← 8 ML models + MLflow tracking
 ├── pipelines/
 │   └── adf_globeleq_pipeline.json  ← Full ADF pipeline definition
 ├── reports/
