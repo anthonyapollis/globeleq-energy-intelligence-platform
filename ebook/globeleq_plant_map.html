@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Globeleq — Plant Locations Map</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0d1117; color: #e2e8f0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; min-height: 100vh; }
+
+  header { background: #161b22; border-bottom: 1px solid #21262d; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-mark { width: 32px; height: 32px; background: #14443B; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; color: #00B4D8; }
+  .logo-text { font-size: 15px; font-weight: 500; color: #e2e8f0; }
+  .logo-sub { font-size: 12px; color: #8b949e; margin-top: 1px; }
+  .nav-links { display: flex; gap: 16px; }
+  .nav-links a { color: #8b949e; text-decoration: none; font-size: 13px; }
+  .nav-links a:hover { color: #e2e8f0; }
+
+  .stats-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: #21262d; border-bottom: 1px solid #21262d; }
+  .stat { background: #0d1117; padding: 14px 20px; }
+  .stat-val { font-size: 22px; font-weight: 600; }
+  .stat-lbl { font-size: 11px; color: #8b949e; margin-top: 3px; text-transform: uppercase; letter-spacing: 0.04em; }
+
+  .map-area { display: flex; height: calc(100vh - 148px); }
+  #map { flex: 1; }
+
+  .sidebar { width: 260px; background: #161b22; border-left: 1px solid #21262d; display: flex; flex-direction: column; overflow-y: auto; }
+  .sidebar-section { padding: 16px; border-bottom: 1px solid #21262d; }
+  .sidebar-title { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: #8b949e; margin-bottom: 12px; }
+
+  .filter-btn { width: 100%; display: flex; align-items: center; gap: 9px; background: transparent; border: none; color: #c9d1d9; font-size: 13px; padding: 7px 8px; border-radius: 6px; cursor: pointer; text-align: left; }
+  .filter-btn:hover { background: #21262d; }
+  .filter-btn.active { background: #21262d; color: #e2e8f0; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .count-badge { margin-left: auto; font-size: 11px; color: #8b949e; background: #21262d; border-radius: 10px; padding: 1px 7px; }
+
+  .region-item { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; font-size: 13px; color: #c9d1d9; border-bottom: 1px solid #21262d; }
+  .region-item:last-child { border-bottom: none; }
+  .region-mw { font-weight: 500; color: #00B4D8; font-size: 13px; }
+
+  .legend-item { display: flex; align-items: center; gap: 8px; padding: 4px 0; font-size: 12px; color: #8b949e; }
+
+  .popup-head { font-size: 14px; font-weight: 600; color: #e2e8f0; margin-bottom: 4px; }
+  .popup-badge { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 20px; margin-bottom: 8px; font-weight: 500; }
+  .popup-row { display: flex; justify-content: space-between; gap: 12px; font-size: 12px; padding: 5px 0; border-top: 1px solid #2d3340; }
+  .popup-row .lbl { color: #8b949e; }
+  .popup-row .val { color: #e2e8f0; font-weight: 500; text-align: right; }
+  .popup-const { font-size: 10px; padding: 2px 7px; border-radius: 20px; background: #ffffff1a; color: #ffffff99; border: 1px solid #ffffff33; vertical-align: middle; margin-left: 6px; }
+
+  .leaflet-popup-content-wrapper { background: #1a1f2e !important; border: 1px solid #2d3340 !important; border-radius: 10px !important; color: #e2e8f0 !important; box-shadow: 0 8px 32px rgba(0,0,0,0.6) !important; }
+  .leaflet-popup-tip { background: #1a1f2e !important; }
+  .leaflet-popup-content { margin: 14px 16px !important; min-width: 200px; }
+  .leaflet-control-zoom a { background: #161b22 !important; color: #c9d1d9 !important; border-color: #21262d !important; }
+  .leaflet-control-attribution { background: rgba(13,17,23,0.7) !important; color: #555 !important; }
+  .leaflet-control-attribution a { color: #555 !important; }
+
+  @media (max-width: 600px) {
+    .sidebar { display: none; }
+    .stats-bar { grid-template-columns: repeat(2, 1fr); }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-mark">G</div>
+    <div>
+      <div class="logo-text">Globeleq Energy Intelligence Platform</div>
+      <div class="logo-sub">19 IPP plants · 7 African countries · 1,794 MW operating</div>
+    </div>
+  </div>
+  <div class="nav-links">
+    <a href="globeleq_energy_intelligence_ebook.html">Ebook &rarr;</a>
+    <a href="https://github.com/anthonyapollis/globeleq-energy-intelligence-platform" target="_blank">GitHub</a>
+  </div>
+</header>
+
+<div class="stats-bar">
+  <div class="stat"><div class="stat-val">19</div><div class="stat-lbl">Plants</div></div>
+  <div class="stat"><div class="stat-val">7</div><div class="stat-lbl">Countries</div></div>
+  <div class="stat"><div class="stat-val" style="color:#00B4D8">1,794 MW</div><div class="stat-lbl">Operating capacity</div></div>
+  <div class="stat"><div class="stat-val" style="color:#F7941D">485 MW</div><div class="stat-lbl">Pipeline (construction)</div></div>
+</div>
+
+<div class="map-area">
+  <div id="map"></div>
+  <div class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-title">Filter by technology</div>
+      <button class="filter-btn active" data-tech="All" onclick="filterTech(this)">
+        <span class="dot" style="background:#555"></span>All plants
+        <span class="count-badge">19</span>
+      </button>
+      <button class="filter-btn" data-tech="Solar PV" onclick="filterTech(this)">
+        <span class="dot" style="background:#F7941D"></span>Solar PV
+        <span class="count-badge">11</span>
+      </button>
+      <button class="filter-btn" data-tech="Natural Gas" onclick="filterTech(this)">
+        <span class="dot" style="background:#00B4D8"></span>Natural gas
+        <span class="count-badge">4</span>
+      </button>
+      <button class="filter-btn" data-tech="Wind" onclick="filterTech(this)">
+        <span class="dot" style="background:#14B8A6"></span>Wind
+        <span class="count-badge">2</span>
+      </button>
+      <button class="filter-btn" data-tech="Heavy Fuel Oil" onclick="filterTech(this)">
+        <span class="dot" style="background:#EF4444"></span>Heavy fuel oil
+        <span class="count-badge">1</span>
+      </button>
+      <button class="filter-btn" data-tech="Solar PV + BESS" onclick="filterTech(this)">
+        <span class="dot" style="background:#A855F7"></span>Solar + BESS
+        <span class="count-badge">1</span>
+      </button>
+      <button class="filter-btn" data-tech="Geothermal" onclick="filterTech(this)">
+        <span class="dot" style="background:#22C55E"></span>Geothermal
+        <span class="count-badge">1</span>
+      </button>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-title">Capacity by region</div>
+      <div class="region-item"><span>Southern Africa</span><span class="region-mw">872 MW</span></div>
+      <div class="region-item"><span>West Africa</span><span class="region-mw">1,017 MW</span></div>
+      <div class="region-item"><span>East Africa</span><span class="region-mw">277 MW</span></div>
+      <div class="region-item"><span>Northern Africa</span><span class="region-mw">91 MW</span></div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-title">Map legend</div>
+      <div class="legend-item"><span class="dot" style="background:#F7941D"></span>Solar PV</div>
+      <div class="legend-item"><span class="dot" style="background:#00B4D8"></span>Natural gas (CCGT/GT)</div>
+      <div class="legend-item"><span class="dot" style="background:#14B8A6"></span>Wind</div>
+      <div class="legend-item"><span class="dot" style="background:#EF4444"></span>Heavy fuel oil</div>
+      <div class="legend-item"><span class="dot" style="background:#A855F7"></span>Solar PV + BESS</div>
+      <div class="legend-item"><span class="dot" style="background:#22C55E"></span>Geothermal</div>
+      <div class="legend-item" style="margin-top:8px;padding-top:8px;border-top:1px solid #21262d">
+        <span style="width:10px;height:10px;border-radius:50%;border:2px dashed #fff;opacity:0.5;flex-shrink:0;display:inline-block"></span>
+        In construction
+      </div>
+      <div class="legend-item" style="font-size:11px;color:#555;margin-top:8px">Circle size = nameplate MW</div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-title">Key asset</div>
+      <div style="font-size:13px;color:#c9d1d9;line-height:1.6">
+        <strong style="color:#F7941D">Azito Power</strong> (Côte d'Ivoire) is the portfolio's largest plant at 713 MW and ~41% of annual revenue. It is a combined-cycle gas plant and the primary revenue concentration risk.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const TECH_COLOR = {
+  "Solar PV":       "#F7941D",
+  "Natural Gas":    "#00B4D8",
+  "Wind":           "#14B8A6",
+  "Heavy Fuel Oil": "#EF4444",
+  "Solar PV + BESS":"#A855F7",
+  "Geothermal":     "#22C55E"
+};
+
+const plants = [
+  { code:"ARC",      name:"ARC Solar Power",           city:"Aswan",        country:"Egypt",         region:"Northern Africa", tech:"Solar PV",       mw:66,  lat:24.09,  lng:32.64,  status:"Operating",      offtaker:"EETC",                  agreement:"PPA", term:25 },
+  { code:"WINNERGY", name:"Winnergy Solar Power",       city:"Aswan",        country:"Egypt",         region:"Northern Africa", tech:"Solar PV",       mw:25,  lat:24.14,  lng:32.96,  status:"Operating",      offtaker:"EETC",                  agreement:"PPA", term:25 },
+  { code:"AZITO",    name:"Azito Power",                city:"Abidjan",      country:"Côte d'Ivoire", region:"West Africa",     tech:"Natural Gas",    mw:713, lat:5.36,   lng:-4.01,  status:"Operating",      offtaker:"Govt. Côte d'Ivoire",   agreement:"Concession", term:20 },
+  { code:"DIBAMBA",  name:"Dibamba Power",              city:"Douala",       country:"Cameroon",      region:"West Africa",     tech:"Heavy Fuel Oil", mw:88,  lat:4.10,   lng:9.77,   status:"Operating",      offtaker:"ENEO",                  agreement:"Tolling", term:20 },
+  { code:"KRIBI",    name:"Kribi Power",                city:"Kribi",        country:"Cameroon",      region:"West Africa",     tech:"Natural Gas",    mw:216, lat:2.94,   lng:9.91,   status:"Operating",      offtaker:"Cameroon Natl Grid",    agreement:"PPA", term:20 },
+  { code:"MALINDI",  name:"Malindi Solar Power",        city:"Malindi",      country:"Kenya",         region:"East Africa",     tech:"Solar PV",       mw:52,  lat:-3.22,  lng:40.12,  status:"Operating",      offtaker:"Kenya Power",           agreement:"PPA", term:20 },
+  { code:"MENENGAI", name:"Menengai Geothermal",        city:"Nakuru County",country:"Kenya",         region:"East Africa",     tech:"Geothermal",     mw:35,  lat:-0.38,  lng:36.08,  status:"In Construction",offtaker:"Kenya Natl Grid",        agreement:"", term:0 },
+  { code:"CUAMBA",   name:"Cuamba Solar PV + BESS",     city:"Cuamba",       country:"Mozambique",    region:"Southern Africa", tech:"Solar PV + BESS",mw:19,  lat:-14.80, lng:36.54,  status:"Operating",      offtaker:"—",                     agreement:"", term:0 },
+  { code:"MOCUBA",   name:"Mocuba Solar",               city:"Mocuba",       country:"Mozambique",    region:"Southern Africa", tech:"Solar PV",       mw:41,  lat:-16.84, lng:36.99,  status:"Operating",      offtaker:"EDM",                   agreement:"PPA", term:25 },
+  { code:"CTT",      name:"Central Térmica de Temane",  city:"Temane",       country:"Mozambique",    region:"Southern Africa", tech:"Natural Gas",    mw:450, lat:-22.13, lng:34.73,  status:"In Construction",offtaker:"EDM",                   agreement:"Tolling", term:25 },
+  { code:"SONGAS",   name:"Songas",                     city:"Dar es Salaam",country:"Tanzania",      region:"East Africa",     tech:"Natural Gas",    mw:190, lat:-6.79,  lng:39.21,  status:"Operating",      offtaker:"Tanzania Natl Grid",    agreement:"PPA", term:20 },
+  { code:"ARIES",    name:"Aries Solar Power",          city:"Kenhardt",     country:"South Africa",  region:"Southern Africa", tech:"Solar PV",       mw:11,  lat:-29.36, lng:21.15,  status:"Operating",      offtaker:"Eskom",                 agreement:"PPA", term:20 },
+  { code:"BOSHOF",   name:"Boshof Solar Power",         city:"Boshof",       country:"South Africa",  region:"Southern Africa", tech:"Solar PV",       mw:66,  lat:-28.54, lng:25.23,  status:"Operating",      offtaker:"Eskom",                 agreement:"PPA", term:20 },
+  { code:"DEAAR",    name:"De Aar Solar Power",         city:"De Aar",       country:"South Africa",  region:"Southern Africa", tech:"Solar PV",       mw:50,  lat:-30.65, lng:24.01,  status:"Operating",      offtaker:"Eskom",                 agreement:"PPA", term:20 },
+  { code:"DROOG",    name:"Droogfontein Solar",         city:"Kimberley",    country:"South Africa",  region:"Southern Africa", tech:"Solar PV",       mw:50,  lat:-28.73, lng:24.75,  status:"Operating",      offtaker:"Eskom",                 agreement:"PPA", term:20 },
+  { code:"JBAY",     name:"Jeffreys Bay Wind Farm",     city:"Jeffreys Bay", country:"South Africa",  region:"Southern Africa", tech:"Wind",           mw:138, lat:-34.05, lng:24.93,  status:"Operating",      offtaker:"—",                     agreement:"", term:0 },
+  { code:"KLIP",     name:"Klipheuwel Wind Farm",       city:"Caledon",      country:"South Africa",  region:"Southern Africa", tech:"Wind",           mw:27,  lat:-34.23, lng:19.42,  status:"Operating",      offtaker:"—",                     agreement:"", term:0 },
+  { code:"KONK",     name:"Konkoonsies Solar",          city:"Pofadder",     country:"South Africa",  region:"Southern Africa", tech:"Solar PV",       mw:11,  lat:-29.13, lng:19.40,  status:"Operating",      offtaker:"Eskom",                 agreement:"PPA", term:20 },
+  { code:"SOUTPAN",  name:"Soutpan Solar Power",        city:"Vivo, Limpopo",country:"South Africa",  region:"Southern Africa", tech:"Solar PV",       mw:31,  lat:-23.08, lng:28.32,  status:"Operating",      offtaker:"Eskom",                 agreement:"PPA", term:20 },
+];
+
+const map = L.map('map', { zoomControl: true, scrollWheelZoom: true })
+  .setView([0, 22], 4);
+
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
+  subdomains: 'abcd', maxZoom: 19
+}).addTo(map);
+
+function circleRadius(mw) { return Math.max(8, Math.sqrt(mw) * 1.7); }
+
+const markers = [];
+
+plants.forEach(p => {
+  const col = TECH_COLOR[p.tech] || "#aaa";
+  const isConst = p.status === "In Construction";
+  const r = circleRadius(p.mw);
+
+  const m = L.circleMarker([p.lat, p.lng], {
+    radius: r,
+    fillColor: col,
+    color: isConst ? "#ffffff" : col,
+    weight: isConst ? 2.5 : 1.5,
+    opacity: isConst ? 0.55 : 0.95,
+    fillOpacity: isConst ? 0.25 : 0.82,
+  }).addTo(map);
+
+  const badge = `background:${col}25;color:${col};border:1px solid ${col}55;`;
+  const constTag = isConst ? `<span class="popup-const">In construction</span>` : '';
+
+  m.bindPopup(`
+    <div class="popup-head">${p.name}${constTag}</div>
+    <span class="popup-badge" style="${badge}">${p.tech}</span>
+    <div class="popup-row"><span class="lbl">Location</span><span class="val">${p.city}, ${p.country}</span></div>
+    <div class="popup-row"><span class="lbl">Capacity</span><span class="val">${p.mw} MW</span></div>
+    <div class="popup-row"><span class="lbl">Region</span><span class="val">${p.region}</span></div>
+    ${p.offtaker && p.offtaker !== '—' ? `<div class="popup-row"><span class="lbl">Offtaker</span><span class="val">${p.offtaker}</span></div>` : ''}
+    ${p.agreement ? `<div class="popup-row"><span class="lbl">Agreement</span><span class="val">${p.agreement}${p.term ? ' · ' + p.term + 'yr' : ''}</span></div>` : ''}
+  `, { maxWidth: 240 });
+
+  m.on('mouseover', function() { this.setStyle({ weight: 3, fillOpacity: isConst ? 0.4 : 1, opacity: 1 }); });
+  m.on('mouseout',  function() { this.setStyle({ weight: isConst ? 2.5 : 1.5, fillOpacity: isConst ? 0.25 : 0.82, opacity: isConst ? 0.55 : 0.95 }); });
+
+  markers.push({ m, plant: p });
+});
+
+function filterTech(btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const tech = btn.dataset.tech;
+  markers.forEach(({ m, plant }) => {
+    if (tech === 'All' || plant.tech === tech) { m.addTo(map); }
+    else { m.remove(); }
+  });
+}
+</script>
+</body>
+</html>

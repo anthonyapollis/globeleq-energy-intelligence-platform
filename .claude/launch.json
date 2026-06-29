@@ -3,8 +3,9 @@
   "configurations": [
     {
       "name": "globeleq-ebook",
+      "autoPort": true,
       "runtimeExecutable": "python",
-      "runtimeArgs": ["-m", "http.server", "5500", "--directory", "ebook"],
+      "runtimeArgs": ["-m", "http.server", "--directory", "ebook"],
       "port": 5500
     }
   ]
