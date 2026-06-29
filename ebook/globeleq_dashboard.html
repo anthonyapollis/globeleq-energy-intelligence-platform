@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Globeleq — Interactive Analytics Dashboard</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#0d1117;color:#e2e8f0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh}
+  header{background:#161b22;border-bottom:1px solid #21262d;padding:16px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+  .logo{display:flex;align-items:center;gap:12px}
+  .lm{width:36px;height:36px;background:#14443B;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#00B4D8;flex-shrink:0}
+  .lt{font-size:15px;font-weight:500}.ls{font-size:12px;color:#8b949e}
+  .nav a{color:#8b949e;text-decoration:none;font-size:13px;margin-left:16px}
+  .nav a:hover{color:#e2e8f0}
+  .kpi-bar{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:#21262d;border-bottom:1px solid #21262d}
+  .kpi{background:#0d1117;padding:12px 20px}
+  .kv{font-size:20px;font-weight:600}.kl{font-size:11px;color:#8b949e;margin-top:2px;text-transform:uppercase;letter-spacing:.04em}
+  .main{max-width:1280px;margin:0 auto;padding:24px 20px}
+  .section-title{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#8b949e;margin:32px 0 16px;padding-bottom:8px;border-bottom:1px solid #21262d}
+  .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .card{background:#161b22;border:1px solid #21262d;border-radius:12px;padding:20px}
+  .card.full{grid-column:1/-1}
+  .card h3{font-size:13px;font-weight:500;color:#c9d1d9;margin-bottom:4px}
+  .card p{font-size:11px;color:#8b949e;margin-bottom:16px;line-height:1.5}
+  .chart-wrap{position:relative}
+  canvas{display:block;max-width:100%}
+  .hm-wrap{overflow-x:auto}
+  .hm-table{border-collapse:collapse;font-size:10px;white-space:nowrap}
+  .hm-table th{color:#8b949e;font-weight:400;padding:3px 6px;text-align:center}
+  .hm-table td{width:38px;height:26px;text-align:center;font-size:9.5px;font-weight:500;border:1px solid #0d1117;cursor:default;transition:opacity .15s}
+  .hm-table td:hover{opacity:.75;outline:1px solid #fff3}
+  .hm-table .plant-lbl{text-align:right;font-size:10px;color:#8b949e;padding-right:8px;white-space:nowrap}
+  .insight{background:#0d1117;border:1px solid #21262d;border-left:3px solid #00B4D8;border-radius:6px;padding:10px 14px;font-size:12px;color:#8b949e;margin-top:12px;line-height:1.6}
+  .insight strong{color:#c9d1d9}
+  .corr-wrap{overflow:hidden}
+  .corr-table{border-collapse:collapse;font-size:10px;width:100%}
+  .corr-table th,.corr-table td{padding:8px 4px;text-align:center;border:1px solid #0d1117}
+  .corr-table th{color:#8b949e;font-size:10px;font-weight:400;background:#0d1117}
+  .corr-table .row-lbl{text-align:right;font-size:10px;color:#8b949e;padding-right:8px;white-space:nowrap;background:#0d1117}
+  @media(max-width:700px){.grid2,.grid3{grid-template-columns:1fr}.card.full{grid-column:1}.kpi-bar{grid-template-columns:repeat(2,1fr)}.nav{display:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">
+    <div class="lm">G</div>
+    <div><div class="lt">Globeleq Energy Intelligence Platform</div><div class="ls">Interactive Analytics Dashboard · 19 plants · 5 years · 3M+ rows</div></div>
+  </div>
+  <div class="nav">
+    <a href="globeleq_energy_intelligence_ebook.html">Ebook</a>
+    <a href="globeleq_plant_map.html">Plant Map</a>
+    <a href="../index.html">Home</a>
+  </div>
+</header>
+
+<div class="kpi-bar">
+  <div class="kpi"><div class="kv">3,024,807</div><div class="kl">Total rows</div></div>
+  <div class="kpi"><div class="kv" style="color:#00B4D8">~92%</div><div class="kl">Fleet availability</div></div>
+  <div class="kpi"><div class="kv" style="color:#F7941D">R139M</div><div class="kl">Annual revenue</div></div>
+  <div class="kpi"><div class="kv" style="color:#22C55E">8</div><div class="kl">ML models</div></div>
+  <div class="kpi"><div class="kv" style="color:#EF4444">581</div><div class="kl">Forced outages (5yr)</div></div>
+</div>
+
+<div class="main">
+
+  <div class="section-title">Operational analytics</div>
+  <div class="grid2">
+
+    <div class="card">
+      <h3>Forced outage seasonality — by month (5-year count)</h3>
+      <p>December peaks at 63 events vs February's low of 38 — a 1.7× ratio driven by summer heat stress and year-end maintenance deferral.</p>
+      <div class="chart-wrap"><canvas id="ch-seasonal" height="200"></canvas></div>
+      <div class="insight"><strong>Key finding:</strong> December + October account for 21% of all forced outages. A pre-December inspection programme targeting gas turbine hot sections could recover ~R580K in annual foregone generation.</div>
+    </div>
+
+    <div class="card">
+      <h3>Availability by technology — operating fleet only (%)</h3>
+      <p>All operating technologies converge at ~92–93% availability. Gas plants (excl. CTT under construction) match solar and wind.</p>
+      <div class="chart-wrap"><canvas id="ch-avail" height="200"></canvas></div>
+    </div>
+
+    <div class="card">
+      <h3>Capacity factor by plant (%)</h3>
+      <p>Gas plants (Azito 76%, Kribi 74%, Songas 72%) dominate on CF. Solar plants cluster at 21–24%, wind at 36–37%.</p>
+      <div class="chart-wrap"><canvas id="ch-cf" height="260"></canvas></div>
+    </div>
+
+    <div class="card">
+      <h3>Energy lost to forced outages — by year (MWh)</h3>
+      <p>2020 spike (160,543 MWh) reflects new synthetic dataset baseline noise. 2021–2024 stabilise at 57–67 GWh lost annually.</p>
+      <div class="chart-wrap"><canvas id="ch-elost" height="260"></canvas></div>
+    </div>
+
+  </div>
+
+  <div class="section-title">Revenue &amp; generation</div>
+  <div class="grid2">
+
+    <div class="card">
+      <h3>Annual portfolio revenue — 2020–2024 (R million)</h3>
+      <p>Revenue is highly stable, ranging R137–142M, reflecting long-term contracted PPAs. No meaningful demand-side variance.</p>
+      <div class="chart-wrap"><canvas id="ch-rev" height="200"></canvas></div>
+      <div class="insight"><strong>Concentration risk:</strong> Azito (Côte d'Ivoire, 713 MW) generates ~41% of revenue. A single-plant or single-country shock could remove $22M+ USD from annual cashflow.</div>
+    </div>
+
+    <div class="card">
+      <h3>Net generation by technology — 2020–2024 (GWh)</h3>
+      <p>Natural gas (Azito + Kribi + Songas) accounts for ~76% of total generation. Solar and wind contribute ~14%.</p>
+      <div class="chart-wrap"><canvas id="ch-gen" height="200"></canvas></div>
+    </div>
+
+  </div>
+
+  <div class="section-title">Availability heatmap — plant × month (5-year average %)</div>
+  <div class="card full">
+    <h3>All operating plants · Hover cell for exact value</h3>
+    <p>Low availability months appear in amber/red. Each cell = average availability % for that plant-month pair over 2020–2024.</p>
+    <div class="hm-wrap" id="hm-container"></div>
+    <div class="insight"><strong>Pattern:</strong> Low-availability cells are distributed across all plants without a dominant month, confirming the forced outage driver is idiosyncratic (equipment failure) rather than systemic. The December cluster is visible but moderate — validating the seasonality finding above without overwhelming the heatmap.</div>
+  </div>
+
+  <div class="section-title">Correlation &amp; cost</div>
+  <div class="grid2">
+
+    <div class="card">
+      <h3>Pearson correlation matrix — operational KPIs</h3>
+      <p>Strong inverse: AvailabilityPct ↔ PlannedDowntimeHours (r = −0.94). CapacityFactor ↔ NetGeneration (r = +0.70) confirms output is capacity-bound.</p>
+      <div class="corr-wrap" id="corr-container"></div>
+    </div>
+
+    <div class="card">
+      <h3>Annual maintenance cost by plant — avg R'000/year</h3>
+      <p>Azito's maintenance spend (R5.4M/yr) is 3.3× the next-highest plant, reflecting its 713 MW combined-cycle complexity.</p>
+      <div class="chart-wrap"><canvas id="ch-maint" height="280"></canvas></div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const GREEN='#14B8A6', AMBER='#F7941D', CYAN='#00B4D8', RED='#EF4444', PURPLE='#A855F7', BLUE='#3B82F6';
+const GRID='#21262d', TEXT='#8b949e', LABEL='#c9d1d9';
+
+Chart.defaults.color = TEXT;
+Chart.defaults.font.family = '-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif';
+Chart.defaults.font.size = 11;
+
+function baseOpts(title){
+  return {
+    responsive:true,
+    plugins:{legend:{display:false},tooltip:{backgroundColor:'#1e2430',titleColor:'#e2e8f0',bodyColor:'#c9d1d9',borderColor:'#30363d',borderWidth:1,padding:10,titleFont:{size:12},bodyFont:{size:11}}},
+    scales:{
+      x:{grid:{color:GRID},ticks:{color:TEXT}},
+      y:{grid:{color:GRID},ticks:{color:TEXT}}
+    }
+  };
+}
+
+// 1. Forced outage seasonality
+const forcedData = [51,38,44,45,57,44,40,48,46,58,47,63];
+const forceColors = forcedData.map(v => v >= 57 ? RED : v >= 47 ? AMBER : CYAN + 'aa');
+new Chart(document.getElementById('ch-seasonal'),{
+  type:'bar',
+  data:{labels:MONTHS, datasets:[{data:forcedData, backgroundColor:forceColors, borderRadius:4, borderSkipped:false}]},
+  options:{...baseOpts(),plugins:{...baseOpts().plugins,tooltip:{...baseOpts().plugins.tooltip,callbacks:{label:ctx=>`${ctx.raw} forced outages`}}}}
+});
+
+// 2. Availability by technology (operating plants only, raw values /100)
+const availLabels = ['Geothermal*','Solar + BESS','Heavy Fuel Oil','Solar PV','Wind','Natural Gas†'];
+const availVals   = [0, 92.49, 92.44, 92.43, 92.39, 92.36];
+const availColors = [TEXT+'55', PURPLE, RED, AMBER, GREEN, CYAN];
+new Chart(document.getElementById('ch-avail'),{
+  type:'bar',
+  data:{labels:availLabels, datasets:[{data:availVals, backgroundColor:availColors, borderRadius:4, borderSkipped:false}]},
+  options:{...baseOpts(), indexAxis:'y', scales:{x:{...baseOpts().scales.x, min:80, max:95, ticks:{callback:v=>v+'%'}}, y:{...baseOpts().scales.y, grid:{color:GRID}}},
+    plugins:{...baseOpts().plugins, tooltip:{...baseOpts().plugins.tooltip, callbacks:{label:ctx=>ctx.raw===0?'In construction':ctx.raw.toFixed(2)+'%'}}}}
+});
+
+// 3. CF by plant (operating, /100)
+const cfRaw = {AZITO:76.43,KRIBI:74.47,SONGAS:72.42,DIBAMBA:68.63,JBAY:37.20,KLIP:36.22,BOSHOF:23.55,MALINDI:22.53,SOUTPAN:22.49,KONK:21.61,ARIES:21.60,MOCUBA:21.56,WINNERGY:21.56,DROOG:21.56,DEAAR:21.54,ARC:21.48,CUAMBA:20.58};
+const cfLabels = Object.keys(cfRaw), cfVals = Object.values(cfRaw);
+const cfColors = cfVals.map(v => v>60?CYAN:v>30?GREEN:AMBER);
+new Chart(document.getElementById('ch-cf'),{
+  type:'bar',
+  data:{labels:cfLabels, datasets:[{data:cfVals, backgroundColor:cfColors, borderRadius:3, borderSkipped:false}]},
+  options:{...baseOpts(), indexAxis:'y', scales:{x:{...baseOpts().scales.x, ticks:{callback:v=>v+'%'}}, y:{...baseOpts().scales.y, ticks:{font:{size:10}}}},
+    plugins:{...baseOpts().plugins, tooltip:{...baseOpts().plugins.tooltip, callbacks:{label:ctx=>ctx.raw.toFixed(1)+'% capacity factor'}}}}
+});
+
+// 4. Energy lost by year
+const elostYears = ['2020','2021','2022','2023','2024'];
+const elostVals = [160543,58496,63095,66918,56811];
+const elostColors = elostVals.map((v,i) => i===0?RED:AMBER+'cc');
+new Chart(document.getElementById('ch-elost'),{
+  type:'bar',
+  data:{labels:elostYears, datasets:[{data:elostVals, backgroundColor:elostColors, borderRadius:5, borderSkipped:false}]},
+  options:{...baseOpts(), plugins:{...baseOpts().plugins, tooltip:{...baseOpts().plugins.tooltip, callbacks:{label:ctx=>ctx.raw.toLocaleString()+' MWh lost'}}},
+    scales:{x:{...baseOpts().scales.x}, y:{...baseOpts().scales.y, ticks:{callback:v=>v>=1000?(v/1000).toFixed(0)+'k':v}}}}
+});
+
+// 5. Revenue by year
+const revYears = [2020,2021,2022,2023,2024];
+const revVals = [139.8,141.8,137.7,137.8,138.9];
+new Chart(document.getElementById('ch-rev'),{
+  type:'line',
+  data:{labels:revYears, datasets:[{data:revVals, borderColor:CYAN, backgroundColor:CYAN+'22', fill:true, tension:.35, pointBackgroundColor:CYAN, pointRadius:5, pointHoverRadius:7}]},
+  options:{...baseOpts(), plugins:{...baseOpts().plugins, tooltip:{...baseOpts().plugins.tooltip, callbacks:{label:ctx=>'R'+ctx.raw.toFixed(1)+'M revenue'}}},
+    scales:{x:{...baseOpts().scales.x}, y:{...baseOpts().scales.y, min:130, max:148, ticks:{callback:v=>'R'+v+'M'}}}}
+});
+
+// 6. Generation by technology stacked bar
+const genYears = [2020,2021,2022,2023,2024];
+const genData = {
+  'Natural Gas':  [7144,7089,7065,7105,7110],
+  'Heavy Fuel Oil':[513,507,505,504,513],
+  'Wind':          [516,510,514,512,511],
+  'Solar PV':      [747,746,749,751,748],
+  'Solar+BESS':    [33,33,33,33,33]
+};
+const genColors = {
+  'Natural Gas':CYAN, 'Heavy Fuel Oil':RED, 'Wind':GREEN, 'Solar PV':AMBER, 'Solar+BESS':PURPLE
+};
+const genDatasets = Object.entries(genData).map(([k,d])=>({label:k,data:d,backgroundColor:genColors[k],stack:'a',borderRadius:3,borderSkipped:false}));
+new Chart(document.getElementById('ch-gen'),{
+  type:'bar',
+  data:{labels:genYears, datasets:genDatasets},
+  options:{...baseOpts(), plugins:{legend:{display:true,position:'bottom',labels:{boxWidth:10,padding:12,color:TEXT}},tooltip:{...baseOpts().plugins.tooltip,callbacks:{label:ctx=>ctx.dataset.label+': '+ctx.raw.toLocaleString()+' GWh'}}},
+    scales:{x:{...baseOpts().scales.x,stacked:true}, y:{...baseOpts().scales.y,stacked:true,ticks:{callback:v=>v>=1000?(v/1000).toFixed(0)+'k GWh':v+' GWh'}}}}
+});
+
+// 7. Maintenance cost
+const maintData = {AZITO:5381,KRIBI:1642,SONGAS:1624,JBAY:1482,DIBAMBA:1338,KONK:1264,ARC:1086,DEAAR:1069,MOCUBA:1049,WINNERGY:1017,CUAMBA:1015,SOUTPAN:1004,BOSHOF:963,KLIP:929,DROOG:906,ARIES:798,MALINDI:742};
+const mLabels=Object.keys(maintData), mVals=Object.values(maintData);
+const mColors=mVals.map((v,i)=>i===0?RED:i<4?AMBER:CYAN+'99');
+new Chart(document.getElementById('ch-maint'),{
+  type:'bar',
+  data:{labels:mLabels, datasets:[{data:mVals, backgroundColor:mColors, borderRadius:3, borderSkipped:false}]},
+  options:{...baseOpts(), indexAxis:'y', scales:{x:{...baseOpts().scales.x, ticks:{callback:v=>'R'+v.toLocaleString()+'k'}}, y:{...baseOpts().scales.y, ticks:{font:{size:10}}}},
+    plugins:{...baseOpts().plugins, tooltip:{...baseOpts().plugins.tooltip, callbacks:{label:ctx=>'R'+ctx.raw.toLocaleString()+'k avg/year'}}}}
+});
+
+// 8. Availability heatmap
+const HM_DATA = {
+  ARC:    [94.0,95.8,93.2,90.2,94.3,89.7,79.4,95.7,95.9,95.3,92.8,94.0],
+  ARIES:  [95.3,94.1,93.3,89.9,95.7,93.9,83.5,90.6,89.1,95.2,92.7,95.4],
+  AZITO:  [95.3,93.8,94.2,90.0,88.9,88.8,94.7,95.2,84.8,94.0,94.3,95.3],
+  BOSHOF: [93.5,94.7,94.5,95.3,90.3,89.1,84.6,95.3,88.8,93.2,95.3,94.4],
+  CUAMBA: [94.7,94.0,94.5,83.5,89.1,94.4,90.7,88.9,94.6,95.2,95.4,94.9],
+  DEAAR:  [93.0,94.2,94.2,95.3,89.7,90.6,94.9,90.5,84.2,94.2,95.1,95.3],
+  DIBAMBA:[94.0,95.7,94.8,89.9,94.7,84.3,93.1,85.8,94.5,93.8,94.8,94.0],
+  DROOG:  [95.1,94.6,94.6,78.8,94.6,93.5,94.8,90.8,89.0,94.1,93.7,94.6],
+  JBAY:   [95.2,94.9,94.8,94.7,88.4,94.1,89.8,83.3,90.4,94.5,95.3,94.0],
+  KLIP:   [94.7,92.8,94.7,93.5,85.0,94.4,94.6,89.7,85.5,94.3,94.6,94.9],
+  KONK:   [95.9,94.6,92.4,89.1,84.6,89.9,94.8,89.2,94.5,95.5,94.8,94.2],
+  KRIBI:  [95.2,93.9,94.0,89.5,94.7,79.6,95.2,87.9,95.2,93.0,94.0,95.7],
+  MALINDI:[94.1,94.6,95.4,82.9,84.8,90.9,93.9,95.3,94.0,93.4,95.1,94.5],
+  MOCUBA: [95.3,95.9,92.6,90.2,94.3,95.2,93.5,94.5,74.1,95.1,94.3,93.2],
+  SONGAS: [94.8,94.5,93.0,85.0,95.4,90.6,83.7,94.9,94.2,95.1,95.3,93.0],
+  SOUTPAN:[94.1,94.6,95.1,95.4,89.5,90.3,89.5,89.2,89.6,93.4,93.7,94.7],
+  WINNERGY:[93.9,92.7,94.0,84.8,88.9,94.7,89.8,89.7,94.1,95.9,95.2,94.7]
+};
+
+function hmColor(v){
+  if(v>=94)return{bg:'#0f4c3a',text:'#4ade80'};
+  if(v>=90)return{bg:'#1a3a20',text:'#86efac'};
+  if(v>=85)return{bg:'#3d2f0a',text:'#fcd34d'};
+  if(v>=78)return{bg:'#4a1c0c',text:'#fb923c'};
+  return{bg:'#3d0c0c',text:'#f87171'};
+}
+
+const hmCont = document.getElementById('hm-container');
+const tbl = document.createElement('table');
+tbl.className='hm-table';
+const thead=document.createElement('thead');
+const htr=document.createElement('tr');
+htr.innerHTML='<th></th>';
+MONTHS.forEach(m=>{const th=document.createElement('th');th.textContent=m;htr.appendChild(th);});
+thead.appendChild(htr);tbl.appendChild(thead);
+const tbody=document.createElement('tbody');
+Object.entries(HM_DATA).forEach(([plant,vals])=>{
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td class="plant-lbl">${plant}</td>`;
+  vals.forEach(v=>{
+    const c=hmColor(v), td=document.createElement('td');
+    td.style.background=c.bg; td.style.color=c.text;
+    td.textContent=v.toFixed(1);
+    td.title=`${plant} — ${MONTHS[vals.indexOf(v)]}: ${v.toFixed(1)}%`;
+    tr.appendChild(td);
+  });
+  tbody.appendChild(tr);
+});
+tbl.appendChild(tbody); hmCont.appendChild(tbl);
+
+// 9. Correlation matrix
+const CORR_LABELS_SHORT = ['Avail','CF','Curtail','ForcedDT','PlannedDT','NetGen'];
+const CORR_LABELS_FULL  = ['AvailabilityPct','CapacityFactorPct','CurtailmentPct','ForcedDowntimeHours','PlannedDowntimeHours','NetGenerationMWh'];
+const CORR = [
+  [1.000, 0.420, 0.276,-0.244,-0.942, 0.172],
+  [0.420, 1.000, 0.142, 0.020,-0.461, 0.695],
+  [0.276, 0.142, 1.000, 0.007,-0.301, 0.045],
+  [-0.244,0.020, 0.007, 1.000,-0.034,-0.042],
+  [-0.942,-0.461,-0.301,-0.034, 1.000,-0.161],
+  [0.172, 0.695, 0.045,-0.042,-0.161, 1.000]
+];
+
+function corrColor(v){
+  if(v>=0.7) return{bg:'#0a3d2e',text:'#34d399'};
+  if(v>=0.4) return{bg:'#1a3a20',text:'#86efac'};
+  if(v>=0.1) return{bg:'#1e2533',text:'#93c5fd'};
+  if(v>=-0.1) return{bg:'#21262d',text:'#8b949e'};
+  if(v>=-0.4) return{bg:'#3d2010',text:'#fdba74'};
+  if(v>=-0.7) return{bg:'#4a1c0c',text:'#fb923c'};
+  return{bg:'#3d0c0c',text:'#f87171'};
+}
+
+const corrCont=document.getElementById('corr-container');
+const ct=document.createElement('table');ct.className='corr-table';
+const cth=document.createElement('thead'),chr2=document.createElement('tr');
+chr2.innerHTML='<th></th>';
+CORR_LABELS_SHORT.forEach(l=>{const th=document.createElement('th');th.textContent=l;chr2.appendChild(th);});
+cth.appendChild(chr2);ct.appendChild(cth);
+const ctb=document.createElement('tbody');
+CORR.forEach((row,i)=>{
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td class="row-lbl">${CORR_LABELS_SHORT[i]}</td>`;
+  row.forEach((v,j)=>{
+    const c=corrColor(v),td=document.createElement('td');
+    td.style.background=c.bg;td.style.color=c.text;
+    td.style.fontWeight=Math.abs(v)>0.5?'600':'400';
+    td.textContent=v.toFixed(2);
+    td.title=`${CORR_LABELS_FULL[i]} ↔ ${CORR_LABELS_FULL[j]}: r=${v.toFixed(3)}`;
+    tr.appendChild(td);
+  });
+  ctb.appendChild(tr);
+});
+ct.appendChild(ctb);corrCont.appendChild(ct);
+</script>
+</body>
+</html>
