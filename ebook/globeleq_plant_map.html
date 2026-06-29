@@ -7,54 +7,61 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: #0d1117; color: #e2e8f0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; min-height: 100vh; }
+  body { background: #f4f2ed; color: #1a1a2e; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; min-height: 100vh; }
 
-  header { background: #161b22; border-bottom: 1px solid #21262d; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; }
-  .logo { display: flex; align-items: center; gap: 12px; }
-  .logo-mark { width: 32px; height: 32px; background: #14443B; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; color: #00B4D8; }
-  .logo-text { font-size: 15px; font-weight: 500; color: #e2e8f0; }
-  .logo-sub { font-size: 12px; color: #8b949e; margin-top: 1px; }
-  .nav-links { display: flex; gap: 16px; }
-  .nav-links a { color: #8b949e; text-decoration: none; font-size: 13px; }
-  .nav-links a:hover { color: #e2e8f0; }
+  header { background: #ffffff; border-bottom: 3px solid #F79420; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo { display: flex; align-items: center; gap: 14px; }
+  .logo-mark { width: 38px; height: 38px; background: #F79420; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; color: #fff; letter-spacing: -1px; }
+  .logo-text { font-size: 15px; font-weight: 700; color: #1a1a2e; text-transform: uppercase; letter-spacing: 0.06em; }
+  .logo-sub { font-size: 10px; color: #0091A8; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+  .nav-links { display: flex; gap: 0; }
+  .nav-links a { color: #555; text-decoration: none; font-size: 12px; font-weight: 500; padding: 8px 14px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .nav-links a:hover { background: #F7942015; color: #F79420; }
 
-  .stats-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: #21262d; border-bottom: 1px solid #21262d; }
-  .stat { background: #0d1117; padding: 14px 20px; }
-  .stat-val { font-size: 22px; font-weight: 600; }
-  .stat-lbl { font-size: 11px; color: #8b949e; margin-top: 3px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .accent-bar { height: 4px; background: #0091A8; }
 
-  .map-area { display: flex; height: calc(100vh - 148px); }
+  .stats-bar { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid #e0ddd8; background: #fff; }
+  .stat { padding: 14px 24px; border-right: 1px solid #e0ddd8; }
+  .stat:last-child { border-right: none; }
+  .stat-val { font-size: 22px; font-weight: 700; color: #1a1a2e; }
+  .stat-lbl { font-size: 10px; color: #888; margin-top: 3px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+  .map-area { display: flex; height: calc(100vh - 122px); }
   #map { flex: 1; }
 
-  .sidebar { width: 260px; background: #161b22; border-left: 1px solid #21262d; display: flex; flex-direction: column; overflow-y: auto; }
-  .sidebar-section { padding: 16px; border-bottom: 1px solid #21262d; }
-  .sidebar-title { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: #8b949e; margin-bottom: 12px; }
+  .sidebar { width: 268px; background: #fff; border-left: 1px solid #e0ddd8; display: flex; flex-direction: column; overflow-y: auto; }
+  .sidebar-section { padding: 16px; border-bottom: 1px solid #e0ddd8; }
+  .sidebar-title { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #0091A8; font-weight: 700; margin-bottom: 12px; }
 
-  .filter-btn { width: 100%; display: flex; align-items: center; gap: 9px; background: transparent; border: none; color: #c9d1d9; font-size: 13px; padding: 7px 8px; border-radius: 6px; cursor: pointer; text-align: left; }
-  .filter-btn:hover { background: #21262d; }
-  .filter-btn.active { background: #21262d; color: #e2e8f0; }
+  .filter-btn { width: 100%; display: flex; align-items: center; gap: 9px; background: transparent; border: none; color: #444; font-size: 13px; padding: 7px 8px; border-radius: 6px; cursor: pointer; text-align: left; }
+  .filter-btn:hover { background: #f4f2ed; }
+  .filter-btn.active { background: #F7942015; color: #1a1a2e; font-weight: 500; }
   .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-  .count-badge { margin-left: auto; font-size: 11px; color: #8b949e; background: #21262d; border-radius: 10px; padding: 1px 7px; }
+  .count-badge { margin-left: auto; font-size: 11px; color: #888; background: #f0ede8; border-radius: 10px; padding: 1px 7px; }
 
-  .region-item { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; font-size: 13px; color: #c9d1d9; border-bottom: 1px solid #21262d; }
+  .region-item { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; font-size: 13px; color: #444; border-bottom: 1px solid #f0ede8; }
   .region-item:last-child { border-bottom: none; }
-  .region-mw { font-weight: 500; color: #00B4D8; font-size: 13px; }
+  .region-mw { font-weight: 600; color: #F79420; font-size: 13px; }
 
-  .legend-item { display: flex; align-items: center; gap: 8px; padding: 4px 0; font-size: 12px; color: #8b949e; }
+  .legend-item { display: flex; align-items: center; gap: 8px; padding: 4px 0; font-size: 12px; color: #666; }
 
-  .popup-head { font-size: 14px; font-weight: 600; color: #e2e8f0; margin-bottom: 4px; }
-  .popup-badge { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 20px; margin-bottom: 8px; font-weight: 500; }
-  .popup-row { display: flex; justify-content: space-between; gap: 12px; font-size: 12px; padding: 5px 0; border-top: 1px solid #2d3340; }
-  .popup-row .lbl { color: #8b949e; }
-  .popup-row .val { color: #e2e8f0; font-weight: 500; text-align: right; }
-  .popup-const { font-size: 10px; padding: 2px 7px; border-radius: 20px; background: #ffffff1a; color: #ffffff99; border: 1px solid #ffffff33; vertical-align: middle; margin-left: 6px; }
+  .key-asset { font-size: 12px; color: #555; line-height: 1.65; }
+  .key-asset strong { color: #F79420; }
 
-  .leaflet-popup-content-wrapper { background: #1a1f2e !important; border: 1px solid #2d3340 !important; border-radius: 10px !important; color: #e2e8f0 !important; box-shadow: 0 8px 32px rgba(0,0,0,0.6) !important; }
-  .leaflet-popup-tip { background: #1a1f2e !important; }
-  .leaflet-popup-content { margin: 14px 16px !important; min-width: 200px; }
-  .leaflet-control-zoom a { background: #161b22 !important; color: #c9d1d9 !important; border-color: #21262d !important; }
-  .leaflet-control-attribution { background: rgba(13,17,23,0.7) !important; color: #555 !important; }
-  .leaflet-control-attribution a { color: #555 !important; }
+  .popup-head { font-size: 14px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .popup-badge { display: inline-block; font-size: 10px; padding: 3px 9px; border-radius: 20px; margin-bottom: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+  .popup-row { display: flex; justify-content: space-between; gap: 12px; font-size: 12px; padding: 5px 0; border-top: 1px solid #e8e4de; }
+  .popup-row .lbl { color: #999; }
+  .popup-row .val { color: #1a1a2e; font-weight: 600; text-align: right; }
+  .popup-const { font-size: 10px; padding: 2px 7px; border-radius: 20px; background: #FFF3E0; color: #E65100; border: 1px solid #FFCC80; vertical-align: middle; margin-left: 6px; font-weight: 600; }
+
+  .leaflet-popup-content-wrapper { background: #ffffff !important; border: 1px solid #e0ddd8 !important; border-top: 3px solid #F79420 !important; border-radius: 8px !important; color: #1a1a2e !important; box-shadow: 0 8px 24px rgba(0,0,0,0.15) !important; }
+  .leaflet-popup-tip { background: #ffffff !important; }
+  .leaflet-popup-content { margin: 14px 16px !important; min-width: 210px; }
+  .leaflet-control-zoom a { background: #ffffff !important; color: #444 !important; border-color: #e0ddd8 !important; }
+  .leaflet-control-zoom a:hover { background: #f4f2ed !important; }
+  .leaflet-control-attribution { background: rgba(255,255,255,0.85) !important; color: #aaa !important; }
+  .leaflet-control-attribution a { color: #aaa !important; }
 
   @media (max-width: 600px) {
     .sidebar { display: none; }
@@ -69,99 +76,104 @@
   <div class="logo">
     <div class="logo-mark">G</div>
     <div>
-      <div class="logo-text">Globeleq Energy Intelligence Platform</div>
-      <div class="logo-sub">19 IPP plants · 7 African countries · 1,794 MW operating</div>
+      <div class="logo-text">Globeleq</div>
+      <div class="logo-sub">Powering Africa's Growth</div>
     </div>
   </div>
   <div class="nav-links">
-    <a href="globeleq_energy_intelligence_ebook.html">Ebook &rarr;</a>
+    <a href="globeleq_energy_intelligence_ebook.html">Ebook</a>
+    <a href="globeleq_dashboard.html">Dashboard</a>
+    <a href="../index.html">Home</a>
     <a href="https://github.com/anthonyapollis/globeleq-energy-intelligence-platform" target="_blank">GitHub</a>
   </div>
 </header>
+<div class="accent-bar"></div>
 
 <div class="stats-bar">
   <div class="stat"><div class="stat-val">19</div><div class="stat-lbl">Plants</div></div>
-  <div class="stat"><div class="stat-val">7</div><div class="stat-lbl">Countries</div></div>
-  <div class="stat"><div class="stat-val" style="color:#00B4D8">1,794 MW</div><div class="stat-lbl">Operating capacity</div></div>
-  <div class="stat"><div class="stat-val" style="color:#F7941D">485 MW</div><div class="stat-lbl">Pipeline (construction)</div></div>
+  <div class="stat"><div class="stat-val" style="color:#F79420">7</div><div class="stat-lbl">Countries</div></div>
+  <div class="stat"><div class="stat-val" style="color:#0091A8">1,794 MW</div><div class="stat-lbl">Operating capacity</div></div>
+  <div class="stat"><div class="stat-val" style="color:#E65100">485 MW</div><div class="stat-lbl">Pipeline</div></div>
 </div>
 
 <div class="map-area">
   <div id="map"></div>
   <div class="sidebar">
+
     <div class="sidebar-section">
       <div class="sidebar-title">Filter by technology</div>
       <button class="filter-btn active" data-tech="All" onclick="filterTech(this)">
-        <span class="dot" style="background:#555"></span>All plants
+        <span class="dot" style="background:#bbb"></span>All plants
         <span class="count-badge">19</span>
       </button>
       <button class="filter-btn" data-tech="Solar PV" onclick="filterTech(this)">
-        <span class="dot" style="background:#F7941D"></span>Solar PV
+        <span class="dot" style="background:#F79420"></span>Solar PV
         <span class="count-badge">11</span>
       </button>
       <button class="filter-btn" data-tech="Natural Gas" onclick="filterTech(this)">
-        <span class="dot" style="background:#00B4D8"></span>Natural gas
+        <span class="dot" style="background:#0091A8"></span>Natural gas
         <span class="count-badge">4</span>
       </button>
       <button class="filter-btn" data-tech="Wind" onclick="filterTech(this)">
-        <span class="dot" style="background:#14B8A6"></span>Wind
+        <span class="dot" style="background:#2ECC71"></span>Wind
         <span class="count-badge">2</span>
       </button>
       <button class="filter-btn" data-tech="Heavy Fuel Oil" onclick="filterTech(this)">
-        <span class="dot" style="background:#EF4444"></span>Heavy fuel oil
+        <span class="dot" style="background:#E74C3C"></span>Heavy fuel oil
         <span class="count-badge">1</span>
       </button>
       <button class="filter-btn" data-tech="Solar PV + BESS" onclick="filterTech(this)">
-        <span class="dot" style="background:#A855F7"></span>Solar + BESS
+        <span class="dot" style="background:#9B59B6"></span>Solar + BESS
         <span class="count-badge">1</span>
       </button>
       <button class="filter-btn" data-tech="Geothermal" onclick="filterTech(this)">
-        <span class="dot" style="background:#22C55E"></span>Geothermal
+        <span class="dot" style="background:#27AE60"></span>Geothermal
         <span class="count-badge">1</span>
       </button>
     </div>
 
     <div class="sidebar-section">
       <div class="sidebar-title">Capacity by region</div>
-      <div class="region-item"><span>Southern Africa</span><span class="region-mw">872 MW</span></div>
       <div class="region-item"><span>West Africa</span><span class="region-mw">1,017 MW</span></div>
+      <div class="region-item"><span>Southern Africa</span><span class="region-mw">872 MW</span></div>
       <div class="region-item"><span>East Africa</span><span class="region-mw">277 MW</span></div>
       <div class="region-item"><span>Northern Africa</span><span class="region-mw">91 MW</span></div>
     </div>
 
     <div class="sidebar-section">
-      <div class="sidebar-title">Map legend</div>
-      <div class="legend-item"><span class="dot" style="background:#F7941D"></span>Solar PV</div>
-      <div class="legend-item"><span class="dot" style="background:#00B4D8"></span>Natural gas (CCGT/GT)</div>
-      <div class="legend-item"><span class="dot" style="background:#14B8A6"></span>Wind</div>
-      <div class="legend-item"><span class="dot" style="background:#EF4444"></span>Heavy fuel oil</div>
-      <div class="legend-item"><span class="dot" style="background:#A855F7"></span>Solar PV + BESS</div>
-      <div class="legend-item"><span class="dot" style="background:#22C55E"></span>Geothermal</div>
-      <div class="legend-item" style="margin-top:8px;padding-top:8px;border-top:1px solid #21262d">
-        <span style="width:10px;height:10px;border-radius:50%;border:2px dashed #fff;opacity:0.5;flex-shrink:0;display:inline-block"></span>
+      <div class="sidebar-title">Legend</div>
+      <div class="legend-item"><span class="dot" style="background:#F79420"></span>Solar PV</div>
+      <div class="legend-item"><span class="dot" style="background:#0091A8"></span>Natural gas (CCGT / GT)</div>
+      <div class="legend-item"><span class="dot" style="background:#2ECC71"></span>Wind</div>
+      <div class="legend-item"><span class="dot" style="background:#E74C3C"></span>Heavy fuel oil</div>
+      <div class="legend-item"><span class="dot" style="background:#9B59B6"></span>Solar PV + BESS</div>
+      <div class="legend-item"><span class="dot" style="background:#27AE60"></span>Geothermal</div>
+      <div class="legend-item" style="margin-top:8px; padding-top:8px; border-top:1px solid #e0ddd8">
+        <span style="width:10px;height:10px;border-radius:50%;border:2px dashed #F79420;display:inline-block;flex-shrink:0"></span>
         In construction
       </div>
-      <div class="legend-item" style="font-size:11px;color:#555;margin-top:8px">Circle size = nameplate MW</div>
+      <div class="legend-item" style="font-size:11px;color:#aaa;margin-top:6px">Circle size = nameplate MW</div>
     </div>
 
     <div class="sidebar-section">
       <div class="sidebar-title">Key asset</div>
-      <div style="font-size:13px;color:#c9d1d9;line-height:1.6">
-        <strong style="color:#F7941D">Azito Power</strong> (Côte d'Ivoire) is the portfolio's largest plant at 713 MW and ~41% of annual revenue. It is a combined-cycle gas plant and the primary revenue concentration risk.
+      <div class="key-asset">
+        <strong>Azito Power</strong> (Côte d'Ivoire) is the portfolio anchor at 713 MW and ~41% of annual revenue. It is a combined-cycle gas turbine plant and the primary revenue concentration risk.
       </div>
     </div>
+
   </div>
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 const TECH_COLOR = {
-  "Solar PV":       "#F7941D",
-  "Natural Gas":    "#00B4D8",
-  "Wind":           "#14B8A6",
-  "Heavy Fuel Oil": "#EF4444",
-  "Solar PV + BESS":"#A855F7",
-  "Geothermal":     "#22C55E"
+  "Solar PV":        "#F79420",
+  "Natural Gas":     "#0091A8",
+  "Wind":            "#2ECC71",
+  "Heavy Fuel Oil":  "#E74C3C",
+  "Solar PV + BESS": "#9B59B6",
+  "Geothermal":      "#27AE60"
 };
 
 const plants = [
@@ -171,8 +183,8 @@ const plants = [
   { code:"DIBAMBA",  name:"Dibamba Power",              city:"Douala",       country:"Cameroon",      region:"West Africa",     tech:"Heavy Fuel Oil", mw:88,  lat:4.10,   lng:9.77,   status:"Operating",      offtaker:"ENEO",                  agreement:"Tolling", term:20 },
   { code:"KRIBI",    name:"Kribi Power",                city:"Kribi",        country:"Cameroon",      region:"West Africa",     tech:"Natural Gas",    mw:216, lat:2.94,   lng:9.91,   status:"Operating",      offtaker:"Cameroon Natl Grid",    agreement:"PPA", term:20 },
   { code:"MALINDI",  name:"Malindi Solar Power",        city:"Malindi",      country:"Kenya",         region:"East Africa",     tech:"Solar PV",       mw:52,  lat:-3.22,  lng:40.12,  status:"Operating",      offtaker:"Kenya Power",           agreement:"PPA", term:20 },
-  { code:"MENENGAI", name:"Menengai Geothermal",        city:"Nakuru County",country:"Kenya",         region:"East Africa",     tech:"Geothermal",     mw:35,  lat:-0.38,  lng:36.08,  status:"In Construction",offtaker:"Kenya Natl Grid",        agreement:"", term:0 },
-  { code:"CUAMBA",   name:"Cuamba Solar PV + BESS",     city:"Cuamba",       country:"Mozambique",    region:"Southern Africa", tech:"Solar PV + BESS",mw:19,  lat:-14.80, lng:36.54,  status:"Operating",      offtaker:"—",                     agreement:"", term:0 },
+  { code:"MENENGAI", name:"Menengai Geothermal",        city:"Nakuru County",country:"Kenya",         region:"East Africa",     tech:"Geothermal",     mw:35,  lat:-0.38,  lng:36.08,  status:"In Construction",offtaker:"Kenya Natl Grid",        agreement:"—", term:0 },
+  { code:"CUAMBA",   name:"Cuamba Solar PV + BESS",     city:"Cuamba",       country:"Mozambique",    region:"Southern Africa", tech:"Solar PV + BESS",mw:19,  lat:-14.80, lng:36.54,  status:"Operating",      offtaker:"—",                     agreement:"—", term:0 },
   { code:"MOCUBA",   name:"Mocuba Solar",               city:"Mocuba",       country:"Mozambique",    region:"Southern Africa", tech:"Solar PV",       mw:41,  lat:-16.84, lng:36.99,  status:"Operating",      offtaker:"EDM",                   agreement:"PPA", term:25 },
   { code:"CTT",      name:"Central Térmica de Temane",  city:"Temane",       country:"Mozambique",    region:"Southern Africa", tech:"Natural Gas",    mw:450, lat:-22.13, lng:34.73,  status:"In Construction",offtaker:"EDM",                   agreement:"Tolling", term:25 },
   { code:"SONGAS",   name:"Songas",                     city:"Dar es Salaam",country:"Tanzania",      region:"East Africa",     tech:"Natural Gas",    mw:190, lat:-6.79,  lng:39.21,  status:"Operating",      offtaker:"Tanzania Natl Grid",    agreement:"PPA", term:20 },
@@ -180,8 +192,8 @@ const plants = [
   { code:"BOSHOF",   name:"Boshof Solar Power",         city:"Boshof",       country:"South Africa",  region:"Southern Africa", tech:"Solar PV",       mw:66,  lat:-28.54, lng:25.23,  status:"Operating",      offtaker:"Eskom",                 agreement:"PPA", term:20 },
   { code:"DEAAR",    name:"De Aar Solar Power",         city:"De Aar",       country:"South Africa",  region:"Southern Africa", tech:"Solar PV",       mw:50,  lat:-30.65, lng:24.01,  status:"Operating",      offtaker:"Eskom",                 agreement:"PPA", term:20 },
   { code:"DROOG",    name:"Droogfontein Solar",         city:"Kimberley",    country:"South Africa",  region:"Southern Africa", tech:"Solar PV",       mw:50,  lat:-28.73, lng:24.75,  status:"Operating",      offtaker:"Eskom",                 agreement:"PPA", term:20 },
-  { code:"JBAY",     name:"Jeffreys Bay Wind Farm",     city:"Jeffreys Bay", country:"South Africa",  region:"Southern Africa", tech:"Wind",           mw:138, lat:-34.05, lng:24.93,  status:"Operating",      offtaker:"—",                     agreement:"", term:0 },
-  { code:"KLIP",     name:"Klipheuwel Wind Farm",       city:"Caledon",      country:"South Africa",  region:"Southern Africa", tech:"Wind",           mw:27,  lat:-34.23, lng:19.42,  status:"Operating",      offtaker:"—",                     agreement:"", term:0 },
+  { code:"JBAY",     name:"Jeffreys Bay Wind Farm",     city:"Jeffreys Bay", country:"South Africa",  region:"Southern Africa", tech:"Wind",           mw:138, lat:-34.05, lng:24.93,  status:"Operating",      offtaker:"—",                     agreement:"—", term:0 },
+  { code:"KLIP",     name:"Klipheuwel Wind Farm",       city:"Caledon",      country:"South Africa",  region:"Southern Africa", tech:"Wind",           mw:27,  lat:-34.23, lng:19.42,  status:"Operating",      offtaker:"—",                     agreement:"—", term:0 },
   { code:"KONK",     name:"Konkoonsies Solar",          city:"Pofadder",     country:"South Africa",  region:"Southern Africa", tech:"Solar PV",       mw:11,  lat:-29.13, lng:19.40,  status:"Operating",      offtaker:"Eskom",                 agreement:"PPA", term:20 },
   { code:"SOUTPAN",  name:"Soutpan Solar Power",        city:"Vivo, Limpopo",country:"South Africa",  region:"Southern Africa", tech:"Solar PV",       mw:31,  lat:-23.08, lng:28.32,  status:"Operating",      offtaker:"Eskom",                 agreement:"PPA", term:20 },
 ];
@@ -189,7 +201,7 @@ const plants = [
 const map = L.map('map', { zoomControl: true, scrollWheelZoom: true })
   .setView([0, 22], 4);
 
-L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
   attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
   subdomains: 'abcd', maxZoom: 19
 }).addTo(map);
@@ -206,13 +218,14 @@ plants.forEach(p => {
   const m = L.circleMarker([p.lat, p.lng], {
     radius: r,
     fillColor: col,
-    color: isConst ? "#ffffff" : col,
+    color: isConst ? "#F79420" : "#fff",
     weight: isConst ? 2.5 : 1.5,
-    opacity: isConst ? 0.55 : 0.95,
-    fillOpacity: isConst ? 0.25 : 0.82,
+    opacity: isConst ? 0.8 : 0.9,
+    fillOpacity: isConst ? 0.25 : 0.88,
+    dashArray: isConst ? "5,4" : null,
   }).addTo(map);
 
-  const badge = `background:${col}25;color:${col};border:1px solid ${col}55;`;
+  const badge = `background:${col}20;color:${col};border:1px solid ${col}60;`;
   const constTag = isConst ? `<span class="popup-const">In construction</span>` : '';
 
   m.bindPopup(`
@@ -222,11 +235,11 @@ plants.forEach(p => {
     <div class="popup-row"><span class="lbl">Capacity</span><span class="val">${p.mw} MW</span></div>
     <div class="popup-row"><span class="lbl">Region</span><span class="val">${p.region}</span></div>
     ${p.offtaker && p.offtaker !== '—' ? `<div class="popup-row"><span class="lbl">Offtaker</span><span class="val">${p.offtaker}</span></div>` : ''}
-    ${p.agreement ? `<div class="popup-row"><span class="lbl">Agreement</span><span class="val">${p.agreement}${p.term ? ' · ' + p.term + 'yr' : ''}</span></div>` : ''}
-  `, { maxWidth: 240 });
+    ${p.agreement && p.agreement !== '—' ? `<div class="popup-row"><span class="lbl">Agreement</span><span class="val">${p.agreement}${p.term ? ' · ' + p.term + 'yr' : ''}</span></div>` : ''}
+  `, { maxWidth: 250 });
 
-  m.on('mouseover', function() { this.setStyle({ weight: 3, fillOpacity: isConst ? 0.4 : 1, opacity: 1 }); });
-  m.on('mouseout',  function() { this.setStyle({ weight: isConst ? 2.5 : 1.5, fillOpacity: isConst ? 0.25 : 0.82, opacity: isConst ? 0.55 : 0.95 }); });
+  m.on('mouseover', function() { this.setStyle({ weight: 3, fillOpacity: isConst ? 0.45 : 1 }); });
+  m.on('mouseout',  function() { this.setStyle({ weight: isConst ? 2.5 : 1.5, fillOpacity: isConst ? 0.25 : 0.88 }); });
 
   markers.push({ m, plant: p });
 });
