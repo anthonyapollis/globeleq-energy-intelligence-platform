@@ -23,20 +23,25 @@
   /* ── Navigation ── */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    background: var(--dark-blue); padding: 0 2rem;
-    display: flex; align-items: center; height: 56px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    background: #fff; border-bottom: 3px solid #F79420; padding: 0 2rem;
+    display: flex; align-items: center; height: 64px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   }
-  .nav-logo { color: var(--amber); font-weight: 800; font-size: 1.1rem; letter-spacing: 1px; }
-  .nav-links { margin-left: auto; display: flex; gap: 1.4rem; }
-  .nav-links a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.85rem;
-    transition: color 0.2s; }
-  .nav-links a:hover { color: var(--cyan); }
+  .nav-accent { position: fixed; top: 64px; left: 0; right: 0; z-index: 99; height: 4px; background: #0091A8; }
+  .nav-logo { color: #1a1a2e; font-weight: 800; font-size: 0.95rem; letter-spacing: 2px; text-transform: uppercase; }
+  .nav-logo-g { color: #F79420; }
+  .nav-links { margin-left: auto; display: flex; gap: 0.2rem; align-items: center; }
+  .nav-links a { color: #555; text-decoration: none; font-size: 0.75rem; font-weight: 500;
+    padding: 5px 9px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.04em;
+    transition: color 0.2s, background 0.2s; }
+  .nav-links a:hover { color: #F79420; background: rgba(247,148,32,0.08); }
+  .nav-page-link { color: #0091A8 !important; border: 1px solid #e0ddd8; margin-right: 6px; }
+  .nav-page-link:hover { border-color: #F79420 !important; }
 
   /* ── Hero ── */
   .hero {
-    background: linear-gradient(135deg, var(--dark-blue) 0%, #003d73 60%, #004d8c 100%);
-    padding: 120px 4rem 80px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #0091A8 60%, #006d85 100%);
+    padding: 130px 4rem 80px;
     text-align: center; position: relative; overflow: hidden;
   }
   .hero::before {
@@ -331,8 +336,11 @@
 
 <!-- ── NAV ── -->
 <nav>
-  <span class="nav-logo">GLOBELEQ EIP</span>
+  <span class="nav-logo"><span class="nav-logo-g">G</span> LOBELEQ EIP</span>
   <div class="nav-links">
+    <a href="../index.html" class="nav-page-link">&#8592; Home</a>
+    <a href="globeleq_plant_map.html" class="nav-page-link">Map</a>
+    <a href="globeleq_dashboard.html" class="nav-page-link">Dashboard</a>
     <a href="#overview">Overview</a>
     <a href="#architecture">Architecture</a>
     <a href="#data">Data</a>
@@ -342,6 +350,7 @@
     <a href="#diagnostics">Diagnostics</a>
   </div>
 </nav>
+<div class="nav-accent"></div>
 
 <!-- ── HERO ── -->
 <div class="hero">
