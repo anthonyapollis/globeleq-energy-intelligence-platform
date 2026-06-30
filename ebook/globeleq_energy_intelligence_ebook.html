@@ -341,6 +341,7 @@
     <a href="../index.html" class="nav-page-link">&#8592; Home</a>
     <a href="globeleq_plant_map.html" class="nav-page-link">Map</a>
     <a href="globeleq_dashboard.html" class="nav-page-link">Dashboard</a>
+    <a href="../reports/Globeleq_Energy_Intelligence_Report.xlsx" download class="nav-page-link">Excel</a>
     <a href="#overview">Overview</a>
     <a href="#architecture">Architecture</a>
     <a href="#data">Data</a>
@@ -377,7 +378,7 @@
 <div class="kpi-strip">
   <div class="kpi-item"><div class="kpi-num">3.02M</div><div class="kpi-label">Total Rows Generated</div></div>
   <div class="kpi-item"><div class="kpi-num">19</div><div class="kpi-label">African Power Plants</div></div>
-  <div class="kpi-item"><div class="kpi-num">5</div><div class="kpi-label">ML Models in Registry</div></div>
+  <div class="kpi-item"><div class="kpi-num">8</div><div class="kpi-label">ML Models in Registry</div></div>
   <div class="kpi-item"><div class="kpi-num">R139M</div><div class="kpi-label">Annual Portfolio Revenue</div></div>
   <div class="kpi-item"><div class="kpi-num">~92%</div><div class="kpi-label">Operating Fleet Availability</div></div>
 </div>
@@ -436,7 +437,7 @@
           <div class="card amber-top">
             <div class="card-icon">&#128200;</div>
             <h3>Predictive ML Suite</h3>
-            <p>Five models covering yield forecasting, forced outage risk, maintenance cost, anomaly detection, and revenue projection.</p>
+            <p>Eight models covering yield forecasting, availability classification, maintenance cost, anomaly detection, revenue projection, and three production forecasting challengers.</p>
           </div>
           <div class="card green-top">
             <div class="card-icon">&#127758;</div>
@@ -600,7 +601,7 @@
         <div class="arch-layer green">
           <div class="arch-label">Consume</div>
           <div class="arch-title">MLflow Registry</div>
-          <div class="arch-sub">5 models · versioned · staging → production promotion</div>
+          <div class="arch-sub">8 models · versioned · staging → production promotion</div>
         </div>
         <div class="arch-layer green">
           <div class="arch-label">Consume</div>
@@ -815,9 +816,11 @@
     <div class="section-eyebrow">Chapter 6</div>
     <h2 class="section-title">Machine Learning <span>Suite</span></h2>
     <p class="section-intro">
-      Five models address distinct business questions across the plant lifecycle — from
-      15-minute yield prediction to monthly revenue forecasting. All models are tracked in
-      MLflow, versioned in the Model Registry, and refreshed weekly.
+      Eight models address distinct business questions across the plant lifecycle — from
+      15-minute yield prediction to monthly revenue forecasting. Five operational models
+      (XGBoost, LightGBM, Random Forest, Isolation Forest, LightGBM Regressor) are tracked
+      in MLflow alongside three production-ready forecasting challengers, all versioned in
+      the Model Registry and refreshed weekly.
     </p>
 
     <table class="ml-table">
