@@ -1,7 +1,7 @@
 # Globeleq Energy Intelligence Platform
 
 **Full-stack Azure Databricks data engineering + ML portfolio project**
-Synthetic SCADA telemetry from 19 African IPP power plants · 3M+ rows · 8 ML models
+Synthetic SCADA telemetry from 19 African IPP power plants · 3M+ rows · 9 ML models
 
 ---
 
@@ -19,7 +19,7 @@ commercial decision-making.
 | Plants | **19** across **7 countries** (17 operating · 2 under construction) |
 | Operating capacity | **1,794 MW** · Construction pipeline: **485 MW** |
 | Date range | **2020–2024** (5 years) |
-| ML models | **8** registered in MLflow (5 operational + 3 forecasting) |
+| ML models | **9** registered in MLflow (6 operational + 3 forecasting) |
 | Annual portfolio revenue | **~R139M** (synthetic; reflects contracted PPA tariff scale) |
 | Portfolio availability (operating fleet) | **~92%** (82.7% incl. under-construction plants) |
 
@@ -49,7 +49,7 @@ Globeleq_Energy_Intelligence_Platform/
 │   ├── 01_bronze_ingest.py         ← ADF-triggered, raw CSV → Delta Bronze
 │   ├── 02_silver_transform.py      ← Type casting, enrichment, rolling windows
 │   ├── 03_gold_kpis.py             ← Executive KPIs, ML feature store
-│   └── 04_ml_energy_intelligence.py← 8 ML models + MLflow tracking
+│   └── 04_ml_energy_intelligence.py← 9 ML models + MLflow tracking
 ├── pipelines/
 │   └── adf_globeleq_pipeline.json  ← Full ADF pipeline definition
 ├── reports/
@@ -106,6 +106,12 @@ Globeleq_Energy_Intelligence_Platform/
 | 6 | Weekly Seasonal Profile | Seasonal Decomposition | Baseline |
 | 7 | Robust Dynamic Regression | MM-Estimator Regression | Challenger |
 | **8** | **Technology-Aware Weather GBM** | **Gradient Boosting** | **Selected** (lowest RMSE) |
+
+**Solar yield forecasting (Model 9):**
+
+| # | Model | Algorithm | Key Metric |
+|---|---|---|---|
+| 9 | Solar Irradiance Yield Forecaster | LightGBM Regressor | R²=0.988, MAE=8.5 MWh, MAPE=4.2% |
 
 ---
 
