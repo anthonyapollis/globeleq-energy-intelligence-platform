@@ -6,45 +6,47 @@
 <title>Globeleq Energy Intelligence Platform</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: #0d1117; color: #e2e8f0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; min-height: 100vh; display: flex; flex-direction: column; }
+  body { background: #f4f2ed; color: #1a1a2e; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; min-height: 100vh; display: flex; flex-direction: column; }
 
-  header { background: #161b22; border-bottom: 1px solid #21262d; padding: 20px 40px; display: flex; align-items: center; gap: 16px; }
-  .logo-mark { width: 40px; height: 40px; background: #14443B; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; color: #00B4D8; flex-shrink: 0; }
-  .logo-text { font-size: 18px; font-weight: 500; }
-  .logo-sub { font-size: 13px; color: #8b949e; margin-top: 3px; }
+  header { background: #fff; border-bottom: 3px solid #F79420; padding: 0 40px; height: 64px; display: flex; align-items: center; gap: 16px; }
+  .accent-bar { height: 4px; background: #0091A8; }
+  .logo-mark { width: 40px; height: 40px; background: #F79420; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; color: #fff; flex-shrink: 0; }
+  .logo-text { font-size: 16px; font-weight: 700; color: #1a1a2e; text-transform: uppercase; letter-spacing: 0.06em; }
+  .logo-sub { font-size: 10px; color: #0091A8; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
 
   .hero { max-width: 860px; margin: 60px auto 40px; padding: 0 24px; text-align: center; }
-  .hero h1 { font-size: 36px; font-weight: 600; line-height: 1.2; margin-bottom: 16px; }
-  .hero h1 span { color: #00B4D8; }
-  .hero p { font-size: 16px; color: #8b949e; line-height: 1.7; max-width: 600px; margin: 0 auto; }
+  .hero h1 { font-size: 36px; font-weight: 700; line-height: 1.2; margin-bottom: 16px; color: #1a1a2e; }
+  .hero h1 span { color: #F79420; }
+  .hero p { font-size: 16px; color: #555; line-height: 1.7; max-width: 600px; margin: 0 auto; }
 
   .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; max-width: 860px; margin: 0 auto 48px; padding: 0 24px; }
-  .kpi { background: #161b22; border: 1px solid #21262d; border-radius: 10px; padding: 18px 20px; text-align: center; }
-  .kpi-val { font-size: 26px; font-weight: 600; color: #00B4D8; }
-  .kpi-lbl { font-size: 12px; color: #8b949e; margin-top: 4px; }
+  .kpi { background: #fff; border: 1px solid #e0ddd8; border-top: 3px solid #F79420; border-radius: 10px; padding: 18px 20px; text-align: center; }
+  .kpi-val { font-size: 26px; font-weight: 700; color: #F79420; }
+  .kpi-lbl { font-size: 11px; color: #888; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.04em; }
 
   .cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; max-width: 860px; margin: 0 auto 60px; padding: 0 24px; }
-  .card { background: #161b22; border: 1px solid #21262d; border-radius: 12px; padding: 28px 28px 24px; text-decoration: none; color: inherit; transition: border-color 0.15s, background 0.15s; display: flex; flex-direction: column; }
-  .card:hover { border-color: #00B4D8; background: #1a2030; }
+  .card { background: #fff; border: 1px solid #e0ddd8; border-top: 3px solid #F79420; border-radius: 10px; padding: 28px 28px 24px; text-decoration: none; color: inherit; transition: border-color 0.15s, box-shadow 0.15s; display: flex; flex-direction: column; }
+  .card:hover { border-color: #F79420; box-shadow: 0 4px 16px rgba(247,148,32,0.12); }
   .card-icon { font-size: 28px; margin-bottom: 14px; }
-  .card-title { font-size: 17px; font-weight: 500; margin-bottom: 8px; color: #e2e8f0; }
-  .card-desc { font-size: 13px; color: #8b949e; line-height: 1.6; flex: 1; }
-  .card-cta { margin-top: 18px; font-size: 13px; color: #00B4D8; display: flex; align-items: center; gap: 6px; }
+  .card-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; color: #1a1a2e; }
+  .card-desc { font-size: 13px; color: #666; line-height: 1.6; flex: 1; }
+  .card-cta { margin-top: 18px; font-size: 13px; color: #0091A8; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+  .card:hover .card-cta { color: #F79420; }
 
   .stack { max-width: 860px; margin: 0 auto 48px; padding: 0 24px; }
-  .stack h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.06em; color: #8b949e; margin-bottom: 16px; }
-  .pills { display: flex; flex-wrap: wrap; gap: 8px; }
-  .pill { background: #21262d; border: 1px solid #30363d; border-radius: 20px; padding: 5px 12px; font-size: 12px; color: #c9d1d9; }
+  .stack h2 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #0091A8; font-weight: 700; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #F79420; display: inline-block; }
+  .pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .pill { background: #fff; border: 1px solid #e0ddd8; border-radius: 20px; padding: 5px 14px; font-size: 12px; color: #1a1a2e; font-weight: 500; }
 
-  footer { margin-top: auto; border-top: 1px solid #21262d; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #555; }
-  footer a { color: #8b949e; text-decoration: none; }
-  footer a:hover { color: #e2e8f0; }
+  footer { margin-top: auto; border-top: 1px solid #e0ddd8; background: #fff; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #888; }
+  footer a { color: #0091A8; text-decoration: none; }
+  footer a:hover { color: #F79420; }
 
   @media (max-width: 620px) {
     .hero h1 { font-size: 26px; }
     .kpis { grid-template-columns: repeat(2, 1fr); }
     .cards { grid-template-columns: 1fr; }
-    header { padding: 16px 20px; }
+    header { padding: 0 20px; }
   }
 </style>
 </head>
@@ -53,10 +55,11 @@
 <header>
   <div class="logo-mark">G</div>
   <div>
-    <div class="logo-text">Globeleq Energy Intelligence Platform</div>
-    <div class="logo-sub">Full-stack Azure Databricks · Medallion Architecture · ML + Power BI · Portfolio Project</div>
+    <div class="logo-text">Globeleq</div>
+    <div class="logo-sub">Powering Africa's Growth</div>
   </div>
 </header>
+<div class="accent-bar"></div>
 
 <div class="hero">
   <h1>African IPP Portfolio<br><span>Intelligence Platform</span></h1>
