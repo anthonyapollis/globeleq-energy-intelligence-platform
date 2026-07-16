@@ -1,0 +1,18 @@
+Site,Latitude,Longitude,Activity Weight,Nearest Site,Nearest Distance (km)
+Welkom,-27.9767,26.736,21798,Orkney,110.6
+Butterworth,-32.3292,28.1458,15164,Umtata,102.0
+Umtata,-31.5889,28.7844,15960,Butterworth,102.0
+Maseru,-29.3167,27.4833,29741,Teyateyaneng,31.8
+Botshabelo,-29.25,26.7333,10610,Maseru,73.1
+Molepolole,-24.4067,25.495,5439,Gaborone,49.8
+Witsieshoek,-28.5167,28.95,5092,Hlotse,96.8
+Mbabane,-26.3054,31.1367,5046,Maputo,148.2
+Carletonville,-26.3667,27.4,8150,Stilfontein,82.8
+Stilfontein,-26.85,26.7667,4261,Orkney,17.0
+Mafeteng,-29.8167,27.25,12929,Mohale's Hoek,42.5
+Hlotse,-28.8833,28.05,11641,Teyateyaneng,41.6
+Mohale's Hoek,-30.15,27.4667,5838,Mafeteng,42.5
+Teyateyaneng,-29.15,27.75,5026,Maseru,31.8
+Maputo,-25.9692,32.5732,7362,Mbabane,148.2
+Orkney,-26.9833,26.6833,2925,Stilfontein,17.0
+Gaborone,-24.6282,25.9231,2611,Molepolole,49.8
