@@ -1,6 +1,6 @@
 # Globeleq Energy Intelligence Platform
 
-**Full-stack Azure Databricks data engineering + ML portfolio project**
+**Full-stack Azure Databricks data engineering + ML completed project**
 Synthetic SCADA telemetry from 19 African IPP power plants · 3M+ rows · 9 ML models
 
 ---

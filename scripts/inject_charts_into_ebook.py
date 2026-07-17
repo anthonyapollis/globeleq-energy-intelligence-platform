@@ -75,7 +75,7 @@ CHARTS_META = [
         "XGBoost Feature Importance — Energy Yield Forecaster",
         "Horizontal bar chart of gain-based feature importance scores for the 7 input features: NameplateCapacity, AvailabilityPct, CurtailmentPct, Month, ForcedDowntimeHours, PlannedDowntimeHours, Year.",
         "Explainability is a regulatory requirement in energy markets. Lenders, offtakers, and regulators ask 'which variables drive your forecast?' — this chart answers directly. It also guides future feature engineering: low-importance features are dropped; high-importance ones are engineered further.",
-        "Model governance documentation, MLflow experiment metadata, and the SHAP explainability module in Notebook 04. Referenced in the hiring manager letter as evidence of explainable ML practice.",
+        "Model governance documentation, MLflow experiment metadata, and the SHAP explainability module in Notebook 04. Referenced in the project evidence note as evidence of explainable ML practice.",
         "Longer bar = higher contribution to model decisions. Features with near-zero importance can be safely dropped to reduce model complexity. The top 2–3 features typically explain 80%+ of model behaviour. Compare across model versions to detect feature drift.",
         "NameplateCapacity is the dominant feature — physical capacity caps maximum possible generation. AvailabilityPct is second — when a plant is running, capacity factor flows through. Month captures seasonal irradiance patterns for solar. Year shows a mild upward trend. Forced and Planned Downtime provide marginal additional signal."
     ),
