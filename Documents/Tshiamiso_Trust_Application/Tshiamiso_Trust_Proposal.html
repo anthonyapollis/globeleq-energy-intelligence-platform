@@ -47,7 +47,7 @@ h1,h2,h3{
 .mono{font-family:ui-monospace,"Cascadia Code","SF Mono",Consolas,monospace}
 .tnum{font-variant-numeric:tabular-nums}
 
-.wrap{max-width:920px; margin:0 auto; padding:0 28px 120px}
+.wrap{max-width:1180px; margin:0 auto; padding:0 28px 120px}
 
 /* ===== Cover ===== */
 .cover{
@@ -189,12 +189,13 @@ td.amt{font-family:ui-monospace,"Cascadia Code","SF Mono",Consolas,monospace; fo
 .leaflet-tooltip{position:absolute;white-space:nowrap;pointer-events:none}
 .leaflet-popup{position:absolute;text-align:center;margin-bottom:20px}.leaflet-popup-content-wrapper{background:#fff;color:#201D18;border-radius:4px;padding:1px;text-align:left}.leaflet-popup-content{margin:10px 12px;line-height:1.35}.leaflet-popup-tip-container{display:none}
 .leafmap{
-  flex:1 1 620px; min-width:280px; max-width:calc(100% - 244px); height:min(68vh,640px); min-height:500px;
+  flex:1 1 760px; min-width:280px; max-width:calc(100% - 210px); height:min(78vh,760px); min-height:560px;
   border:1px solid var(--line-strong); border-radius:4px; background:var(--surface);
   overflow:hidden; position:relative; z-index:1;
   order:1;
 }
-.leafmap.compact{height:min(64vh,600px); min-height:480px}
+.leafmap.compact{height:min(74vh,720px); min-height:540px}
+@media (min-width:1400px){.leafmap{height:min(80vh,860px)}.leafmap.compact{height:min(76vh,800px)}}
 .leafmap .leaflet-control-layers,
 .leafmap .leaflet-control-zoom a{font-family:-apple-system,"Segoe UI",Roboto,system-ui,sans-serif}
 .leafmap .leaflet-control-layers{border-radius:4px; box-shadow:0 4px 14px rgba(0,0,0,.18)}
