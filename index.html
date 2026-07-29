@@ -54,6 +54,42 @@
     .cards { grid-template-columns: 1fr; }
     header { padding: 0 20px; }
   }
+
+  .simbox { max-width: 860px; margin: 0 auto 48px; padding: 0 24px; }
+  .simbox h2 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #0091A8; font-weight: 700; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 2px solid #F79420; display: inline-block; }
+  .simbox p.sub { font-size: 13px; color: #666; line-height: 1.6; margin: 10px 0 16px; }
+  .simcols { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; background: #fff; border: 1px solid #e0ddd8; border-top: 3px solid #F79420; border-radius: 10px; padding: 20px 24px; }
+  @media (max-width: 620px) { .simcols { grid-template-columns: 1fr; } }
+  .simcols select { width: 100%; padding: 9px; border-radius: 6px; border: 1px solid #e0ddd8; font-size: 13px; margin-bottom: 12px; }
+  .simcols h4 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: #888; margin-bottom: 8px; }
+  .simlist { list-style: none; font-size: 13px; }
+  .simlist li { padding: 8px 10px; background: #f4f2ed; border-radius: 6px; margin-bottom: 7px; display: flex; justify-content: space-between; gap: 10px; }
+  .simlist li b { color: #F79420; }
+
+  #qa-toggle {
+    position: fixed; bottom: 22px; right: 22px; z-index: 200; background: #1a1a2e; color: #fff;
+    border: none; border-radius: 30px; padding: 13px 20px; font-size: 13px; font-weight: 700;
+    box-shadow: 0 6px 20px rgba(0,0,0,.35); cursor: pointer; display: flex; align-items: center; gap: 8px;
+  }
+  #qa-toggle:hover { background: #F79420; }
+  #qa-panel {
+    position: fixed; bottom: 78px; right: 22px; z-index: 200; width: 360px; max-width: 92vw; max-height: 70vh;
+    background: #fff; border-radius: 12px; box-shadow: 0 12px 40px rgba(0,0,0,.3);
+    display: none; flex-direction: column; overflow: hidden; border: 1px solid #e0ddd8;
+  }
+  #qa-panel.open { display: flex; }
+  #qa-head { background: #1a1a2e; color: #fff; padding: 13px 16px; font-size: 13px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
+  #qa-head button { background: none; border: none; color: #fff; font-size: 16px; cursor: pointer; opacity: .7; }
+  #qa-log { flex: 1; overflow-y: auto; padding: 14px; font-size: 12.5px; display: flex; flex-direction: column; gap: 8px; }
+  #qa-log .bubble { padding: 9px 12px; border-radius: 10px; max-width: 88%; line-height: 1.5; }
+  #qa-log .bot { background: #f4f2ed; align-self: flex-start; color: #1a1a2e; }
+  #qa-log .user { background: #1a1a2e; color: #fff; align-self: flex-end; }
+  #qa-chips { display: flex; gap: 6px; flex-wrap: wrap; padding: 0 14px 10px; }
+  #qa-chips button { font-size: 10.5px; background: #f4f2ed; border: 1px solid #e0ddd8; border-radius: 14px; padding: 5px 10px; cursor: pointer; color: #1a1a2e; }
+  #qa-chips button:hover { border-color: #F79420; }
+  #qa-input-row { display: flex; border-top: 1px solid #eee; }
+  #qa-input { flex: 1; border: none; padding: 11px 12px; font-size: 12.5px; outline: none; }
+  #qa-send { background: #F79420; color: #fff; border: none; padding: 0 16px; font-weight: 700; cursor: pointer; font-size: 12px; }
 </style>
 </head>
 <body>
@@ -147,10 +183,128 @@
   </div>
 </div>
 
+<div class="simbox">
+  <h2>Similar plants — operational risk triage</h2>
+  <p class="sub">Content-based nearest-neighbour similarity (cosine) over real plant attributes (technology, capacity, region) and real aggregated operations data (average availability %, average capacity factor % from 12,400+ daily SCADA rows) — not customer-purchase collaborative filtering, since a power-plant portfolio has no such history. Framed for ops triage: if one plant's numbers move, which plants have a similar profile and are worth a second look too. 19 plants is too few for a held-out accuracy claim, so this is reported as a diagnostic, not a validated prediction: each plant's nearest neighbour shares its primary technology 88.2% of the time.</p>
+  <div class="simcols">
+    <div>
+      <h4>Look up a plant</h4>
+      <select id="sim-select"></select>
+    </div>
+    <div>
+      <h4>Similar plants</h4>
+      <ul class="simlist" id="sim-results"></ul>
+    </div>
+  </div>
+</div>
+
 <footer>
   <span>Anthony Apollis &mdash; <a href="mailto:anthony.apollis@gmail.com">anthony.apollis@gmail.com</a></span>
   <a href="https://github.com/anthonyapollis/globeleq-energy-intelligence-platform" target="_blank">github.com/anthonyapollis/globeleq-energy-intelligence-platform</a>
 </footer>
+
+<button id="qa-toggle">&#128172; Ask about this platform</button>
+<div id="qa-panel">
+  <div id="qa-head"><span>Ask about Globeleq Intelligence</span><button id="qa-close">&times;</button></div>
+  <div id="qa-log"><div class="bubble bot">Hi! Ask me about the plants, the ML models, the tech stack, or the similar-plants tool.</div></div>
+  <div id="qa-chips">
+    <button>What is this project?</button>
+    <button>How much data is in this?</button>
+    <button>What are the ML models?</button>
+    <button>Is the data real?</button>
+  </div>
+  <div id="qa-input-row">
+    <input id="qa-input" type="text" placeholder="Ask a question...">
+    <button id="qa-send">Send</button>
+  </div>
+</div>
+<script>
+var PLANT_SIM = {"metrics": {"model": "Content-based nearest-neighbour similarity (cosine) over real plant attributes + real ops data", "plants_total": 19, "plants_scored": 17, "plants_under_construction_excluded": 2, "features": ["NameplateCapacity", "avg_availability_pct", "avg_capacity_factor_pct", "PrimaryTechnology (one-hot)", "Region (one-hot)"], "diagnostic_nearest_neighbour_same_technology_pct": 88.2, "note": "19 plants is too few for a held-out accuracy claim - this is a similarity tool for operational risk triage (\"which plants look like this one\"), not a validated prediction."}, "plants": [{"code": "ARC", "name": "ARC Solar Power", "country": "Egypt", "technology": "Solar PV", "capacity_mw": 66.0, "avg_availability_pct": 97.5, "avg_capacity_factor_pct": 23.9, "similar": [{"code": "WINNERGY", "name": "Winnergy Solar Power", "similarity": 0.982, "avg_availability_pct": 97.5}, {"code": "DEAAR", "name": "De Aar Solar Power", "similarity": 0.736, "avg_availability_pct": 97.5}, {"code": "DROOG", "name": "Droogfontein Solar Power", "similarity": 0.734, "avg_availability_pct": 97.5}]}, {"code": "ARIES", "name": "Aries Solar Power", "country": "South Africa", "technology": "Solar PV", "capacity_mw": 11.0, "avg_availability_pct": 97.5, "avg_capacity_factor_pct": 24.0, "similar": [{"code": "KONK", "name": "Konkoonsies Solar Power", "similarity": 1.0, "avg_availability_pct": 97.5}, {"code": "SOUTPAN", "name": "Soutpan Solar Power", "similarity": 0.996, "avg_availability_pct": 97.5}, {"code": "MOCUBA", "name": "Mocuba Solar", "similarity": 0.992, "avg_availability_pct": 97.4}]}, {"code": "AZITO", "name": "Azito Power", "country": "C\u00f4te d\u2019Ivoire", "technology": "Natural Gas", "capacity_mw": 713.0, "avg_availability_pct": 94.0, "avg_capacity_factor_pct": 67.9, "similar": [{"code": "KRIBI", "name": "Kribi Power", "similarity": 0.773, "avg_availability_pct": 93.9}, {"code": "SONGAS", "name": "Songas", "similarity": 0.708, "avg_availability_pct": 94.0}, {"code": "DIBAMBA", "name": "Dibamba Power", "similarity": 0.429, "avg_availability_pct": 94.1}]}, {"code": "BOSHOF", "name": "Boshof Solar Power", "country": "South Africa", "technology": "Solar PV", "capacity_mw": 66.0, "avg_availability_pct": 97.4, "avg_capacity_factor_pct": 24.1, "similar": [{"code": "DROOG", "name": "Droogfontein Solar Power", "similarity": 0.997, "avg_availability_pct": 97.5}, {"code": "DEAAR", "name": "De Aar Solar Power", "similarity": 0.997, "avg_availability_pct": 97.5}, {"code": "MOCUBA", "name": "Mocuba Solar", "similarity": 0.993, "avg_availability_pct": 97.4}]}, {"code": "CUAMBA", "name": "Cuamba Solar PV + BESS", "country": "Mozambique", "technology": "Solar PV + BESS", "capacity_mw": 19.0, "avg_availability_pct": 97.5, "avg_capacity_factor_pct": 24.0, "similar": [{"code": "KONK", "name": "Konkoonsies Solar Power", "similarity": 0.767, "avg_availability_pct": 97.5}, {"code": "ARIES", "name": "Aries Solar Power", "similarity": 0.767, "avg_availability_pct": 97.5}, {"code": "SOUTPAN", "name": "Soutpan Solar Power", "similarity": 0.759, "avg_availability_pct": 97.5}]}, {"code": "DEAAR", "name": "De Aar Solar Power", "country": "South Africa", "technology": "Solar PV", "capacity_mw": 50.0, "avg_availability_pct": 97.5, "avg_capacity_factor_pct": 24.1, "similar": [{"code": "DROOG", "name": "Droogfontein Solar Power", "similarity": 1.0, "avg_availability_pct": 97.5}, {"code": "MOCUBA", "name": "Mocuba Solar", "similarity": 0.998, "avg_availability_pct": 97.4}, {"code": "BOSHOF", "name": "Boshof Solar Power", "similarity": 0.997, "avg_availability_pct": 97.4}]}, {"code": "DIBAMBA", "name": "Dibamba Power", "country": "Cameroon", "technology": "Heavy Fuel Oil", "capacity_mw": 88.0, "avg_availability_pct": 94.1, "avg_capacity_factor_pct": 42.0, "similar": [{"code": "KRIBI", "name": "Kribi Power", "similarity": 0.746, "avg_availability_pct": 93.9}, {"code": "SONGAS", "name": "Songas", "similarity": 0.681, "avg_availability_pct": 94.0}, {"code": "AZITO", "name": "Azito Power", "similarity": 0.429, "avg_availability_pct": 94.0}]}, {"code": "DROOG", "name": "Droogfontein Solar Power", "country": "South Africa", "technology": "Solar PV", "capacity_mw": 50.0, "avg_availability_pct": 97.5, "avg_capacity_factor_pct": 24.1, "similar": [{"code": "DEAAR", "name": "De Aar Solar Power", "similarity": 1.0, "avg_availability_pct": 97.5}, {"code": "MOCUBA", "name": "Mocuba Solar", "similarity": 0.998, "avg_availability_pct": 97.4}, {"code": "BOSHOF", "name": "Boshof Solar Power", "similarity": 0.997, "avg_availability_pct": 97.4}]}, {"code": "JBAY", "name": "Jeffreys Bay Wind Farm", "country": "South Africa", "technology": "Wind", "capacity_mw": 138.0, "avg_availability_pct": 97.5, "avg_capacity_factor_pct": 36.2, "similar": [{"code": "KLIP", "name": "Klipheuwel Wind Farm", "similarity": 0.83, "avg_availability_pct": 97.5}, {"code": "BOSHOF", "name": "Boshof Solar Power", "similarity": 0.437, "avg_availability_pct": 97.4}, {"code": "DEAAR", "name": "De Aar Solar Power", "similarity": 0.427, "avg_availability_pct": 97.5}]}, {"code": "KLIP", "name": "Klipheuwel Wind Farm", "country": "South Africa", "technology": "Wind", "capacity_mw": 27.0, "avg_availability_pct": 97.5, "avg_capacity_factor_pct": 36.1, "similar": [{"code": "JBAY", "name": "Jeffreys Bay Wind Farm", "similarity": 0.83, "avg_availability_pct": 97.5}, {"code": "ARIES", "name": "Aries Solar Power", "similarity": 0.581, "avg_availability_pct": 97.5}, {"code": "KONK", "name": "Konkoonsies Solar Power", "similarity": 0.579, "avg_availability_pct": 97.5}]}, {"code": "KONK", "name": "Konkoonsies Solar Power", "country": "South Africa", "technology": "Solar PV", "capacity_mw": 11.0, "avg_availability_pct": 97.5, "avg_capacity_factor_pct": 23.9, "similar": [{"code": "ARIES", "name": "Aries Solar Power", "similarity": 1.0, "avg_availability_pct": 97.5}, {"code": "SOUTPAN", "name": "Soutpan Solar Power", "similarity": 0.996, "avg_availability_pct": 97.5}, {"code": "MOCUBA", "name": "Mocuba Solar", "similarity": 0.992, "avg_availability_pct": 97.4}]}, {"code": "KRIBI", "name": "Kribi Power", "country": "Cameroon", "technology": "Natural Gas", "capacity_mw": 216.0, "avg_availability_pct": 93.9, "avg_capacity_factor_pct": 68.1, "similar": [{"code": "SONGAS", "name": "Songas", "similarity": 0.948, "avg_availability_pct": 94.0}, {"code": "AZITO", "name": "Azito Power", "similarity": 0.773, "avg_availability_pct": 94.0}, {"code": "DIBAMBA", "name": "Dibamba Power", "similarity": 0.746, "avg_availability_pct": 94.1}]}, {"code": "MALINDI", "name": "Malindi Solar Power", "country": "Kenya", "technology": "Solar PV", "capacity_mw": 52.0, "avg_availability_pct": 97.4, "avg_capacity_factor_pct": 24.0, "similar": [{"code": "SOUTPAN", "name": "Soutpan Solar Power", "similarity": 0.736, "avg_availability_pct": 97.5}, {"code": "KONK", "name": "Konkoonsies Solar Power", "similarity": 0.734, "avg_availability_pct": 97.5}, {"code": "WINNERGY", "name": "Winnergy Solar Power", "similarity": 0.734, "avg_availability_pct": 97.5}]}, {"code": "MOCUBA", "name": "Mocuba Solar", "country": "Mozambique", "technology": "Solar PV", "capacity_mw": 41.0, "avg_availability_pct": 97.4, "avg_capacity_factor_pct": 23.9, "similar": [{"code": "SOUTPAN", "name": "Soutpan Solar Power", "similarity": 0.999, "avg_availability_pct": 97.5}, {"code": "DROOG", "name": "Droogfontein Solar Power", "similarity": 0.998, "avg_availability_pct": 97.5}, {"code": "DEAAR", "name": "De Aar Solar Power", "similarity": 0.998, "avg_availability_pct": 97.5}]}, {"code": "SONGAS", "name": "Songas", "country": "Tanzania", "technology": "Natural Gas", "capacity_mw": 190.0, "avg_availability_pct": 94.0, "avg_capacity_factor_pct": 67.9, "similar": [{"code": "KRIBI", "name": "Kribi Power", "similarity": 0.948, "avg_availability_pct": 93.9}, {"code": "AZITO", "name": "Azito Power", "similarity": 0.708, "avg_availability_pct": 94.0}, {"code": "DIBAMBA", "name": "Dibamba Power", "similarity": 0.681, "avg_availability_pct": 94.1}]}, {"code": "SOUTPAN", "name": "Soutpan Solar Power", "country": "South Africa", "technology": "Solar PV", "capacity_mw": 31.0, "avg_availability_pct": 97.5, "avg_capacity_factor_pct": 24.0, "similar": [{"code": "MOCUBA", "name": "Mocuba Solar", "similarity": 0.999, "avg_availability_pct": 97.4}, {"code": "DROOG", "name": "Droogfontein Solar Power", "similarity": 0.997, "avg_availability_pct": 97.5}, {"code": "DEAAR", "name": "De Aar Solar Power", "similarity": 0.996, "avg_availability_pct": 97.5}]}, {"code": "WINNERGY", "name": "Winnergy Solar Power", "country": "Egypt", "technology": "Solar PV", "capacity_mw": 25.0, "avg_availability_pct": 97.5, "avg_capacity_factor_pct": 24.0, "similar": [{"code": "ARC", "name": "ARC Solar Power", "similarity": 0.982, "avg_availability_pct": 97.5}, {"code": "KONK", "name": "Konkoonsies Solar Power", "similarity": 0.761, "avg_availability_pct": 97.5}, {"code": "ARIES", "name": "Aries Solar Power", "similarity": 0.761, "avg_availability_pct": 97.5}]}]};
+var FAQ = [
+  {q: "What is this project?",
+   kw: ["what is this", "about this project", "what company", "globeleq"],
+   a: "The Globeleq Energy Intelligence Platform models Globeleq's real African IPP portfolio - 19 utility-scale power plants across 7 countries - with synthetic 15-minute SCADA telemetry, ingested via Azure Databricks through a Medallion Architecture (Bronze/Silver/Gold), surfaced with 8 ML models and a 111-measure Power BI model. Plant names, technologies, capacities and countries are Globeleq's real portfolio; the operational telemetry is synthetic."},
+  {q: "How much data is in this?",
+   kw: ["how much data", "how many rows", "scale", "size of the data"],
+   a: "3,024,807 total rows generated, 2,981,664 SCADA telemetry rows (15-minute intervals, 17 operating plants x 5 years), across 19 plants (17 operating, 2 under construction) and 1,794 MW of operating capacity."},
+  {q: "What are the ML models?",
+   kw: ["ml model", "machine learning", "forecast", "xgboost", "lightgbm"],
+   a: "8 models registered in MLflow: 6 operational (e.g. forced-outage risk, anomaly detection via Isolation Forest) plus 3 forecasting models (XGBoost/LightGBM), including a solar yield forecaster."},
+  {q: "What's the similar-plants tool?",
+   kw: ["similar plant", "plant recommender", "risk triage", "similar-plants"],
+   a: "Content-based nearest-neighbour similarity (cosine) over real plant technology, capacity and region plus real aggregated availability/capacity-factor from the daily operations data. Not collaborative filtering - a power-plant portfolio has no purchase history. Built for operational risk triage: if one plant's numbers move, which similarly-profiled plants are worth a second look. Each plant's nearest neighbour shares its primary technology 88.2% of the time - a diagnostic, not a validated accuracy claim, since 19 plants is too few to hold anything out."},
+  {q: "What's the biggest plant?",
+   kw: ["biggest plant", "largest plant", "top plant"],
+   a: "Azito Power in Abidjan, Côte d'Ivoire - 713 MW, Natural Gas, under a 20-year concession with the Ivorian government."},
+  {q: "Is the data real?",
+   kw: ["is the data real", "real data", "is this real", "synthetic", "fictional"],
+   a: "The plant portfolio (names, locations, technologies, capacities, offtakers) is Globeleq's real African IPP fleet. Every SCADA telemetry row, outage record and financial figure is synthetic, generated for this portfolio project - not Globeleq's real operational or financial data."},
+  {q: "What's the tech stack?",
+   kw: ["tech stack", "technology", "what's it built with", "stack"],
+   a: "Azure Databricks (PySpark, Delta Lake, MLflow), Azure Data Factory, Azure Data Lake Gen2, Azure SQL Server (27-table warehouse), Power BI (111 DAX measures across 9 report pages), Python (XGBoost, LightGBM, Isolation Forest), and Leaflet.js for the interactive plant map."},
+  {q: "Who built this?",
+   kw: ["who built", "who made", "author", "anthony"],
+   a: "Anthony Apollis, as a portfolio project demonstrating Azure Databricks data engineering and ML across Globeleq's real African IPP portfolio - not an official Globeleq platform."},
+];
+document.addEventListener("DOMContentLoaded", function () {
+  var sel = document.getElementById("sim-select");
+  var resultsEl = document.getElementById("sim-results");
+  if (sel && PLANT_SIM && PLANT_SIM.plants) {
+    sel.innerHTML = PLANT_SIM.plants.map(function (p, i) {
+      return "<option value=\"" + i + "\">" + p.name + " (" + p.code + ") - " + p.capacity_mw + " MW</option>";
+    }).join("");
+    function renderSim(i) {
+      var item = PLANT_SIM.plants[i];
+      if (!item) return;
+      resultsEl.innerHTML = item.similar.length
+        ? item.similar.map(function (s) {
+            return "<li><span>" + s.name + " (" + s.code + ")</span><b>" + s.avg_availability_pct + "% avail.</b></li>";
+          }).join("")
+        : "<li>No close match found</li>";
+    }
+    sel.addEventListener("change", function () { renderSim(this.value); });
+    renderSim(0);
+  }
+
+  var toggle = document.getElementById("qa-toggle");
+  var panel = document.getElementById("qa-panel");
+  var log = document.getElementById("qa-log");
+  var input = document.getElementById("qa-input");
+  var send = document.getElementById("qa-send");
+  function addBubble(text, who) {
+    var b = document.createElement("div");
+    b.className = "bubble " + who;
+    b.textContent = text;
+    log.appendChild(b);
+    log.scrollTop = log.scrollHeight;
+  }
+  function answer(q) {
+    var ql = q.toLowerCase();
+    var best = null, bestScore = 0;
+    FAQ.forEach(function (item) {
+      var score = 0;
+      item.kw.forEach(function (k) { if (ql.indexOf(k) !== -1) score += k.length; });
+      if (score > bestScore) { bestScore = score; best = item; }
+    });
+    return best ? best.a : "I don't have a grounded answer for that yet - try asking about the plants, the ML models, the tech stack, or the similar-plants tool.";
+  }
+  function ask(q) {
+    if (!q.trim()) return;
+    addBubble(q, "user");
+    input.value = "";
+    setTimeout(function () { addBubble(answer(q), "bot"); }, 200);
+  }
+  if (toggle) {
+    toggle.addEventListener("click", function () { panel.classList.toggle("open"); });
+    document.getElementById("qa-close").addEventListener("click", function () { panel.classList.remove("open"); });
+    send.addEventListener("click", function () { ask(input.value); });
+    input.addEventListener("keydown", function (e) { if (e.key === "Enter") ask(input.value); });
+    document.querySelectorAll("#qa-chips button").forEach(function (btn) {
+      btn.addEventListener("click", function () { ask(btn.textContent); });
+    });
+  }
+});
+</script>
 
 </body>
 </html>
