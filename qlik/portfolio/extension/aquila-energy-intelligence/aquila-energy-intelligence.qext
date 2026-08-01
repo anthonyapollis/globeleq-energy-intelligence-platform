@@ -1,0 +1,10 @@
+{
+  "name": "Aquila African Energy Intelligence",
+  "description": "Six-page employer-facing Qlik Sense decision product for IPP operations cockpit.",
+  "type": "visualization",
+  "version": "1.0.0",
+  "author": "Anthony Apollis",
+  "icon": "extension",
+  "preview": "",
+  "homepage": ""
+}

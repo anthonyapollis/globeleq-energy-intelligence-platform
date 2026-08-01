@@ -1,5 +1,11 @@
 # Globeleq Energy Intelligence Platform
 
+## Aquila African Energy Intelligence — Qlik Sense portfolio app
+
+![Aquila executive dashboard](qlik/portfolio/previews/aquila-energy-intelligence-executive.png)
+
+The portfolio now includes a six-page Qlik Sense Desktop SCADA command experience covering fleet capacity, reliability, telemetry, commercial/ESG performance and ML trust. Download the QVF and industrial control-room extension from [`qlik/portfolio`](qlik/portfolio/README.md).
+
 **Full-stack Azure Databricks data engineering + ML completed project**
 Synthetic SCADA telemetry from 19 African IPP power plants · 3M+ rows · 9 ML models
 

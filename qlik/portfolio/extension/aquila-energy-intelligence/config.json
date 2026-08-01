@@ -1,0 +1,823 @@
+{
+  "prefix": "aquila-energy-intelligence",
+  "theme": "energy",
+  "mark": "AE",
+  "shortName": "Aquila Energy",
+  "sector": "IPP operations cockpit",
+  "asOf": "19-plant African fleet",
+  "snapshot": "2020–2024",
+  "footer": "Source: Globeleq Energy Intelligence public portfolio case study · synthetic operations and SCADA data · not affiliated with Globeleq · ML metrics from repository validation",
+  "hero": "/extensions/aquila-energy-intelligence/assets/aquila-energy-hero.png",
+  "filters": [
+    "Country",
+    "Plant",
+    "Technology"
+  ],
+  "sheetMap": {
+    "exec": "aquila-energy-intelligence-sheet-exec",
+    "fleet": "aquila-energy-intelligence-sheet-fleet",
+    "reliability": "aquila-energy-intelligence-sheet-reliability",
+    "scada": "aquila-energy-intelligence-sheet-scada",
+    "commercial": "aquila-energy-intelligence-sheet-commercial",
+    "ml": "aquila-energy-intelligence-sheet-ml"
+  },
+  "pages": [
+    {
+      "id": "exec",
+      "nav": "Fleet Command",
+      "eyebrow": "01 · GENERATION CONTROL",
+      "title": "African Energy Command Centre",
+      "subtitle": "A fleet-wide view of capacity, generation health, availability and predictive intervention.",
+      "kpis": [
+        {
+          "icon": "spark",
+          "label": "OPERATING CAPACITY",
+          "value": "1,794 MW",
+          "note": "17 operating plants",
+          "tone": "a"
+        },
+        {
+          "icon": "map",
+          "label": "FLEET",
+          "value": "19 plants",
+          "note": "Across 7 countries",
+          "tone": "b"
+        },
+        {
+          "icon": "shield",
+          "label": "AVAILABILITY",
+          "value": "~92%",
+          "note": "Operating fleet only",
+          "tone": "c"
+        },
+        {
+          "icon": "wallet",
+          "label": "ANNUAL REVENUE",
+          "value": "~R139M",
+          "note": "Synthetic PPA-scale",
+          "tone": "d"
+        }
+      ],
+      "cards": [
+        {
+          "title": "Capacity by technology",
+          "subtitle": "Operating portfolio mix",
+          "type": "bars",
+          "span": 7,
+          "rows": [
+            {
+              "label": "Gas / thermal",
+              "value": 742,
+              "display": "742 MW"
+            },
+            {
+              "label": "Solar PV",
+              "value": 486,
+              "display": "486 MW"
+            },
+            {
+              "label": "Wind",
+              "value": 356,
+              "display": "356 MW"
+            },
+            {
+              "label": "Hydro",
+              "value": 210,
+              "display": "210 MW"
+            }
+          ]
+        },
+        {
+          "title": "Fleet status",
+          "subtitle": "19 plants by lifecycle",
+          "type": "donut",
+          "span": 5,
+          "center": "19",
+          "centerLabel": "plants",
+          "rows": [
+            {
+              "label": "Operating",
+              "value": 17
+            },
+            {
+              "label": "Under construction",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "title": "Executive decision",
+          "subtitle": "Availability is the bridge between installed capacity and contracted value.",
+          "type": "narrative",
+          "span": 12,
+          "headline": "Read operating-fleet availability separately from construction status, then direct maintenance to the assets where avoided downtime protects the most generation and revenue.",
+          "text": "Availability is the bridge between installed capacity and contracted value.",
+          "actions": [
+            {
+              "title": "Protect constrained plants",
+              "text": "Prioritise outage and maintenance exposure by MW."
+            },
+            {
+              "title": "Separate build from operate",
+              "text": "Keep the 485 MW construction pipeline out of operating availability."
+            },
+            {
+              "title": "Use forecasts operationally",
+              "text": "Link yield and revenue outlooks to action owners."
+            }
+          ],
+          "icon": "spark"
+        }
+      ]
+    },
+    {
+      "id": "fleet",
+      "nav": "Plant Fleet",
+      "eyebrow": "02 · PORTFOLIO PERFORMANCE",
+      "title": "Plant Fleet Performance",
+      "subtitle": "Compare technology, country and plant output with transparent operating context.",
+      "kpis": [
+        {
+          "icon": "spark",
+          "label": "GENERATION DATA",
+          "value": "34,713 days",
+          "note": "Five-year daily fact",
+          "tone": "a"
+        },
+        {
+          "icon": "map",
+          "label": "COUNTRIES",
+          "value": "7",
+          "note": "African operating footprint",
+          "tone": "b"
+        },
+        {
+          "icon": "trend",
+          "label": "CONSTRUCTION",
+          "value": "485 MW",
+          "note": "Two-plant pipeline",
+          "tone": "c"
+        },
+        {
+          "icon": "shield",
+          "label": "PPA COVERAGE",
+          "value": "100%",
+          "note": "Synthetic agreement layer",
+          "tone": "d"
+        }
+      ],
+      "cards": [
+        {
+          "title": "Plant performance matrix",
+          "subtitle": "Availability, capacity and dispatch signal",
+          "type": "matrix",
+          "span": 7,
+          "rows": [
+            {
+              "label": "Plant 01 · Gas",
+              "value": 94,
+              "display": "95.1%",
+              "note": "410 MW · stable baseload",
+              "status": "Protect"
+            },
+            {
+              "label": "Plant 07 · Solar",
+              "value": 91,
+              "display": "93.8%",
+              "note": "100 MW · strong yield",
+              "status": "Scale"
+            },
+            {
+              "label": "Plant 12 · Wind",
+              "value": 84,
+              "display": "91.2%",
+              "note": "138 MW · curtailment watch",
+              "status": "Optimise"
+            },
+            {
+              "label": "Plant 16 · Hydro",
+              "value": 78,
+              "display": "89.4%",
+              "note": "76 MW · seasonal constraint",
+              "status": "Plan"
+            },
+            {
+              "label": "Plant 18 · Build",
+              "value": 62,
+              "display": "72% build",
+              "note": "250 MW pipeline",
+              "status": "Deliver"
+            }
+          ]
+        },
+        {
+          "title": "Technology portfolio",
+          "subtitle": "Operating capacity share",
+          "type": "donut",
+          "span": 5,
+          "center": "1,794",
+          "centerLabel": "MW",
+          "rows": [
+            {
+              "label": "Gas / thermal",
+              "value": 742
+            },
+            {
+              "label": "Solar PV",
+              "value": 486
+            },
+            {
+              "label": "Wind",
+              "value": 356
+            },
+            {
+              "label": "Hydro",
+              "value": 210
+            }
+          ]
+        },
+        {
+          "title": "Five-year generation index",
+          "subtitle": "Synthetic portfolio operating trajectory",
+          "type": "line",
+          "span": 12,
+          "rows": [
+            {
+              "label": "2020",
+              "value": 82
+            },
+            {
+              "label": "2021",
+              "value": 87
+            },
+            {
+              "label": "2022",
+              "value": 91
+            },
+            {
+              "label": "2023",
+              "value": 96
+            },
+            {
+              "label": "2024",
+              "value": 100
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reliability",
+      "nav": "Reliability",
+      "eyebrow": "03 · ASSET HEALTH",
+      "title": "Availability & Reliability",
+      "subtitle": "Connect outage, maintenance and condition signals to avoided lost generation.",
+      "kpis": [
+        {
+          "icon": "shield",
+          "label": "OUTAGES",
+          "value": "1,656",
+          "note": "Five-year event fact",
+          "tone": "a"
+        },
+        {
+          "icon": "alert",
+          "label": "MAINTENANCE WOs",
+          "value": "3,878",
+          "note": "Planned + corrective",
+          "tone": "d"
+        },
+        {
+          "icon": "trend",
+          "label": "MTTR SIGNAL",
+          "value": "18.6 h",
+          "note": "Synthetic portfolio median",
+          "tone": "b"
+        },
+        {
+          "icon": "spark",
+          "label": "FORCED OUTAGE",
+          "value": "3.7%",
+          "note": "Directional fleet rate",
+          "tone": "c"
+        }
+      ],
+      "cards": [
+        {
+          "title": "Lost-generation contribution",
+          "subtitle": "Largest reliability drivers",
+          "type": "bars",
+          "span": 7,
+          "rows": [
+            {
+              "label": "Forced equipment outage",
+              "value": 38,
+              "display": "38%"
+            },
+            {
+              "label": "Grid constraint",
+              "value": 24,
+              "display": "24%"
+            },
+            {
+              "label": "Planned maintenance",
+              "value": 18,
+              "display": "18%"
+            },
+            {
+              "label": "Fuel / resource constraint",
+              "value": 12,
+              "display": "12%"
+            },
+            {
+              "label": "Other external",
+              "value": 8,
+              "display": "8%"
+            }
+          ]
+        },
+        {
+          "title": "Maintenance priority",
+          "subtitle": "Risk-weighted asset queue",
+          "type": "score",
+          "span": 5,
+          "rows": [
+            {
+              "label": "Gas turbine train B",
+              "value": 94,
+              "display": "Critical",
+              "note": "High MW · cost signal"
+            },
+            {
+              "label": "Solar inverter block 4",
+              "value": 82,
+              "display": "High",
+              "note": "Yield degradation"
+            },
+            {
+              "label": "Wind turbine cluster N",
+              "value": 73,
+              "display": "Watch",
+              "note": "Anomaly concentration"
+            },
+            {
+              "label": "Hydro gate system",
+              "value": 58,
+              "display": "Plan",
+              "note": "Seasonal access"
+            }
+          ]
+        },
+        {
+          "title": "Reliability workbench",
+          "subtitle": "Evidence-level action queue",
+          "type": "table",
+          "span": 12,
+          "columns": [
+            "Asset",
+            "Plant",
+            "Signal",
+            "Exposure",
+            "Action"
+          ],
+          "rows": [
+            [
+              "GT-B compressor",
+              "Plant 01",
+              "Vibration drift",
+              "62 MW",
+              "Inspect next outage"
+            ],
+            [
+              "INV-04 block",
+              "Plant 07",
+              "Yield -8.2%",
+              "9 MW",
+              "Thermal scan"
+            ],
+            [
+              "WTG-N cluster",
+              "Plant 12",
+              "5% anomaly band",
+              "14 MW",
+              "Condition review"
+            ],
+            [
+              "Cooling train",
+              "Plant 04",
+              "MTTR +31%",
+              "27 MW",
+              "Spare strategy"
+            ],
+            [
+              "Hydro gate 2",
+              "Plant 16",
+              "Cycle variance",
+              "11 MW",
+              "Plan service"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "scada",
+      "nav": "SCADA Operations",
+      "eyebrow": "04 · TELEMETRY CONTROL",
+      "title": "SCADA & Anomaly Operations",
+      "subtitle": "Turn 15-minute telemetry into a governed engineering review queue.",
+      "kpis": [
+        {
+          "icon": "pulse",
+          "label": "SCADA ROWS",
+          "value": "2,981,664",
+          "note": "15-minute telemetry",
+          "tone": "a"
+        },
+        {
+          "icon": "spark",
+          "label": "OPERATING PLANTS",
+          "value": "17",
+          "note": "Five-year coverage",
+          "tone": "b"
+        },
+        {
+          "icon": "alert",
+          "label": "ANOMALY RATE",
+          "value": "5.0%",
+          "note": "1,553 / 31,059 scored",
+          "tone": "d"
+        },
+        {
+          "icon": "shield",
+          "label": "DATA RANGE",
+          "value": "5 years",
+          "note": "2020–2024",
+          "tone": "c"
+        }
+      ],
+      "cards": [
+        {
+          "title": "Telemetry health signal",
+          "subtitle": "Illustrative 15-minute operating profile",
+          "type": "line",
+          "span": 7,
+          "rows": [
+            {
+              "label": "00:00",
+              "value": 44
+            },
+            {
+              "label": "04:00",
+              "value": 38
+            },
+            {
+              "label": "08:00",
+              "value": 71
+            },
+            {
+              "label": "12:00",
+              "value": 96
+            },
+            {
+              "label": "16:00",
+              "value": 83
+            },
+            {
+              "label": "20:00",
+              "value": 57
+            },
+            {
+              "label": "24:00",
+              "value": 45
+            }
+          ]
+        },
+        {
+          "title": "Anomaly triage bands",
+          "subtitle": "Human-reviewed operational priority",
+          "type": "score",
+          "span": 5,
+          "rows": [
+            {
+              "label": "High MW + persistent",
+              "value": 94,
+              "display": "Critical",
+              "note": "Immediate engineering review"
+            },
+            {
+              "label": "Weather-adjusted deviation",
+              "value": 78,
+              "display": "High",
+              "note": "Check sensor + asset"
+            },
+            {
+              "label": "Short-lived spike",
+              "value": 46,
+              "display": "Watch",
+              "note": "Retain context"
+            },
+            {
+              "label": "Known maintenance state",
+              "value": 18,
+              "display": "Suppress",
+              "note": "Documented window"
+            }
+          ]
+        },
+        {
+          "title": "SCADA decision path",
+          "subtitle": "Telemetry to engineering action",
+          "type": "pipeline",
+          "span": 12,
+          "rows": [
+            {
+              "label": "Ingest",
+              "value": 2.98,
+              "display": "2.98M",
+              "note": "15-minute rows"
+            },
+            {
+              "label": "Silver",
+              "value": 35,
+              "display": "35 DQ patterns",
+              "note": "Detect dirt"
+            },
+            {
+              "label": "Score",
+              "value": 5,
+              "display": "5.0%",
+              "note": "Anomaly band"
+            },
+            {
+              "label": "Review",
+              "value": 1553,
+              "display": "1,553",
+              "note": "Human queue"
+            },
+            {
+              "label": "Learn",
+              "value": 9,
+              "display": "9 models",
+              "note": "MLflow"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "commercial",
+      "nav": "Commercial & ESG",
+      "eyebrow": "05 · VALUE & RESPONSIBILITY",
+      "title": "Commercial & ESG Intelligence",
+      "subtitle": "Align generation, contracted revenue, safety and environmental responsibility.",
+      "kpis": [
+        {
+          "icon": "wallet",
+          "label": "ANNUAL REVENUE",
+          "value": "~R139M",
+          "note": "Synthetic contracted scale",
+          "tone": "a"
+        },
+        {
+          "icon": "spark",
+          "label": "ENERGY SALES",
+          "value": "1,020 rows",
+          "note": "Monthly five-year fact",
+          "tone": "b"
+        },
+        {
+          "icon": "shield",
+          "label": "HSE EVENTS",
+          "value": "1,516",
+          "note": "Synthetic incident fact",
+          "tone": "d"
+        },
+        {
+          "icon": "trend",
+          "label": "REVENUE MAPE",
+          "value": "3.1%",
+          "note": "LightGBM forecast",
+          "tone": "c"
+        }
+      ],
+      "cards": [
+        {
+          "title": "Revenue contribution by technology",
+          "subtitle": "Synthetic contracted portfolio",
+          "type": "bars",
+          "span": 6,
+          "rows": [
+            {
+              "label": "Gas / thermal",
+              "value": 47,
+              "display": "47%"
+            },
+            {
+              "label": "Solar PV",
+              "value": 24,
+              "display": "24%"
+            },
+            {
+              "label": "Wind",
+              "value": 19,
+              "display": "19%"
+            },
+            {
+              "label": "Hydro",
+              "value": 10,
+              "display": "10%"
+            }
+          ]
+        },
+        {
+          "title": "HSE severity mix",
+          "subtitle": "All incidents remain visible",
+          "type": "donut",
+          "span": 6,
+          "center": "1,516",
+          "centerLabel": "events",
+          "rows": [
+            {
+              "label": "Near miss",
+              "value": 58
+            },
+            {
+              "label": "First aid",
+              "value": 24
+            },
+            {
+              "label": "Medical treatment",
+              "value": 12
+            },
+            {
+              "label": "Lost time / serious",
+              "value": 6
+            }
+          ]
+        },
+        {
+          "title": "Portfolio decision",
+          "subtitle": "Commercial performance and safe operations are one operating system.",
+          "type": "narrative",
+          "span": 12,
+          "headline": "A generation forecast is incomplete without asset, grid, safety and contract context. No optimisation should trade away safe work.",
+          "text": "Commercial performance and safe operations are one operating system.",
+          "actions": [
+            {
+              "title": "Protect contracted delivery",
+              "text": "Focus reliability actions on exposed PPA value."
+            },
+            {
+              "title": "Keep HSE leading indicators visible",
+              "text": "Use near misses before harm occurs."
+            },
+            {
+              "title": "Explain forecast variance",
+              "text": "Separate weather, outage and curtailment effects."
+            }
+          ],
+          "icon": "shield"
+        }
+      ]
+    },
+    {
+      "id": "ml",
+      "nav": "Predictive Trust",
+      "eyebrow": "06 · MLFLOW GOVERNANCE",
+      "title": "Predictive ML & Trust",
+      "subtitle": "Compare nine registered models, their evidence and the operating decisions they may support.",
+      "kpis": [
+        {
+          "icon": "brain",
+          "label": "MLFLOW MODELS",
+          "value": "9",
+          "note": "Operational + forecasting",
+          "tone": "a"
+        },
+        {
+          "icon": "trend",
+          "label": "YIELD R²",
+          "value": "0.998",
+          "note": "XGBoost validation",
+          "tone": "b"
+        },
+        {
+          "icon": "shield",
+          "label": "AVAILABILITY AUC",
+          "value": "0.85",
+          "note": "LightGBM classifier",
+          "tone": "c"
+        },
+        {
+          "icon": "wallet",
+          "label": "SOLAR MAPE",
+          "value": "4.2%",
+          "note": "LightGBM forecaster",
+          "tone": "d"
+        }
+      ],
+      "cards": [
+        {
+          "title": "Model registry",
+          "subtitle": "Validation metrics from the repository",
+          "type": "score",
+          "span": 7,
+          "rows": [
+            {
+              "label": "Energy yield forecaster",
+              "value": 99.8,
+              "display": "R² .998",
+              "note": "MAE 62 MWh"
+            },
+            {
+              "label": "Maintenance cost",
+              "value": 99.9,
+              "display": "R² .999",
+              "note": "MAE R103"
+            },
+            {
+              "label": "Solar irradiance yield",
+              "value": 98.8,
+              "display": "R² .988",
+              "note": "MAPE 4.2%"
+            },
+            {
+              "label": "Revenue forecast",
+              "value": 93,
+              "display": "R² .93",
+              "note": "MAPE 3.1%"
+            },
+            {
+              "label": "Availability tier",
+              "value": 85,
+              "display": "AUC .85",
+              "note": "AP .97"
+            }
+          ]
+        },
+        {
+          "title": "Model-to-decision register",
+          "subtitle": "Use is bounded and reviewable",
+          "type": "table",
+          "span": 5,
+          "columns": [
+            "Model",
+            "Decision",
+            "Guardrail"
+          ],
+          "rows": [
+            [
+              "Yield forecast",
+              "Dispatch outlook",
+              "Weather + outage context"
+            ],
+            [
+              "Availability tier",
+              "Maintenance triage",
+              "No automatic shutdown"
+            ],
+            [
+              "Cost estimator",
+              "Budget planning",
+              "Vendor/context review"
+            ],
+            [
+              "Anomaly detector",
+              "Engineer queue",
+              "5% is model setting"
+            ],
+            [
+              "Revenue forecast",
+              "Commercial outlook",
+              "Synthetic PPA scale"
+            ]
+          ]
+        },
+        {
+          "title": "Trust statement",
+          "subtitle": "A model is production-ready only when its decision path is monitored.",
+          "type": "narrative",
+          "span": 12,
+          "headline": "High synthetic validation metrics demonstrate engineering. Live deployment needs drift, calibration, operational acceptance and measured value.",
+          "text": "A model is production-ready only when its decision path is monitored.",
+          "actions": [
+            {
+              "title": "Version data and models",
+              "text": "Keep feature, code and registry lineage."
+            },
+            {
+              "title": "Monitor forecast error",
+              "text": "Report by plant and technology."
+            },
+            {
+              "title": "Keep engineers accountable",
+              "text": "Models prioritise evidence; operators decide."
+            }
+          ],
+          "icon": "brain"
+        }
+      ]
+    }
+  ]
+}
