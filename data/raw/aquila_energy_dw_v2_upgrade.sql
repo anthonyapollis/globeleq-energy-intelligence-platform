@@ -1,9 +1,9 @@
 /*
 =============================================================
-Baobab Power Energy Intelligence Platform
+Aquila Energy Intelligence Platform
 V2 Upgrade: Meter Data Quality + Forecast Model Registry
 =============================================================
-Run AFTER baobab_power_energy_dw.sql.
+Run AFTER aquila_energy_dw.sql.
 Adds 9 new tables and 6 new BI views without modifying
 any existing tables, columns, constraints or indexes.
 
@@ -28,7 +28,7 @@ New BI views
   bi.vw_ForecastModelRegistry
 =============================================================
 */
-USE BaobabPowerEnergyDW;
+USE AquilaEnergyDW;
 GO
 
 -- ============================================================
@@ -587,7 +587,7 @@ GROUP BY
     fm.PrimaryFeatures, fm.Notes;
 GO
 
-PRINT 'Baobab Power V2 Upgrade complete.';
+PRINT 'Aquila V2 Upgrade complete.';
 PRINT '  New tables: DimTime, DimMeter, DimForecastModel, DimForecastFeature,';
 PRINT '              BridgeForecastModelFeature, FactMeterReadingHourly,';
 PRINT '              FactDataQualityEvent, FactForecastDaily,';

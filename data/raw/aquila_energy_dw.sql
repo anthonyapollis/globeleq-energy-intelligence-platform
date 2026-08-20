@@ -1,20 +1,20 @@
 /*
-Baobab Power Energy Portfolio Data Warehouse
+Aquila Energy Portfolio Data Warehouse
 SQL Server 2019+ / Azure SQL compatible
 
 IMPORTANT:
 1. Static plant, technology, geography, organisation and agreement data is sourced from the
-   uploaded Baobab Power brochure snapshot.
+   uploaded Aquila brochure snapshot.
 2. Operational, financial, outage, maintenance, construction and HSE fact CSVs are synthetic.
 3. Verify current project status, agreement dates, tariffs and ownership percentages before production use.
 */
-IF DB_ID(N'BaobabPowerEnergyDW') IS NULL
+IF DB_ID(N'AquilaEnergyDW') IS NULL
 BEGIN
-    CREATE DATABASE BaobabPowerEnergyDW;
+    CREATE DATABASE AquilaEnergyDW;
 END;
 GO
 
-USE BaobabPowerEnergyDW;
+USE AquilaEnergyDW;
 GO
 
 IF NOT EXISTS (SELECT 1 FROM sys.schemas WHERE name = N'dw') EXEC(N'CREATE SCHEMA dw');
@@ -371,7 +371,7 @@ INSERT INTO dw.DimTechnology (TechnologyKey, TechnologyName, TechnologyGroup, Fu
 INSERT INTO dw.DimTechnology (TechnologyKey, TechnologyName, TechnologyGroup, FuelType, IndicativeEmissionsFactorTCO2PerMWh) VALUES (6, N'Geothermal', N'Renewable', N'Geothermal', 0.05);
 GO
 
-INSERT INTO dw.DimOrganisation (OrganisationKey, OrganisationName, OrganisationType) VALUES (1, N'Baobab Power', N'Developer / Owner / Operator');
+INSERT INTO dw.DimOrganisation (OrganisationKey, OrganisationName, OrganisationType) VALUES (1, N'Aquila', N'Developer / Owner / Operator');
 INSERT INTO dw.DimOrganisation (OrganisationKey, OrganisationName, OrganisationType) VALUES (2, N'British International Investment (BII)', N'Shareholder');
 INSERT INTO dw.DimOrganisation (OrganisationKey, OrganisationName, OrganisationType) VALUES (3, N'Norfund', N'Shareholder');
 INSERT INTO dw.DimOrganisation (OrganisationKey, OrganisationName, OrganisationType) VALUES (4, N'Eskom', N'Off-taker / Utility');
@@ -393,8 +393,8 @@ INSERT INTO dw.DimOrganisation (OrganisationKey, OrganisationName, OrganisationT
 GO
 
 INSERT INTO dw.DimPlant (PlantKey,PlantCode,PlantName,GeographyKey,City,Province,ProjectStatus,PrimaryTechnologyName,NameplateCapacity,CapacityUnit,StorageCapacityMWh,BrochureAnnualGenerationGWh,BrochureHomesEquivalent,BrochureCO2AvoidedTonnes,SourceNotes,IsActive) VALUES (1,N'ARC',N'Marsa Alam Solar',3,N'Aswan',NULL,N'Operating',N'Solar PV',66,N'MWp',NULL,NULL,NULL,NULL,N'Remote monitoring from Cape Town; asset management and O&M oversight.',1);
-INSERT INTO dw.DimPlant (PlantKey,PlantCode,PlantName,GeographyKey,City,Province,ProjectStatus,PrimaryTechnologyName,NameplateCapacity,CapacityUnit,StorageCapacityMWh,BrochureAnnualGenerationGWh,BrochureHomesEquivalent,BrochureCO2AvoidedTonnes,SourceNotes,IsActive) VALUES (2,N'ARIES',N'Orange Valley Solar',5,N'Kenhardt',N'Northern Cape',N'Operating',N'Solar PV',11,N'MWp',NULL,21.0,6300,NULL,N'Baobab Power is majority shareholder and responsible for asset management.',1);
-INSERT INTO dw.DimPlant (PlantKey,PlantCode,PlantName,GeographyKey,City,Province,ProjectStatus,PrimaryTechnologyName,NameplateCapacity,CapacityUnit,StorageCapacityMWh,BrochureAnnualGenerationGWh,BrochureHomesEquivalent,BrochureCO2AvoidedTonnes,SourceNotes,IsActive) VALUES (3,N'AZITO',N'Ebrie Lagoon Power',7,N'Abidjan',NULL,N'Operating',N'Natural Gas',713,N'MW',NULL,NULL,NULL,NULL,N'Natural gas supplied from offshore gas fields; Baobab Power majority owner.',1);
+INSERT INTO dw.DimPlant (PlantKey,PlantCode,PlantName,GeographyKey,City,Province,ProjectStatus,PrimaryTechnologyName,NameplateCapacity,CapacityUnit,StorageCapacityMWh,BrochureAnnualGenerationGWh,BrochureHomesEquivalent,BrochureCO2AvoidedTonnes,SourceNotes,IsActive) VALUES (2,N'ARIES',N'Orange Valley Solar',5,N'Kenhardt',N'Northern Cape',N'Operating',N'Solar PV',11,N'MWp',NULL,21.0,6300,NULL,N'Aquila is majority shareholder and responsible for asset management.',1);
+INSERT INTO dw.DimPlant (PlantKey,PlantCode,PlantName,GeographyKey,City,Province,ProjectStatus,PrimaryTechnologyName,NameplateCapacity,CapacityUnit,StorageCapacityMWh,BrochureAnnualGenerationGWh,BrochureHomesEquivalent,BrochureCO2AvoidedTonnes,SourceNotes,IsActive) VALUES (3,N'AZITO',N'Ebrie Lagoon Power',7,N'Abidjan',NULL,N'Operating',N'Natural Gas',713,N'MW',NULL,NULL,NULL,NULL,N'Natural gas supplied from offshore gas fields; Aquila majority owner.',1);
 INSERT INTO dw.DimPlant (PlantKey,PlantCode,PlantName,GeographyKey,City,Province,ProjectStatus,PrimaryTechnologyName,NameplateCapacity,CapacityUnit,StorageCapacityMWh,BrochureAnnualGenerationGWh,BrochureHomesEquivalent,BrochureCO2AvoidedTonnes,SourceNotes,IsActive) VALUES (4,N'BOSHOF',N'Free State Sun Park',5,N'Boshof',N'Free State',N'Operating',N'Solar PV',66,N'MWp',NULL,130.0,38900,NULL,N'Asset management, operations and maintenance.',1);
 INSERT INTO dw.DimPlant (PlantKey,PlantCode,PlantName,GeographyKey,City,Province,ProjectStatus,PrimaryTechnologyName,NameplateCapacity,CapacityUnit,StorageCapacityMWh,BrochureAnnualGenerationGWh,BrochureHomesEquivalent,BrochureCO2AvoidedTonnes,SourceNotes,IsActive) VALUES (5,N'CUAMBA',N'Niassa Solar Storage',4,N'Cuamba',NULL,N'Operating',N'Solar PV + BESS',19,N'MWp',7.0,NULL,21800,172000.0,N'First IPP in Mozambique to integrate utility-scale storage.',1);
 INSERT INTO dw.DimPlant (PlantKey,PlantCode,PlantName,GeographyKey,City,Province,ProjectStatus,PrimaryTechnologyName,NameplateCapacity,CapacityUnit,StorageCapacityMWh,BrochureAnnualGenerationGWh,BrochureHomesEquivalent,BrochureCO2AvoidedTonnes,SourceNotes,IsActive) VALUES (6,N'DEAAR',N'Hantam Solar Power',5,N'De Aar',N'Northern Cape',N'Operating',N'Solar PV',50,N'MWp',NULL,93.0,28000,NULL,N'Asset management, operations and maintenance.',1);
@@ -512,40 +512,40 @@ INSERT INTO dw.BridgePlantTechnology (PlantTechnologyKey,PlantKey,TechnologyKey,
 INSERT INTO dw.BridgePlantTechnology (PlantTechnologyKey,PlantKey,TechnologyKey,InstalledCapacity,CapacityUnit,IsPrimary) VALUES (20,19,6,35.0,N'MW',1);
 GO
 
-INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (1,1,1,N'Developer / Owner / Operator',NULL,N'Brochure states Baobab Power role at portfolio or plant level.');
+INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (1,1,1,N'Developer / Owner / Operator',NULL,N'Brochure states Aquila role at portfolio or plant level.');
 INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (2,1,5,N'Off-taker / Counterparty',NULL,N'Agreement counterparty.');
-INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (3,2,1,N'Developer / Owner / Operator',NULL,N'Brochure states Baobab Power role at portfolio or plant level.');
+INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (3,2,1,N'Developer / Owner / Operator',NULL,N'Brochure states Aquila role at portfolio or plant level.');
 INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (4,2,4,N'Off-taker / Counterparty',NULL,N'Agreement counterparty.');
-INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (5,3,1,N'Developer / Owner / Operator',NULL,N'Brochure states Baobab Power role at portfolio or plant level.');
+INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (5,3,1,N'Developer / Owner / Operator',NULL,N'Brochure states Aquila role at portfolio or plant level.');
 INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (6,3,6,N'Off-taker / Counterparty',NULL,N'Agreement counterparty.');
-INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (7,4,1,N'Developer / Owner / Operator',NULL,N'Brochure states Baobab Power role at portfolio or plant level.');
+INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (7,4,1,N'Developer / Owner / Operator',NULL,N'Brochure states Aquila role at portfolio or plant level.');
 INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (8,4,4,N'Off-taker / Counterparty',NULL,N'Agreement counterparty.');
-INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (9,5,1,N'Developer / Owner / Operator',NULL,N'Brochure states Baobab Power role at portfolio or plant level.');
-INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (10,6,1,N'Developer / Owner / Operator',NULL,N'Brochure states Baobab Power role at portfolio or plant level.');
+INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (9,5,1,N'Developer / Owner / Operator',NULL,N'Brochure states Aquila role at portfolio or plant level.');
+INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (10,6,1,N'Developer / Owner / Operator',NULL,N'Brochure states Aquila role at portfolio or plant level.');
 INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (11,6,4,N'Off-taker / Counterparty',NULL,N'Agreement counterparty.');
-INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (12,7,1,N'Developer / Owner / Operator',NULL,N'Brochure states Baobab Power role at portfolio or plant level.');
+INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (12,7,1,N'Developer / Owner / Operator',NULL,N'Brochure states Aquila role at portfolio or plant level.');
 INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (13,7,7,N'Off-taker / Counterparty',NULL,N'Agreement counterparty.');
-INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (14,8,1,N'Developer / Owner / Operator',NULL,N'Brochure states Baobab Power role at portfolio or plant level.');
+INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (14,8,1,N'Developer / Owner / Operator',NULL,N'Brochure states Aquila role at portfolio or plant level.');
 INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (15,8,4,N'Off-taker / Counterparty',NULL,N'Agreement counterparty.');
-INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (16,9,1,N'Developer / Owner / Operator',NULL,N'Brochure states Baobab Power role at portfolio or plant level.');
-INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (17,10,1,N'Developer / Owner / Operator',NULL,N'Brochure states Baobab Power role at portfolio or plant level.');
-INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (18,11,1,N'Developer / Owner / Operator',NULL,N'Brochure states Baobab Power role at portfolio or plant level.');
+INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (16,9,1,N'Developer / Owner / Operator',NULL,N'Brochure states Aquila role at portfolio or plant level.');
+INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (17,10,1,N'Developer / Owner / Operator',NULL,N'Brochure states Aquila role at portfolio or plant level.');
+INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (18,11,1,N'Developer / Owner / Operator',NULL,N'Brochure states Aquila role at portfolio or plant level.');
 INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (19,11,4,N'Off-taker / Counterparty',NULL,N'Agreement counterparty.');
-INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (20,12,1,N'Developer / Owner / Operator',NULL,N'Brochure states Baobab Power role at portfolio or plant level.');
+INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (20,12,1,N'Developer / Owner / Operator',NULL,N'Brochure states Aquila role at portfolio or plant level.');
 INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (21,12,9,N'Off-taker / Counterparty',NULL,N'Agreement counterparty.');
-INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (22,13,1,N'Developer / Owner / Operator',NULL,N'Brochure states Baobab Power role at portfolio or plant level.');
+INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (22,13,1,N'Developer / Owner / Operator',NULL,N'Brochure states Aquila role at portfolio or plant level.');
 INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (23,13,10,N'Off-taker / Counterparty',NULL,N'Agreement counterparty.');
-INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (24,14,1,N'Developer / Owner / Operator',NULL,N'Brochure states Baobab Power role at portfolio or plant level.');
+INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (24,14,1,N'Developer / Owner / Operator',NULL,N'Brochure states Aquila role at portfolio or plant level.');
 INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (25,14,11,N'Off-taker / Counterparty',NULL,N'Agreement counterparty.');
-INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (26,15,1,N'Developer / Owner / Operator',NULL,N'Brochure states Baobab Power role at portfolio or plant level.');
+INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (26,15,1,N'Developer / Owner / Operator',NULL,N'Brochure states Aquila role at portfolio or plant level.');
 INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (27,15,12,N'Off-taker / Counterparty',NULL,N'Agreement counterparty.');
-INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (28,16,1,N'Developer / Owner / Operator',NULL,N'Brochure states Baobab Power role at portfolio or plant level.');
+INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (28,16,1,N'Developer / Owner / Operator',NULL,N'Brochure states Aquila role at portfolio or plant level.');
 INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (29,16,4,N'Off-taker / Counterparty',NULL,N'Agreement counterparty.');
-INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (30,17,1,N'Developer / Owner / Operator',NULL,N'Brochure states Baobab Power role at portfolio or plant level.');
+INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (30,17,1,N'Developer / Owner / Operator',NULL,N'Brochure states Aquila role at portfolio or plant level.');
 INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (31,17,5,N'Off-taker / Counterparty',NULL,N'Agreement counterparty.');
-INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (32,18,1,N'Developer / Owner / Operator',NULL,N'Brochure states Baobab Power role at portfolio or plant level.');
+INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (32,18,1,N'Developer / Owner / Operator',NULL,N'Brochure states Aquila role at portfolio or plant level.');
 INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (33,18,11,N'Off-taker / Counterparty',NULL,N'Agreement counterparty.');
-INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (34,19,1,N'Developer / Owner / Operator',NULL,N'Brochure states Baobab Power role at portfolio or plant level.');
+INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (34,19,1,N'Developer / Owner / Operator',NULL,N'Brochure states Aquila role at portfolio or plant level.');
 INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (35,19,14,N'Off-taker / Counterparty',NULL,N'Agreement counterparty.');
 INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (36,17,13,N'Co-shareholder / O&M Partner',NULL,N'Winnergy');
 INSERT INTO dw.BridgePlantOrganisation (PlantOrganisationKey,PlantKey,OrganisationKey,RoleType,OwnershipPercent,Notes) VALUES (37,19,15,N'Steam Supplier',NULL,N'Menengai');

@@ -1,4 +1,4 @@
-# Baobab Power Energy Portfolio Data Model
+# Aquila Energy Portfolio Data Model
 
 ## Scope
 This model represents an African independent power producer that invests in, develops, owns,
@@ -23,11 +23,11 @@ operates and maintains utility-scale power assets. It covers:
   because that unit is consistent with the surrounding plant descriptions.
 
 ## Files
-- `baobab_power_energy_dw.sql`: SQL Server warehouse DDL, seed dimensions, views and indexes.
-- `Baobab_Power_PowerBI_Measures.dax`: Power BI measures.
-- `baobab_power_erd.mmd`: Mermaid ERD.
+- `aquila_energy_dw.sql`: SQL Server warehouse DDL, seed dimensions, views and indexes.
+- `Aquila_PowerBI_Measures.dax`: Power BI measures.
+- `aquila_erd.mmd`: Mermaid ERD.
 - Dimension and fact CSV files for ETL testing.
-- `baobab_power_energy_model.zip`: complete package.
+- `aquila_energy_model.zip`: complete package.
 
 ## Recommended Power BI model
 Use one-to-many, single-direction relationships:

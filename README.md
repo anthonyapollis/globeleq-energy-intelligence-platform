@@ -1,4 +1,4 @@
-# Baobab Power Energy Intelligence Platform
+# Aquila Energy Intelligence Platform
 
 ## Aquila African Energy Intelligence — Qlik Sense portfolio app
 
@@ -13,7 +13,7 @@ Synthetic SCADA telemetry from 19 African IPP power plants · 3M+ rows · 9 ML m
 
 ## Project Overview
 
-Baobab Power operates utility-scale power plants across seven African nations. This platform
+Aquila operates utility-scale power plants across seven African nations. This platform
 ingests 15-minute SCADA telemetry, applies a Medallion Architecture (Bronze → Silver → Gold)
 on Azure Databricks, and surfaces predictive ML models for operations, maintenance, and
 commercial decision-making.
@@ -36,7 +36,7 @@ commercial decision-making.
 - **Azure Databricks** — PySpark notebooks, Delta Lake, MLflow
 - **Azure Data Factory** — Copy Activities, ForEach, IfCondition, Teams webhook
 - **Azure Data Lake Gen2** — ADLS raw/bronze/silver/gold containers
-- **Azure SQL Server** — BaobabPowerEnergyDW (27 tables: 17 core + 10 V2 upgrade · 6 BI views)
+- **Azure SQL Server** — AquilaEnergyDW (27 tables: 17 core + 10 V2 upgrade · 6 BI views)
 - **Python** — Data generation, ML (XGBoost, LightGBM, sklearn), dirty-data injection
 - **Power BI** — 111 DAX measures across 9 report pages, Databricks SQL endpoint
 - **openpyxl** — 8-sheet Excel report with charts
@@ -46,7 +46,7 @@ commercial decision-making.
 ## Directory Structure
 
 ```
-Baobab_Power_Energy_Intelligence_Platform/
+Aquila_Energy_Intelligence_Platform/
 ├── data/
 │   ├── raw/                        ← Original dim/fact CSVs + SQL DDL
 │   ├── generated/                  ← Synthetic 3M+ row datasets
@@ -57,10 +57,10 @@ Baobab_Power_Energy_Intelligence_Platform/
 │   ├── 03_gold_kpis.py             ← Executive KPIs, ML feature store
 │   └── 04_ml_energy_intelligence.py← 9 ML models + MLflow tracking
 ├── pipelines/
-│   └── adf_baobab_power_pipeline.json  ← Full ADF pipeline definition
+│   └── adf_aquila_pipeline.json  ← Full ADF pipeline definition
 ├── reports/
 │   ├── generate_excel_report.py    ← Generates 8-sheet Excel workbook
-│   ├── Baobab_Power_Energy_Intelligence_Report.xlsx
+│   ├── Aquila_Energy_Intelligence_Report.xlsx
 │   └── charts/                     ← 13 publication-quality PNGs (4.7 MB total)
 ├── scripts/
 │   ├── generate_synthetic_data.py  ← Vectorised data generator (3M+ rows, ~2.5 min)
@@ -69,12 +69,12 @@ Baobab_Power_Energy_Intelligence_Platform/
 │   ├── data_insights.py            ← Portfolio analytics summary
 │   └── reconcile.py                ← Numbers reconciliation across all tables
 ├── ebook/
-│   └── baobab_power_energy_intelligence_ebook.html
+│   └── aquila_energy_intelligence_ebook.html
 └── data/raw/
-    ├── baobab_power_energy_dw.sql              ← Core DDL: 17 tables (9 dims + 2 bridges + 6 facts + DimDate)
-    ├── baobab_power_energy_dw_v2_upgrade.sql   ← V2: 10 tables + 6 BI views (bi schema)
-    ├── Baobab_Power_PowerBI_Measures.dax       ← Original 32 measures
-    └── Baobab_Power_PowerBI_Measures_v2.dax    ← V2: 111 measures, 9 report pages
+    ├── aquila_energy_dw.sql              ← Core DDL: 17 tables (9 dims + 2 bridges + 6 facts + DimDate)
+    ├── aquila_energy_dw_v2_upgrade.sql   ← V2: 10 tables + 6 BI views (bi schema)
+    ├── Aquila_PowerBI_Measures.dax       ← Original 32 measures
+    └── Aquila_PowerBI_Measures_v2.dax    ← V2: 111 measures, 9 report pages
 ```
 
 ---
@@ -132,18 +132,18 @@ python reports/generate_excel_report.py
 
 # 3. Serve the ebook
 python -m http.server 8770 --directory ebook
-# Open http://localhost:8770/baobab_power_energy_intelligence_ebook.html
+# Open http://localhost:8770/aquila_energy_intelligence_ebook.html
 
 # 4. Upload notebooks to Databricks Repos and run via ADF
-# See pipelines/adf_baobab_power_pipeline.json for full pipeline definition
+# See pipelines/adf_aquila_pipeline.json for full pipeline definition
 ```
 
 ---
 
 ## Data Sources
 
-- `dim_plant.csv` and agreement/organisation data derived from the Baobab Power corporate brochure.
-- All operational fact data is **synthetic** (`IsSynthetic=1`) — not real Baobab Power operational data.
+- `dim_plant.csv` and agreement/organisation data derived from the Aquila corporate brochure.
+- All operational fact data is **synthetic** (`IsSynthetic=1`). Aquila is a fictional company; plant names, portfolio structure and operational data are all invented for this portfolio piece.
 - Terra Firma Data Analyst assignment solution included for reference.
 
 ---

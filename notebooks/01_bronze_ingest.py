@@ -1,6 +1,6 @@
 # Databricks notebook source
 # MAGIC %md
-# MAGIC # Baobab Power Energy Intelligence Platform
+# MAGIC # Aquila Energy Intelligence Platform
 # MAGIC ## Notebook 01 — Bronze Layer: Raw Data Ingestion
 # MAGIC **Purpose:** Ingest all raw CSV files from ADLS Gen2 into Delta Lake Bronze tables with
 # MAGIC schema enforcement, audit columns, and data quality tagging.
@@ -16,18 +16,18 @@
 
 # COMMAND ----------
 # Storage account and container (update for your workspace)
-STORAGE_ACCOUNT = "baobab_powerdatalake"
+STORAGE_ACCOUNT = "aquiladatalake"
 CONTAINER       = "raw"
 ADLS_PATH       = f"abfss://{CONTAINER}@{STORAGE_ACCOUNT}.dfs.core.windows.net"
 
 # Mount point (or use direct ABFSS paths)
-MOUNT_POINT     = "/mnt/baobab_power"
+MOUNT_POINT     = "/mnt/aquila"
 BRONZE_DB       = "bronze"
-BRONZE_PATH     = "/mnt/baobab_power/bronze"
+BRONZE_PATH     = "/mnt/aquila/bronze"
 
 # Audit metadata
 PIPELINE_RUN_ID = dbutils.widgets.get("pipeline_run_id") if dbutils.widgets.get("pipeline_run_id") != "" else "manual"
-INGESTED_BY     = "adf_baobab_power_bronze_pipeline"
+INGESTED_BY     = "adf_aquila_bronze_pipeline"
 
 spark.conf.set("spark.sql.shuffle.partitions", "200")
 spark.conf.set("spark.databricks.delta.optimizeWrite.enabled", "true")
@@ -52,11 +52,11 @@ try:
             f"fs.azure.account.oauth.provider.type.{STORAGE_ACCOUNT}.dfs.core.windows.net":
                 "org.apache.hadoop.fs.azurebfs.oauth2.ClientCredsTokenProvider",
             f"fs.azure.account.oauth2.client.id.{STORAGE_ACCOUNT}.dfs.core.windows.net":
-                dbutils.secrets.get("baobab_power-scope", "sp-client-id"),
+                dbutils.secrets.get("aquila-scope", "sp-client-id"),
             f"fs.azure.account.oauth2.client.secret.{STORAGE_ACCOUNT}.dfs.core.windows.net":
-                dbutils.secrets.get("baobab_power-scope", "sp-client-secret"),
+                dbutils.secrets.get("aquila-scope", "sp-client-secret"),
             f"fs.azure.account.oauth2.client.endpoint.{STORAGE_ACCOUNT}.dfs.core.windows.net":
-                f"https://login.microsoftonline.com/{dbutils.secrets.get('baobab_power-scope','tenant-id')}/oauth2/token",
+                f"https://login.microsoftonline.com/{dbutils.secrets.get('aquila-scope','tenant-id')}/oauth2/token",
         }
     )
     print(f"Mounted {MOUNT_POINT}")

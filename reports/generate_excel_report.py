@@ -1,7 +1,7 @@
 """
-Baobab Power Energy Intelligence Platform
+Aquila Energy Intelligence Platform
 Excel Report Generator
-Produces: Baobab_Power_Energy_Intelligence_Report.xlsx
+Produces: Aquila_Energy_Intelligence_Report.xlsx
 """
 import pandas as pd
 import numpy as np
@@ -14,7 +14,7 @@ from openpyxl.utils import get_column_letter
 from openpyxl.drawing.image import Image as XLImage
 import os, sys
 
-ROOT    = r"C:\Users\Anthony.DESKTOP-ES5HL78\Documents\Baobab_Power_Energy_Intelligence_Platform"
+ROOT    = r"C:\Users\Anthony.DESKTOP-ES5HL78\Documents\Aquila_Energy_Intelligence_Platform"
 GEN_DIR = os.path.join(ROOT, "data", "generated")
 OUT_DIR = os.path.join(ROOT, "reports")
 
@@ -38,7 +38,7 @@ ops = ops.merge(plants[["PlantKey","PlantName","PrimaryTechnology","Country","Na
 sales["MonthDate"] = pd.to_datetime(sales["YearMonth"])
 sales["Year"]  = sales["MonthDate"].dt.year
 
-# ── Colour palette (Baobab Power brand: dark blue + amber + cyan) ──────────────
+# ── Colour palette (Aquila brand: dark blue + amber + cyan) ──────────────
 C_DARK_BLUE = "14443B"
 C_AMBER     = "F7941D"
 C_CYAN      = "00B4D8"
@@ -129,7 +129,7 @@ fill_row(ws0, 10, C_LIGHT_BG,  30)
 for r in range(11, 25):
     fill_row(ws0, r, "FFFFFF", 20)
 
-t = ws0.cell(row=2, column=2, value="BAOBAB POWER ENERGY INTELLIGENCE PLATFORM")
+t = ws0.cell(row=2, column=2, value="AQUILA ENERGY INTELLIGENCE PLATFORM")
 t.font = Font(bold=True, color=C_WHITE, name="Calibri", size=24)
 t.alignment = Alignment(horizontal="left", vertical="center")
 
@@ -182,7 +182,7 @@ rev_annual = (sales.groupby("Year")
 annual = annual.merge(rev_annual, on="Year", how="left")
 annual["RenewableSharePct"] = 85.3  # approximate from generation mix
 
-title = ws1.cell(row=1, column=1, value="PORTFOLIO ANNUAL KPIs — BAOBAB POWER ENERGY INTELLIGENCE PLATFORM")
+title = ws1.cell(row=1, column=1, value="PORTFOLIO ANNUAL KPIs — AQUILA ENERGY INTELLIGENCE PLATFORM")
 title.font = Font(bold=True, color=C_DARK_BLUE, name="Calibri", size=14)
 ws1.row_dimensions[1].height = 28
 ws1.merge_cells("A1:I1")
@@ -430,7 +430,7 @@ autofit_columns(ws6)
 ws7 = wb.create_sheet("ML Model Results")
 ws7.sheet_view.showGridLines = False
 
-t7 = ws7.cell(row=1, column=1, value="MACHINE LEARNING MODEL REGISTRY — BAOBAB POWER ENERGY INTELLIGENCE")
+t7 = ws7.cell(row=1, column=1, value="MACHINE LEARNING MODEL REGISTRY — AQUILA ENERGY INTELLIGENCE")
 t7.font = Font(bold=True, color=C_DARK_BLUE, name="Calibri", size=14)
 ws7.row_dimensions[1].height = 28; ws7.merge_cells("A1:H1")
 
@@ -465,7 +465,7 @@ ws7.row_dimensions[12].height = 24
 write_table(ws7, fi_data, start_row=13, header_fill=CYAN_FILL, header_font=BOLD_WHITE)
 
 # ── Save ──────────────────────────────────────────────────────
-out_path = os.path.join(OUT_DIR, "Baobab_Power_Energy_Intelligence_Report.xlsx")
+out_path = os.path.join(OUT_DIR, "Aquila_Energy_Intelligence_Report.xlsx")
 wb.save(out_path)
 print(f"\nExcel report saved: {out_path}")
 print(f"File size         : {os.path.getsize(out_path)/1024:.1f} KB")

@@ -1,6 +1,6 @@
 # Databricks notebook source
 # MAGIC %md
-# MAGIC # Baobab Power Energy Intelligence Platform
+# MAGIC # Aquila Energy Intelligence Platform
 # MAGIC ## Notebook 04 — ML: Energy Intelligence Suite
 # MAGIC **Purpose:** Train, evaluate and register 5 ML models using MLflow on the Gold feature store.
 # MAGIC
@@ -35,7 +35,7 @@ import lightgbm as lgb
 import shap
 
 mlflow.set_registry_uri("databricks")
-EXPERIMENT_NAME = "/Users/anthony.apollis@gmail.com/baobab_power_energy_intelligence"
+EXPERIMENT_NAME = "/Users/anthony.apollis@gmail.com/aquila_energy_intelligence"
 mlflow.set_experiment(EXPERIMENT_NAME)
 
 GOLD_DB = "gold"
@@ -144,7 +144,7 @@ with mlflow.start_run(run_name="energy_yield_xgboost") as run1:
     plt.close()
 
     mlflow.xgboost.log_model(model1, "model",
-        registered_model_name="baobab_power_energy_yield_forecaster")
+        registered_model_name="aquila_energy_yield_forecaster")
 
     print(f"\n  Run ID: {run1.info.run_id}")
 
@@ -219,7 +219,7 @@ with mlflow.start_run(run_name="forced_outage_lgbm_classifier") as run2:
     print(f"    Class report:\n{classification_report(y2_te, y2_pred)}")
 
     mlflow.lightgbm.log_model(model2, "model",
-        registered_model_name="baobab_power_forced_outage_predictor")
+        registered_model_name="aquila_forced_outage_predictor")
 
 # COMMAND ----------
 # MAGIC %md ---
@@ -279,7 +279,7 @@ with mlflow.start_run(run_name="maintenance_cost_rf") as run3:
     print(f"    OOB R² : {model3_oob.oob_score_:.4f}")
 
     mlflow.sklearn.log_model(model3, "model",
-        registered_model_name="baobab_power_maintenance_cost_estimator")
+        registered_model_name="aquila_maintenance_cost_estimator")
 
 # COMMAND ----------
 # MAGIC %md ---
@@ -340,7 +340,7 @@ with mlflow.start_run(run_name="curtailment_anomaly_isolation_forest") as run4:
 
     mlflow.sklearn.log_model(
         {"isolation_forest": model4, "scaler": scaler4}, "model",
-        registered_model_name="baobab_power_curtailment_anomaly_detector"
+        registered_model_name="aquila_curtailment_anomaly_detector"
     )
 
 # COMMAND ----------
@@ -418,14 +418,14 @@ with mlflow.start_run(run_name="portfolio_revenue_lgbm_regressor") as run5:
     print(f"\n  Next-month portfolio revenue forecast: R{next_month_rev:,.0f}")
 
     mlflow.lightgbm.log_model(model5, "model",
-        registered_model_name="baobab_power_portfolio_revenue_forecaster")
+        registered_model_name="aquila_portfolio_revenue_forecaster")
 
 # COMMAND ----------
 # MAGIC %md ### Summary: All 5 Models Registered
 
 # COMMAND ----------
 print("\n" + "="*65)
-print("BAOBAB POWER ML MODEL REGISTRY SUMMARY")
+print("AQUILA ML MODEL REGISTRY SUMMARY")
 print("="*65)
 models_summary = [
     ("Energy Yield Forecaster",     "XGBoost Regressor",    f"MAE={metrics1['MAE']:.1f} MWh  R²={metrics1['R2']:.4f}"),

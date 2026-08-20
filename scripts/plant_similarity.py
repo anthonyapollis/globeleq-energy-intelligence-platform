@@ -1,4 +1,4 @@
-"""Content-based "similar plants" recommender for the Baobab Power Energy
+"""Content-based "similar plants" recommender for the Aquila Energy
 Intelligence Platform.
 
 There's no "customer purchase history" concept in a power-plant portfolio

@@ -1,6 +1,6 @@
 # Databricks notebook source
 # MAGIC %md
-# MAGIC # Baobab Power Energy Intelligence Platform
+# MAGIC # Aquila Energy Intelligence Platform
 # MAGIC ## Notebook 02 — Silver Layer: Cleansing, Enrichment & Standardisation
 # MAGIC **Purpose:** Apply data quality rules, join dimensions, engineer time features,
 # MAGIC and produce publication-ready Silver Delta tables.
@@ -16,7 +16,7 @@
 # COMMAND ----------
 BRONZE_DB = "bronze"
 SILVER_DB = "silver"
-SILVER_PATH = "/mnt/baobab_power/silver"
+SILVER_PATH = "/mnt/aquila/silver"
 spark.sql(f"CREATE DATABASE IF NOT EXISTS {SILVER_DB} LOCATION '{SILVER_PATH}'")
 
 from pyspark.sql import functions as F

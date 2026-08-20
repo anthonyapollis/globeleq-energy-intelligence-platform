@@ -1,4 +1,4 @@
-# Baobab Power Energy Intelligence Platform
+# Aquila Energy Intelligence Platform
 # Local development dependencies
 # (PySpark / Databricks runtime dependencies are managed by the cluster)
 #

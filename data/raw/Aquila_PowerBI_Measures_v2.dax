@@ -1,5 +1,5 @@
 -- =============================================================
--- Baobab Power Energy Intelligence Platform — DAX Measures V2
+-- Aquila Energy Intelligence Platform — DAX Measures V2
 -- Create all measures in a dedicated table named _Measures.
 -- Use one-to-many, single-direction relationships:
 --   DimDate  → all dated fact tables

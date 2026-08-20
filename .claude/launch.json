@@ -2,7 +2,7 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "baobab-power-ebook",
+      "name": "aquila-ebook",
       "autoPort": true,
       "runtimeExecutable": "python",
       "runtimeArgs": ["-m", "http.server", "--directory", "ebook"],

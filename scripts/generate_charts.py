@@ -1,5 +1,5 @@
 """
-Baobab Power Energy Intelligence Platform
+Aquila Energy Intelligence Platform
 Chart Generator — 14 publication-quality charts
 Covers: correlation, ML predictions, feature importance,
         ROC/PR curves, anomaly detection, operational analytics
@@ -25,7 +25,7 @@ import xgboost as xgb
 import lightgbm as lgb
 warnings.filterwarnings("ignore")
 
-ROOT     = r"C:\Users\Anthony.DESKTOP-ES5HL78\Documents\Baobab_Power_Energy_Intelligence_Platform"
+ROOT     = r"C:\Users\Anthony.DESKTOP-ES5HL78\Documents\Aquila_Energy_Intelligence_Platform"
 GEN      = os.path.join(ROOT, "data", "generated")
 RAW      = os.path.join(ROOT, "data", "raw")
 CHART_DIR= os.path.join(ROOT, "reports", "charts")

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://baobab-power-intelligence.netlify.app/sitemap.xml
+Sitemap: https://aquila-energy-intelligence.netlify.app/sitemap.xml

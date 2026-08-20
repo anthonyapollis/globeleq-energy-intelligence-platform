@@ -1,6 +1,6 @@
 # Databricks notebook source
 # MAGIC %md
-# MAGIC # Baobab Power Energy Intelligence Platform
+# MAGIC # Aquila Energy Intelligence Platform
 # MAGIC ## Notebook 03 — Gold Layer: Executive KPIs & Aggregations
 # MAGIC **Purpose:** Build the analytical Gold layer used by Power BI and the ML feature store.
 # MAGIC Computes portfolio-level KPIs, plant rankings, and month-over-month trends.
@@ -18,7 +18,7 @@
 # COMMAND ----------
 SILVER_DB = "silver"
 GOLD_DB   = "gold"
-GOLD_PATH = "/mnt/baobab_power/gold"
+GOLD_PATH = "/mnt/aquila/gold"
 spark.sql(f"CREATE DATABASE IF NOT EXISTS {GOLD_DB} LOCATION '{GOLD_PATH}'")
 
 from pyspark.sql import functions as F

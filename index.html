@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Baobab Power Energy Intelligence Platform - renewable energy analytics, machine-learning forecasting and reporting across African power plants.">
-<title>Baobab Power Energy Intelligence Platform</title>
+<meta name="description" content="Aquila Energy Intelligence Platform - renewable energy analytics, machine-learning forecasting and reporting across African power plants.">
+<title>Aquila Energy Intelligence Platform</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: #f4f2ed; color: #1a1a2e; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; min-height: 100vh; display: flex; flex-direction: column; }
@@ -97,15 +97,15 @@
 <header>
   <div class="logo-mark">G</div>
   <div>
-    <div class="logo-text">Baobab Power</div>
+    <div class="logo-text">Aquila</div>
     <div class="logo-sub">Powering Africa's Growth</div>
   </div>
   <nav class="nav-links">
-    <a href="ebook/baobab_power_energy_intelligence_ebook.html">Ebook</a>
-    <a href="ebook/baobab_power_plant_map.html">Map</a>
-    <a href="ebook/baobab_power_dashboard.html">Dashboard</a>
-    <a href="reports/Baobab_Power_Energy_Intelligence_Report.xlsx" download>Excel</a>
-    <a href="https://github.com/anthonyapollis/baobab-power-intelligence-platform" target="_blank" class="nav-ext">GitHub</a>
+    <a href="ebook/aquila_energy_intelligence_ebook.html">Ebook</a>
+    <a href="ebook/aquila_plant_map.html">Map</a>
+    <a href="ebook/aquila_dashboard.html">Dashboard</a>
+    <a href="reports/Aquila_Energy_Intelligence_Report.xlsx" download>Excel</a>
+    <a href="https://github.com/anthonyapollis/aquila-energy-intelligence-platform" target="_blank" class="nav-ext">GitHub</a>
   </nav>
 </header>
 <div class="accent-bar"></div>
@@ -123,31 +123,31 @@
 </div>
 
 <div class="cards">
-  <a class="card" href="ebook/baobab_power_energy_intelligence_ebook.html">
+  <a class="card" href="ebook/aquila_energy_intelligence_ebook.html">
     <div class="card-icon">📘</div>
     <div class="card-title">Project Ebook</div>
     <div class="card-desc">Full technical walkthrough — architecture, data model, ML model diagnostics with charts, business intelligence findings, and DAX measures across 9 Power BI report pages.</div>
     <div class="card-cta">Open ebook &rarr;</div>
   </a>
-  <a class="card" href="ebook/baobab_power_plant_map.html">
+  <a class="card" href="ebook/aquila_plant_map.html">
     <div class="card-icon">🗺️</div>
     <div class="card-title">Interactive Plant Map</div>
     <div class="card-desc">All 19 IPP plants plotted across Africa — click any plant for capacity, offtaker, and agreement details. Filter by technology type and explore regional capacity distribution.</div>
     <div class="card-cta">Explore map &rarr;</div>
   </a>
-  <a class="card" href="ebook/baobab_power_dashboard.html">
+  <a class="card" href="ebook/aquila_dashboard.html">
     <div class="card-icon">📊</div>
     <div class="card-title">Interactive Analytics Dashboard</div>
     <div class="card-desc">9 live Chart.js charts from real generated data — forced outage seasonality, availability heatmap, capacity factors, revenue trends, correlation matrix, and maintenance costs.</div>
     <div class="card-cta">Open dashboard &rarr;</div>
   </a>
-  <a class="card" href="reports/Baobab_Power_Energy_Intelligence_Report.xlsx" download>
+  <a class="card" href="reports/Aquila_Energy_Intelligence_Report.xlsx" download>
     <div class="card-icon">📊</div>
     <div class="card-title">Excel Intelligence Report</div>
     <div class="card-desc">8-sheet executive workbook — portfolio KPIs, plant availability, outage analysis, revenue trends, ML model summary, ESG metrics, and embedded charts.</div>
     <div class="card-cta">Download report &rarr;</div>
   </a>
-  <a class="card" href="https://github.com/anthonyapollis/baobab-power-intelligence-platform" target="_blank">
+  <a class="card" href="https://github.com/anthonyapollis/aquila-energy-intelligence-platform" target="_blank">
     <div class="card-icon">⚙️</div>
     <div class="card-title">Source Code</div>
     <div class="card-desc">PySpark notebooks (Bronze → Silver → Gold), ADF pipeline JSON, ML training scripts, Excel report generator, and data reconciliation checks — all on GitHub.</div>
@@ -200,12 +200,12 @@
 
 <footer>
   <span>Anthony Apollis &mdash; <a href="mailto:anthony.apollis@gmail.com">anthony.apollis@gmail.com</a></span>
-  <a href="https://github.com/anthonyapollis/baobab-power-intelligence-platform" target="_blank">github.com/anthonyapollis/baobab-power-intelligence-platform</a>
+  <a href="https://github.com/anthonyapollis/aquila-energy-intelligence-platform" target="_blank">github.com/anthonyapollis/aquila-energy-intelligence-platform</a>
 </footer>
 
 <button id="qa-toggle">&#128172; Ask about this platform</button>
 <div id="qa-panel">
-  <div id="qa-head"><span>Ask about Baobab Power Intelligence</span><button id="qa-close">&times;</button></div>
+  <div id="qa-head"><span>Ask about Aquila Intelligence</span><button id="qa-close">&times;</button></div>
   <div id="qa-log"><div class="bubble bot">Hi! Ask me about the plants, the ML models, the tech stack, or the similar-plants tool.</div></div>
   <div id="qa-chips">
     <button>What is this project?</button>
@@ -222,8 +222,8 @@
 var PLANT_SIM = {"metrics": {"model": "Content-based nearest-neighbour similarity (cosine) over real plant attributes + real ops data", "plants_total": 19, "plants_scored": 17, "plants_under_construction_excluded": 2, "features": ["NameplateCapacity", "avg_availability_pct", "avg_capacity_factor_pct", "PrimaryTechnology (one-hot)", "Region (one-hot)"], "diagnostic_nearest_neighbour_same_technology_pct": 88.2, "note": "19 plants is too few for a held-out accuracy claim - this is a similarity tool for operational risk triage (\"which plants look like this one\"), not a validated prediction."}, "plants": [{"code": "ARC", "name": "Marsa Alam Solar", "country": "Egypt", "technology": "Solar PV", "capacity_mw": 66.0, "avg_availability_pct": 97.5, "avg_capacity_factor_pct": 23.9, "similar": [{"code": "WINNERGY", "name": "Nubian Sands Solar", "similarity": 0.982, "avg_availability_pct": 97.5}, {"code": "DEAAR", "name": "Hantam Solar Power", "similarity": 0.736, "avg_availability_pct": 97.5}, {"code": "DROOG", "name": "Diamond Coast Solar", "similarity": 0.734, "avg_availability_pct": 97.5}]}, {"code": "ARIES", "name": "Orange Valley Solar", "country": "South Africa", "technology": "Solar PV", "capacity_mw": 11.0, "avg_availability_pct": 97.5, "avg_capacity_factor_pct": 24.0, "similar": [{"code": "KONK", "name": "Bushmanland Solar Power", "similarity": 1.0, "avg_availability_pct": 97.5}, {"code": "SOUTPAN", "name": "Limpopo Valley Solar", "similarity": 0.996, "avg_availability_pct": 97.5}, {"code": "MOCUBA", "name": "Zambezia Sun Fields", "similarity": 0.992, "avg_availability_pct": 97.4}]}, {"code": "AZITO", "name": "Ebrie Lagoon Power", "country": "C\u00f4te d\u2019Ivoire", "technology": "Natural Gas", "capacity_mw": 713.0, "avg_availability_pct": 94.0, "avg_capacity_factor_pct": 67.9, "similar": [{"code": "KRIBI", "name": "Sanaga Delta Power", "similarity": 0.773, "avg_availability_pct": 93.9}, {"code": "SONGAS", "name": "Rufiji Gas Power", "similarity": 0.708, "avg_availability_pct": 94.0}, {"code": "DIBAMBA", "name": "Wouri Estuary Power", "similarity": 0.429, "avg_availability_pct": 94.1}]}, {"code": "BOSHOF", "name": "Free State Sun Park", "country": "South Africa", "technology": "Solar PV", "capacity_mw": 66.0, "avg_availability_pct": 97.4, "avg_capacity_factor_pct": 24.1, "similar": [{"code": "DROOG", "name": "Diamond Coast Solar", "similarity": 0.997, "avg_availability_pct": 97.5}, {"code": "DEAAR", "name": "Hantam Solar Power", "similarity": 0.997, "avg_availability_pct": 97.5}, {"code": "MOCUBA", "name": "Zambezia Sun Fields", "similarity": 0.993, "avg_availability_pct": 97.4}]}, {"code": "CUAMBA", "name": "Niassa Solar Storage", "country": "Mozambique", "technology": "Solar PV + BESS", "capacity_mw": 19.0, "avg_availability_pct": 97.5, "avg_capacity_factor_pct": 24.0, "similar": [{"code": "KONK", "name": "Bushmanland Solar Power", "similarity": 0.767, "avg_availability_pct": 97.5}, {"code": "ARIES", "name": "Orange Valley Solar", "similarity": 0.767, "avg_availability_pct": 97.5}, {"code": "SOUTPAN", "name": "Limpopo Valley Solar", "similarity": 0.759, "avg_availability_pct": 97.5}]}, {"code": "DEAAR", "name": "Hantam Solar Power", "country": "South Africa", "technology": "Solar PV", "capacity_mw": 50.0, "avg_availability_pct": 97.5, "avg_capacity_factor_pct": 24.1, "similar": [{"code": "DROOG", "name": "Diamond Coast Solar", "similarity": 1.0, "avg_availability_pct": 97.5}, {"code": "MOCUBA", "name": "Zambezia Sun Fields", "similarity": 0.998, "avg_availability_pct": 97.4}, {"code": "BOSHOF", "name": "Free State Sun Park", "similarity": 0.997, "avg_availability_pct": 97.4}]}, {"code": "DIBAMBA", "name": "Wouri Estuary Power", "country": "Cameroon", "technology": "Heavy Fuel Oil", "capacity_mw": 88.0, "avg_availability_pct": 94.1, "avg_capacity_factor_pct": 42.0, "similar": [{"code": "KRIBI", "name": "Sanaga Delta Power", "similarity": 0.746, "avg_availability_pct": 93.9}, {"code": "SONGAS", "name": "Rufiji Gas Power", "similarity": 0.681, "avg_availability_pct": 94.0}, {"code": "AZITO", "name": "Ebrie Lagoon Power", "similarity": 0.429, "avg_availability_pct": 94.0}]}, {"code": "DROOG", "name": "Diamond Coast Solar", "country": "South Africa", "technology": "Solar PV", "capacity_mw": 50.0, "avg_availability_pct": 97.5, "avg_capacity_factor_pct": 24.1, "similar": [{"code": "DEAAR", "name": "Hantam Solar Power", "similarity": 1.0, "avg_availability_pct": 97.5}, {"code": "MOCUBA", "name": "Zambezia Sun Fields", "similarity": 0.998, "avg_availability_pct": 97.4}, {"code": "BOSHOF", "name": "Free State Sun Park", "similarity": 0.997, "avg_availability_pct": 97.4}]}, {"code": "JBAY", "name": "Cape St Francis Wind Farm", "country": "South Africa", "technology": "Wind", "capacity_mw": 138.0, "avg_availability_pct": 97.5, "avg_capacity_factor_pct": 36.2, "similar": [{"code": "KLIP", "name": "Overberg Ridge Wind Farm", "similarity": 0.83, "avg_availability_pct": 97.5}, {"code": "BOSHOF", "name": "Free State Sun Park", "similarity": 0.437, "avg_availability_pct": 97.4}, {"code": "DEAAR", "name": "Hantam Solar Power", "similarity": 0.427, "avg_availability_pct": 97.5}]}, {"code": "KLIP", "name": "Overberg Ridge Wind Farm", "country": "South Africa", "technology": "Wind", "capacity_mw": 27.0, "avg_availability_pct": 97.5, "avg_capacity_factor_pct": 36.1, "similar": [{"code": "JBAY", "name": "Cape St Francis Wind Farm", "similarity": 0.83, "avg_availability_pct": 97.5}, {"code": "ARIES", "name": "Orange Valley Solar", "similarity": 0.581, "avg_availability_pct": 97.5}, {"code": "KONK", "name": "Bushmanland Solar Power", "similarity": 0.579, "avg_availability_pct": 97.5}]}, {"code": "KONK", "name": "Bushmanland Solar Power", "country": "South Africa", "technology": "Solar PV", "capacity_mw": 11.0, "avg_availability_pct": 97.5, "avg_capacity_factor_pct": 23.9, "similar": [{"code": "ARIES", "name": "Orange Valley Solar", "similarity": 1.0, "avg_availability_pct": 97.5}, {"code": "SOUTPAN", "name": "Limpopo Valley Solar", "similarity": 0.996, "avg_availability_pct": 97.5}, {"code": "MOCUBA", "name": "Zambezia Sun Fields", "similarity": 0.992, "avg_availability_pct": 97.4}]}, {"code": "KRIBI", "name": "Sanaga Delta Power", "country": "Cameroon", "technology": "Natural Gas", "capacity_mw": 216.0, "avg_availability_pct": 93.9, "avg_capacity_factor_pct": 68.1, "similar": [{"code": "SONGAS", "name": "Rufiji Gas Power", "similarity": 0.948, "avg_availability_pct": 94.0}, {"code": "AZITO", "name": "Ebrie Lagoon Power", "similarity": 0.773, "avg_availability_pct": 94.0}, {"code": "DIBAMBA", "name": "Wouri Estuary Power", "similarity": 0.746, "avg_availability_pct": 94.1}]}, {"code": "MALINDI", "name": "Watamu Coast Solar", "country": "Kenya", "technology": "Solar PV", "capacity_mw": 52.0, "avg_availability_pct": 97.4, "avg_capacity_factor_pct": 24.0, "similar": [{"code": "SOUTPAN", "name": "Limpopo Valley Solar", "similarity": 0.736, "avg_availability_pct": 97.5}, {"code": "KONK", "name": "Bushmanland Solar Power", "similarity": 0.734, "avg_availability_pct": 97.5}, {"code": "WINNERGY", "name": "Nubian Sands Solar", "similarity": 0.734, "avg_availability_pct": 97.5}]}, {"code": "MOCUBA", "name": "Zambezia Sun Fields", "country": "Mozambique", "technology": "Solar PV", "capacity_mw": 41.0, "avg_availability_pct": 97.4, "avg_capacity_factor_pct": 23.9, "similar": [{"code": "SOUTPAN", "name": "Limpopo Valley Solar", "similarity": 0.999, "avg_availability_pct": 97.5}, {"code": "DROOG", "name": "Diamond Coast Solar", "similarity": 0.998, "avg_availability_pct": 97.5}, {"code": "DEAAR", "name": "Hantam Solar Power", "similarity": 0.998, "avg_availability_pct": 97.5}]}, {"code": "SONGAS", "name": "Rufiji Gas Power", "country": "Tanzania", "technology": "Natural Gas", "capacity_mw": 190.0, "avg_availability_pct": 94.0, "avg_capacity_factor_pct": 67.9, "similar": [{"code": "KRIBI", "name": "Sanaga Delta Power", "similarity": 0.948, "avg_availability_pct": 93.9}, {"code": "AZITO", "name": "Ebrie Lagoon Power", "similarity": 0.708, "avg_availability_pct": 94.0}, {"code": "DIBAMBA", "name": "Wouri Estuary Power", "similarity": 0.681, "avg_availability_pct": 94.1}]}, {"code": "SOUTPAN", "name": "Limpopo Valley Solar", "country": "South Africa", "technology": "Solar PV", "capacity_mw": 31.0, "avg_availability_pct": 97.5, "avg_capacity_factor_pct": 24.0, "similar": [{"code": "MOCUBA", "name": "Zambezia Sun Fields", "similarity": 0.999, "avg_availability_pct": 97.4}, {"code": "DROOG", "name": "Diamond Coast Solar", "similarity": 0.997, "avg_availability_pct": 97.5}, {"code": "DEAAR", "name": "Hantam Solar Power", "similarity": 0.996, "avg_availability_pct": 97.5}]}, {"code": "WINNERGY", "name": "Nubian Sands Solar", "country": "Egypt", "technology": "Solar PV", "capacity_mw": 25.0, "avg_availability_pct": 97.5, "avg_capacity_factor_pct": 24.0, "similar": [{"code": "ARC", "name": "Marsa Alam Solar", "similarity": 0.982, "avg_availability_pct": 97.5}, {"code": "KONK", "name": "Bushmanland Solar Power", "similarity": 0.761, "avg_availability_pct": 97.5}, {"code": "ARIES", "name": "Orange Valley Solar", "similarity": 0.761, "avg_availability_pct": 97.5}]}]};
 var FAQ = [
   {q: "What is this project?",
-   kw: ["what is this", "about this project", "what company", "baobab_power"],
-   a: "The Baobab Power Energy Intelligence Platform models Baobab Power's real African IPP portfolio - 19 utility-scale power plants across 7 countries - with synthetic 15-minute SCADA telemetry, ingested via Azure Databricks through a Medallion Architecture (Bronze/Silver/Gold), surfaced with 8 ML models and a 111-measure Power BI model. Plant names, technologies, capacities and countries are Baobab Power's real portfolio; the operational telemetry is synthetic."},
+   kw: ["what is this", "about this project", "what company", "aquila"],
+   a: "The Aquila Energy Intelligence Platform models a fully fictional African IPP portfolio - 19 utility-scale power plants across 7 countries - with synthetic 15-minute SCADA telemetry, ingested via Azure Databricks through a Medallion Architecture (Bronze/Silver/Gold), surfaced with 8 ML models and a 111-measure Power BI model. Aquila, its plant names and portfolio are invented; the technology mix and African geography reflect realistic industry patterns. All data, including plant identities, is synthetic."},
   {q: "How much data is in this?",
    kw: ["how much data", "how many rows", "scale", "size of the data"],
    a: "3,024,807 total rows generated, 2,981,664 SCADA telemetry rows (15-minute intervals, 17 operating plants x 5 years), across 19 plants (17 operating, 2 under construction) and 1,794 MW of operating capacity."},
@@ -238,13 +238,13 @@ var FAQ = [
    a: "Ebrie Lagoon Power in Abidjan, Côte d'Ivoire - 713 MW, Natural Gas, under a 20-year concession with the Ivorian government."},
   {q: "Is the data real?",
    kw: ["is the data real", "real data", "is this real", "synthetic", "fictional"],
-   a: "The plant portfolio (names, locations, technologies, capacities, offtakers) is Baobab Power's real African IPP fleet. Every SCADA telemetry row, outage record and financial figure is synthetic, generated for this portfolio project - not Baobab Power's real operational or financial data."},
+   a: "Aquila is a fictional company built for this portfolio piece. The plant portfolio (names, locations, technologies, capacities, offtakers) is invented, modelled on realistic patterns for an African independent power producer. Every SCADA telemetry row, outage record and financial figure is likewise synthetic, generated for this project."},
   {q: "What's the tech stack?",
    kw: ["tech stack", "technology", "what's it built with", "stack"],
    a: "Azure Databricks (PySpark, Delta Lake, MLflow), Azure Data Factory, Azure Data Lake Gen2, Azure SQL Server (27-table warehouse), Power BI (111 DAX measures across 9 report pages), Python (XGBoost, LightGBM, Isolation Forest), and Leaflet.js for the interactive plant map."},
   {q: "Who built this?",
    kw: ["who built", "who made", "author", "anthony"],
-   a: "Anthony Apollis, as a portfolio project demonstrating Azure Databricks data engineering and ML across Baobab Power's real African IPP portfolio - not an official Baobab Power platform."},
+   a: "Anthony Apollis, as a portfolio project demonstrating Azure Databricks data engineering and ML across a fully fictional African IPP portfolio - Aquila is an invented company, not a real platform."},
 ];
 document.addEventListener("DOMContentLoaded", function () {
   var sel = document.getElementById("sim-select");

@@ -1,7 +1,7 @@
 {
-  "name": "pl_baobab_power_daily_energy_intelligence",
+  "name": "pl_aquila_daily_energy_intelligence",
   "properties": {
-    "description": "Baobab Power Energy Intelligence Platform — full end-to-end daily pipeline: ADLS ingestion → Databricks Bronze/Silver/Gold → ML inference → Power BI refresh → Teams notification.",
+    "description": "Aquila Energy Intelligence Platform — full end-to-end daily pipeline: ADLS ingestion → Databricks Bronze/Silver/Gold → ML inference → Power BI refresh → Teams notification.",
     "activities": [
       {
         "name": "Set Pipeline Start Time",
@@ -23,7 +23,7 @@
           { "activity": "Set Pipeline Start Time", "dependencyConditions": ["Succeeded"] }
         ],
         "policy": { "timeout": "0.00:05:00", "retry": 2 },
-        "linkedServiceName": { "referenceName": "ls_adls_baobab_power", "type": "LinkedServiceReference" },
+        "linkedServiceName": { "referenceName": "ls_adls_aquila", "type": "LinkedServiceReference" },
         "typeProperties": {
           "dataset": { "referenceName": "ds_adls_raw_container", "type": "DatasetReference" },
           "fieldList": ["exists", "itemName", "lastModified"],
@@ -123,11 +123,11 @@
         ],
         "policy": { "timeout": "1.00:00:00", "retry": 1, "retryIntervalInSeconds": 300 },
         "linkedServiceName": {
-          "referenceName": "ls_databricks_baobab_power",
+          "referenceName": "ls_databricks_aquila",
           "type": "LinkedServiceReference"
         },
         "typeProperties": {
-          "notebookPath": "/Repos/anthony.apollis@gmail.com/baobab_power/notebooks/01_bronze_ingest",
+          "notebookPath": "/Repos/anthony.apollis@gmail.com/aquila/notebooks/01_bronze_ingest",
           "baseParameters": {
             "pipeline_run_id": { "value": "@pipeline().RunId", "type": "Expression" }
           },
@@ -144,11 +144,11 @@
         ],
         "policy": { "timeout": "2.00:00:00", "retry": 1, "retryIntervalInSeconds": 300 },
         "linkedServiceName": {
-          "referenceName": "ls_databricks_baobab_power",
+          "referenceName": "ls_databricks_aquila",
           "type": "LinkedServiceReference"
         },
         "typeProperties": {
-          "notebookPath": "/Repos/anthony.apollis@gmail.com/baobab_power/notebooks/02_silver_transform",
+          "notebookPath": "/Repos/anthony.apollis@gmail.com/aquila/notebooks/02_silver_transform",
           "baseParameters": {
             "pipeline_run_id": { "value": "@pipeline().RunId", "type": "Expression" }
           }
@@ -162,11 +162,11 @@
         ],
         "policy": { "timeout": "1.00:00:00", "retry": 1, "retryIntervalInSeconds": 300 },
         "linkedServiceName": {
-          "referenceName": "ls_databricks_baobab_power",
+          "referenceName": "ls_databricks_aquila",
           "type": "LinkedServiceReference"
         },
         "typeProperties": {
-          "notebookPath": "/Repos/anthony.apollis@gmail.com/baobab_power/notebooks/03_gold_kpis",
+          "notebookPath": "/Repos/anthony.apollis@gmail.com/aquila/notebooks/03_gold_kpis",
           "baseParameters": {
             "pipeline_run_id": { "value": "@pipeline().RunId", "type": "Expression" }
           }
@@ -188,14 +188,14 @@
               "name": "Databricks ML Training",
               "type": "DatabricksNotebook",
               "typeProperties": {
-                "notebookPath": "/Repos/anthony.apollis@gmail.com/baobab_power/notebooks/04_ml_energy_intelligence",
+                "notebookPath": "/Repos/anthony.apollis@gmail.com/aquila/notebooks/04_ml_energy_intelligence",
                 "baseParameters": {
                   "pipeline_run_id": { "value": "@pipeline().RunId", "type": "Expression" },
                   "mode": "retrain"
                 }
               },
               "linkedServiceName": {
-                "referenceName": "ls_databricks_baobab_power",
+                "referenceName": "ls_databricks_aquila",
                 "type": "LinkedServiceReference"
               },
               "policy": { "timeout": "3.00:00:00", "retry": 0 }
@@ -206,14 +206,14 @@
               "name": "Databricks ML Inference Only",
               "type": "DatabricksNotebook",
               "typeProperties": {
-                "notebookPath": "/Repos/anthony.apollis@gmail.com/baobab_power/notebooks/04_ml_energy_intelligence",
+                "notebookPath": "/Repos/anthony.apollis@gmail.com/aquila/notebooks/04_ml_energy_intelligence",
                 "baseParameters": {
                   "pipeline_run_id": { "value": "@pipeline().RunId", "type": "Expression" },
                   "mode": "inference"
                 }
               },
               "linkedServiceName": {
-                "referenceName": "ls_databricks_baobab_power",
+                "referenceName": "ls_databricks_aquila",
                 "type": "LinkedServiceReference"
               },
               "policy": { "timeout": "0.30:00:00", "retry": 1 }
@@ -253,7 +253,7 @@
           "method": "POST",
           "headers": { "Content-Type": "application/json" },
           "body": {
-            "value": "@concat('{\"@type\":\"MessageCard\",\"@context\":\"http://schema.org/extensions\",\"themeColor\":\"00B4D8\",\"summary\":\"Pipeline Succeeded\",\"sections\":[{\"activityTitle\":\"Baobab Power Daily Pipeline — SUCCESS\",\"activitySubtitle\":\"', formatDateTime(utcNow(),'yyyy-MM-dd HH:mm'), ' UTC\",\"facts\":[{\"name\":\"Run ID\",\"value\":\"', pipeline().RunId, '\"},{\"name\":\"Duration\",\"value\":\"See ADF Monitor\"}]}]}')",
+            "value": "@concat('{\"@type\":\"MessageCard\",\"@context\":\"http://schema.org/extensions\",\"themeColor\":\"00B4D8\",\"summary\":\"Pipeline Succeeded\",\"sections\":[{\"activityTitle\":\"Aquila Daily Pipeline — SUCCESS\",\"activitySubtitle\":\"', formatDateTime(utcNow(),'yyyy-MM-dd HH:mm'), ' UTC\",\"facts\":[{\"name\":\"Run ID\",\"value\":\"', pipeline().RunId, '\"},{\"name\":\"Duration\",\"value\":\"See ADF Monitor\"}]}]}')",
             "type": "Expression"
           }
         }
@@ -272,7 +272,7 @@
           "method": "POST",
           "headers": { "Content-Type": "application/json" },
           "body": {
-            "value": "@concat('{\"@type\":\"MessageCard\",\"@context\":\"http://schema.org/extensions\",\"themeColor\":\"FF0000\",\"summary\":\"Pipeline FAILED\",\"sections\":[{\"activityTitle\":\"Baobab Power Daily Pipeline — FAILED\",\"activitySubtitle\":\"', formatDateTime(utcNow(),'yyyy-MM-dd HH:mm'), ' UTC\",\"facts\":[{\"name\":\"Run ID\",\"value\":\"', pipeline().RunId, '\"}]}]}')",
+            "value": "@concat('{\"@type\":\"MessageCard\",\"@context\":\"http://schema.org/extensions\",\"themeColor\":\"FF0000\",\"summary\":\"Pipeline FAILED\",\"sections\":[{\"activityTitle\":\"Aquila Daily Pipeline — FAILED\",\"activitySubtitle\":\"', formatDateTime(utcNow(),'yyyy-MM-dd HH:mm'), ' UTC\",\"facts\":[{\"name\":\"Run ID\",\"value\":\"', pipeline().RunId, '\"}]}]}')",
             "type": "Expression"
           }
         }
@@ -298,7 +298,7 @@
       "teams_webhook_url":   { "type": "String", "defaultValue": "YOUR_TEAMS_WEBHOOK_URL" }
     },
     "annotations": [
-      "Baobab Power",
+      "Aquila",
       "EnergyIntelligence",
       "DeltaLake",
       "Databricks",
@@ -313,7 +313,7 @@
         "description": "Daily at 02:00 SAST (00:00 UTC) — runs after overnight data landing",
         "runtimeState": "Started",
         "pipelines": [
-          { "pipelineReference": { "referenceName": "pl_baobab_power_daily_energy_intelligence" } }
+          { "pipelineReference": { "referenceName": "pl_aquila_daily_energy_intelligence" } }
         ],
         "typeProperties": {
           "recurrence": {

@@ -5,8 +5,8 @@ Adds CSS, updates nav, inserts full section before the footer.
 """
 import os, base64, re
 
-EBOOK  = r"C:\Users\Anthony.DESKTOP-ES5HL78\Documents\Baobab_Power_Energy_Intelligence_Platform\ebook\baobab_power_energy_intelligence_ebook.html"
-CHARTS = r"C:\Users\Anthony.DESKTOP-ES5HL78\Documents\Baobab_Power_Energy_Intelligence_Platform\reports\charts"
+EBOOK  = r"C:\Users\Anthony.DESKTOP-ES5HL78\Documents\Aquila_Energy_Intelligence_Platform\ebook\aquila_energy_intelligence_ebook.html"
+CHARTS = r"C:\Users\Anthony.DESKTOP-ES5HL78\Documents\Aquila_Energy_Intelligence_Platform\reports\charts"
 
 # ── helpers ──────────────────────────────────────────────────────────────────
 def b64(filename):

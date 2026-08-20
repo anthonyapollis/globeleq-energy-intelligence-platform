@@ -1,7 +1,7 @@
 import pandas as pd, warnings
 warnings.filterwarnings('ignore')
 
-ROOT = r'C:\Users\Anthony.DESKTOP-ES5HL78\Documents\Baobab_Power_Energy_Intelligence_Platform'
+ROOT = r'C:\Users\Anthony.DESKTOP-ES5HL78\Documents\Aquila_Energy_Intelligence_Platform'
 GEN  = ROOT + r'\data\generated'
 RAW  = ROOT + r'\data\raw'
 
@@ -41,7 +41,7 @@ rows = {
 }
 total_rows = sum(rows.values())
 
-print("=== BAOBAB POWER NUMBERS RECONCILIATION ===")
+print("=== AQUILA NUMBERS RECONCILIATION ===")
 print()
 print("--- PLANTS ---")
 print("  Total plants in dim_plant.csv :", len(plants))

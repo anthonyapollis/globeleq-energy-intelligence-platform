@@ -1,4 +1,4 @@
--- Baobab Power Power BI measures
+-- Aquila Power BI measures
 -- Create these measures in a dedicated table named _Measures.
 
 Installed Capacity MW :=
