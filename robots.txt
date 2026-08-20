@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://globeleq.netlify.app/sitemap.xml
+Sitemap: https://baobab-power-intelligence.netlify.app/sitemap.xml

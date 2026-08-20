@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Interactive map of Globeleq power plant locations and technologies across Africa.">
-<title>Globeleq — Plant Locations Map</title>
+<meta name="description" content="Interactive map of Baobab Power power plant locations and technologies across Africa.">
+<title>Baobab Power — Plant Locations Map</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -77,16 +77,16 @@
   <div class="logo">
     <div class="logo-mark">G</div>
     <div>
-      <div class="logo-text">Globeleq</div>
+      <div class="logo-text">Baobab Power</div>
       <div class="logo-sub">Powering Africa's Growth</div>
     </div>
   </div>
   <div class="nav-links">
-    <a href="globeleq_energy_intelligence_ebook.html">Ebook</a>
-    <a href="globeleq_dashboard.html">Dashboard</a>
-    <a href="../reports/Globeleq_Energy_Intelligence_Report.xlsx" download>Excel</a>
+    <a href="baobab_power_energy_intelligence_ebook.html">Ebook</a>
+    <a href="baobab_power_dashboard.html">Dashboard</a>
+    <a href="../reports/Baobab_Power_Energy_Intelligence_Report.xlsx" download>Excel</a>
     <a href="../index.html">Home</a>
-    <a href="https://github.com/anthonyapollis/globeleq-energy-intelligence-platform" target="_blank">GitHub</a>
+    <a href="https://github.com/anthonyapollis/baobab-power-intelligence-platform" target="_blank">GitHub</a>
   </div>
 </header>
 <div class="accent-bar"></div>
@@ -160,7 +160,7 @@
     <div class="sidebar-section">
       <div class="sidebar-title">Key asset</div>
       <div class="key-asset">
-        <strong>Azito Power</strong> (Côte d'Ivoire) is the portfolio anchor at 713 MW and ~41% of annual revenue. It is a combined-cycle gas turbine plant and the primary revenue concentration risk.
+        <strong>Ebrie Lagoon Power</strong> (Côte d'Ivoire) is the portfolio anchor at 713 MW and ~41% of annual revenue. It is a combined-cycle gas turbine plant and the primary revenue concentration risk.
       </div>
     </div>
 
@@ -179,25 +179,25 @@ const TECH_COLOR = {
 };
 
 const plants = [
-  { code:"ARC",      name:"ARC Solar Power",           city:"Aswan",        country:"Egypt",         region:"Northern Africa", tech:"Solar PV",       mw:66,  lat:24.09,  lng:32.64,  status:"Operating",      offtaker:"EETC",                  agreement:"PPA", term:25 },
-  { code:"WINNERGY", name:"Winnergy Solar Power",       city:"Aswan",        country:"Egypt",         region:"Northern Africa", tech:"Solar PV",       mw:25,  lat:24.14,  lng:32.96,  status:"Operating",      offtaker:"EETC",                  agreement:"PPA", term:25 },
-  { code:"AZITO",    name:"Azito Power",                city:"Abidjan",      country:"Côte d'Ivoire", region:"West Africa",     tech:"Natural Gas",    mw:713, lat:5.36,   lng:-4.01,  status:"Operating",      offtaker:"Govt. Côte d'Ivoire",   agreement:"Concession", term:20 },
-  { code:"DIBAMBA",  name:"Dibamba Power",              city:"Douala",       country:"Cameroon",      region:"West Africa",     tech:"Heavy Fuel Oil", mw:88,  lat:4.10,   lng:9.77,   status:"Operating",      offtaker:"ENEO",                  agreement:"Tolling", term:20 },
-  { code:"KRIBI",    name:"Kribi Power",                city:"Kribi",        country:"Cameroon",      region:"West Africa",     tech:"Natural Gas",    mw:216, lat:2.94,   lng:9.91,   status:"Operating",      offtaker:"Cameroon Natl Grid",    agreement:"PPA", term:20 },
-  { code:"MALINDI",  name:"Malindi Solar Power",        city:"Malindi",      country:"Kenya",         region:"East Africa",     tech:"Solar PV",       mw:52,  lat:-3.22,  lng:40.12,  status:"Operating",      offtaker:"Kenya Power",           agreement:"PPA", term:20 },
+  { code:"ARC",      name:"Marsa Alam Solar",           city:"Aswan",        country:"Egypt",         region:"Northern Africa", tech:"Solar PV",       mw:66,  lat:24.09,  lng:32.64,  status:"Operating",      offtaker:"EETC",                  agreement:"PPA", term:25 },
+  { code:"WINNERGY", name:"Nubian Sands Solar",       city:"Aswan",        country:"Egypt",         region:"Northern Africa", tech:"Solar PV",       mw:25,  lat:24.14,  lng:32.96,  status:"Operating",      offtaker:"EETC",                  agreement:"PPA", term:25 },
+  { code:"AZITO",    name:"Ebrie Lagoon Power",                city:"Abidjan",      country:"Côte d'Ivoire", region:"West Africa",     tech:"Natural Gas",    mw:713, lat:5.36,   lng:-4.01,  status:"Operating",      offtaker:"Govt. Côte d'Ivoire",   agreement:"Concession", term:20 },
+  { code:"DIBAMBA",  name:"Wouri Estuary Power",              city:"Douala",       country:"Cameroon",      region:"West Africa",     tech:"Heavy Fuel Oil", mw:88,  lat:4.10,   lng:9.77,   status:"Operating",      offtaker:"ENEO",                  agreement:"Tolling", term:20 },
+  { code:"KRIBI",    name:"Sanaga Delta Power",                city:"Kribi",        country:"Cameroon",      region:"West Africa",     tech:"Natural Gas",    mw:216, lat:2.94,   lng:9.91,   status:"Operating",      offtaker:"Cameroon Natl Grid",    agreement:"PPA", term:20 },
+  { code:"MALINDI",  name:"Watamu Coast Solar",        city:"Malindi",      country:"Kenya",         region:"East Africa",     tech:"Solar PV",       mw:52,  lat:-3.22,  lng:40.12,  status:"Operating",      offtaker:"Kenya Power",           agreement:"PPA", term:20 },
   { code:"MENENGAI", name:"Menengai Geothermal",        city:"Nakuru County",country:"Kenya",         region:"East Africa",     tech:"Geothermal",     mw:35,  lat:-0.38,  lng:36.08,  status:"In Construction",offtaker:"Kenya Natl Grid",        agreement:"—", term:0 },
-  { code:"CUAMBA",   name:"Cuamba Solar PV + BESS",     city:"Cuamba",       country:"Mozambique",    region:"Southern Africa", tech:"Solar PV + BESS",mw:19,  lat:-14.80, lng:36.54,  status:"Operating",      offtaker:"—",                     agreement:"—", term:0 },
-  { code:"MOCUBA",   name:"Mocuba Solar",               city:"Mocuba",       country:"Mozambique",    region:"Southern Africa", tech:"Solar PV",       mw:41,  lat:-16.84, lng:36.99,  status:"Operating",      offtaker:"EDM",                   agreement:"PPA", term:25 },
-  { code:"CTT",      name:"Central Térmica de Temane",  city:"Temane",       country:"Mozambique",    region:"Southern Africa", tech:"Natural Gas",    mw:450, lat:-22.13, lng:34.73,  status:"In Construction",offtaker:"EDM",                   agreement:"Tolling", term:25 },
-  { code:"SONGAS",   name:"Songas",                     city:"Dar es Salaam",country:"Tanzania",      region:"East Africa",     tech:"Natural Gas",    mw:190, lat:-6.79,  lng:39.21,  status:"Operating",      offtaker:"Tanzania Natl Grid",    agreement:"PPA", term:20 },
-  { code:"ARIES",    name:"Aries Solar Power",          city:"Kenhardt",     country:"South Africa",  region:"Southern Africa", tech:"Solar PV",       mw:11,  lat:-29.36, lng:21.15,  status:"Operating",      offtaker:"Eskom",                 agreement:"PPA", term:20 },
-  { code:"BOSHOF",   name:"Boshof Solar Power",         city:"Boshof",       country:"South Africa",  region:"Southern Africa", tech:"Solar PV",       mw:66,  lat:-28.54, lng:25.23,  status:"Operating",      offtaker:"Eskom",                 agreement:"PPA", term:20 },
-  { code:"DEAAR",    name:"De Aar Solar Power",         city:"De Aar",       country:"South Africa",  region:"Southern Africa", tech:"Solar PV",       mw:50,  lat:-30.65, lng:24.01,  status:"Operating",      offtaker:"Eskom",                 agreement:"PPA", term:20 },
+  { code:"CUAMBA",   name:"Niassa Solar Storage",     city:"Cuamba",       country:"Mozambique",    region:"Southern Africa", tech:"Solar PV + BESS",mw:19,  lat:-14.80, lng:36.54,  status:"Operating",      offtaker:"—",                     agreement:"—", term:0 },
+  { code:"MOCUBA",   name:"Zambezia Sun Fields",               city:"Mocuba",       country:"Mozambique",    region:"Southern Africa", tech:"Solar PV",       mw:41,  lat:-16.84, lng:36.99,  status:"Operating",      offtaker:"EDM",                   agreement:"PPA", term:25 },
+  { code:"CTT",      name:"Inhambane Gas Power",  city:"Temane",       country:"Mozambique",    region:"Southern Africa", tech:"Natural Gas",    mw:450, lat:-22.13, lng:34.73,  status:"In Construction",offtaker:"EDM",                   agreement:"Tolling", term:25 },
+  { code:"SONGAS",   name:"Rufiji Gas Power",                     city:"Dar es Salaam",country:"Tanzania",      region:"East Africa",     tech:"Natural Gas",    mw:190, lat:-6.79,  lng:39.21,  status:"Operating",      offtaker:"Tanzania Natl Grid",    agreement:"PPA", term:20 },
+  { code:"ARIES",    name:"Orange Valley Solar",          city:"Kenhardt",     country:"South Africa",  region:"Southern Africa", tech:"Solar PV",       mw:11,  lat:-29.36, lng:21.15,  status:"Operating",      offtaker:"Eskom",                 agreement:"PPA", term:20 },
+  { code:"BOSHOF",   name:"Free State Sun Park",         city:"Boshof",       country:"South Africa",  region:"Southern Africa", tech:"Solar PV",       mw:66,  lat:-28.54, lng:25.23,  status:"Operating",      offtaker:"Eskom",                 agreement:"PPA", term:20 },
+  { code:"DEAAR",    name:"Hantam Solar Power",         city:"De Aar",       country:"South Africa",  region:"Southern Africa", tech:"Solar PV",       mw:50,  lat:-30.65, lng:24.01,  status:"Operating",      offtaker:"Eskom",                 agreement:"PPA", term:20 },
   { code:"DROOG",    name:"Droogfontein Solar",         city:"Kimberley",    country:"South Africa",  region:"Southern Africa", tech:"Solar PV",       mw:50,  lat:-28.73, lng:24.75,  status:"Operating",      offtaker:"Eskom",                 agreement:"PPA", term:20 },
-  { code:"JBAY",     name:"Jeffreys Bay Wind Farm",     city:"Jeffreys Bay", country:"South Africa",  region:"Southern Africa", tech:"Wind",           mw:138, lat:-34.05, lng:24.93,  status:"Operating",      offtaker:"—",                     agreement:"—", term:0 },
-  { code:"KLIP",     name:"Klipheuwel Wind Farm",       city:"Caledon",      country:"South Africa",  region:"Southern Africa", tech:"Wind",           mw:27,  lat:-34.23, lng:19.42,  status:"Operating",      offtaker:"—",                     agreement:"—", term:0 },
+  { code:"JBAY",     name:"Cape St Francis Wind Farm",     city:"Jeffreys Bay", country:"South Africa",  region:"Southern Africa", tech:"Wind",           mw:138, lat:-34.05, lng:24.93,  status:"Operating",      offtaker:"—",                     agreement:"—", term:0 },
+  { code:"KLIP",     name:"Overberg Ridge Wind Farm",       city:"Caledon",      country:"South Africa",  region:"Southern Africa", tech:"Wind",           mw:27,  lat:-34.23, lng:19.42,  status:"Operating",      offtaker:"—",                     agreement:"—", term:0 },
   { code:"KONK",     name:"Konkoonsies Solar",          city:"Pofadder",     country:"South Africa",  region:"Southern Africa", tech:"Solar PV",       mw:11,  lat:-29.13, lng:19.40,  status:"Operating",      offtaker:"Eskom",                 agreement:"PPA", term:20 },
-  { code:"SOUTPAN",  name:"Soutpan Solar Power",        city:"Vivo, Limpopo",country:"South Africa",  region:"Southern Africa", tech:"Solar PV",       mw:31,  lat:-23.08, lng:28.32,  status:"Operating",      offtaker:"Eskom",                 agreement:"PPA", term:20 },
+  { code:"SOUTPAN",  name:"Limpopo Valley Solar",        city:"Vivo, Limpopo",country:"South Africa",  region:"Southern Africa", tech:"Solar PV",       mw:31,  lat:-23.08, lng:28.32,  status:"Operating",      offtaker:"Eskom",                 agreement:"PPA", term:20 },
 ];
 
 const map = L.map('map', { zoomControl: true, scrollWheelZoom: true })

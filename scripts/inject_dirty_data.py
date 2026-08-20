@@ -1,5 +1,5 @@
 """
-Globeleq Energy Intelligence Platform
+Baobab Power Energy Intelligence Platform
 Dirty Data Injector — realistic data quality issues for Bronze → Silver pipeline
 
 Dirty patterns injected per table:
@@ -24,7 +24,7 @@ SEED = 99
 np.random.seed(SEED)
 random.seed(SEED)
 
-ROOT    = r"C:\Users\Anthony.DESKTOP-ES5HL78\Documents\Globeleq_Energy_Intelligence_Platform"
+ROOT    = r"C:\Users\Anthony.DESKTOP-ES5HL78\Documents\Baobab_Power_Energy_Intelligence_Platform"
 SRC     = os.path.join(ROOT, "data", "generated")
 OUT     = os.path.join(ROOT, "data", "dirty")
 os.makedirs(OUT, exist_ok=True)
@@ -365,7 +365,7 @@ if __name__ == "__main__":
     import time
     t0 = time.time()
     print("=" * 60)
-    print("GLOBELEQ — DIRTY DATA INJECTOR")
+    print("BAOBAB POWER — DIRTY DATA INJECTOR")
     print("Injecting realistic data quality issues into all tables")
     print("=" * 60)
 

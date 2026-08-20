@@ -3,7 +3,7 @@ import numpy as np
 import warnings
 warnings.filterwarnings('ignore')
 
-ROOT = r'C:\Users\Anthony.DESKTOP-ES5HL78\Documents\Globeleq_Energy_Intelligence_Platform'
+ROOT = r'C:\Users\Anthony.DESKTOP-ES5HL78\Documents\Baobab_Power_Energy_Intelligence_Platform'
 GEN  = ROOT + r'\data\generated'
 RAW  = ROOT + r'\data\raw'
 

@@ -1,5 +1,5 @@
 """
-Globeleq Energy Intelligence Platform
+Baobab Power Energy Intelligence Platform
 Synthetic Data Generator — BATCH MODE
 Generates ~3.3M rows across all fact tables
 Run: python generate_synthetic_data.py
@@ -14,7 +14,7 @@ from datetime import datetime
 SEED = 42
 np.random.seed(SEED)
 
-ROOT = r"C:\Users\Anthony.DESKTOP-ES5HL78\Documents\Globeleq_Energy_Intelligence_Platform"
+ROOT = r"C:\Users\Anthony.DESKTOP-ES5HL78\Documents\Baobab_Power_Energy_Intelligence_Platform"
 OUT  = os.path.join(ROOT, "data", "generated")
 os.makedirs(OUT, exist_ok=True)
 
@@ -49,7 +49,7 @@ START = pd.Timestamp("2020-01-01")
 END   = pd.Timestamp("2024-12-31")
 
 print("=" * 60)
-print("GLOBELEQ ENERGY INTELLIGENCE PLATFORM")
+print("BAOBAB POWER ENERGY INTELLIGENCE PLATFORM")
 print("Synthetic Data Generator  — Batch Mode")
 print(f"Date range : {START.date()} → {END.date()}")
 print(f"Plants     : {len(PLANTS)} operating plants")

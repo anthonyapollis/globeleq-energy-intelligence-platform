@@ -5,8 +5,8 @@ Adds CSS, updates nav, inserts full section before the footer.
 """
 import os, base64, re
 
-EBOOK  = r"C:\Users\Anthony.DESKTOP-ES5HL78\Documents\Globeleq_Energy_Intelligence_Platform\ebook\globeleq_energy_intelligence_ebook.html"
-CHARTS = r"C:\Users\Anthony.DESKTOP-ES5HL78\Documents\Globeleq_Energy_Intelligence_Platform\reports\charts"
+EBOOK  = r"C:\Users\Anthony.DESKTOP-ES5HL78\Documents\Baobab_Power_Energy_Intelligence_Platform\ebook\baobab_power_energy_intelligence_ebook.html"
+CHARTS = r"C:\Users\Anthony.DESKTOP-ES5HL78\Documents\Baobab_Power_Energy_Intelligence_Platform\reports\charts"
 
 # ── helpers ──────────────────────────────────────────────────────────────────
 def b64(filename):
@@ -32,7 +32,7 @@ CHARTS_META = [
         "Reveals which plants show persistent underperformance (row-level trend) vs isolated bad years (single dark cell). Enables the asset management team to target plants for O&M contract renegotiation or equipment inspection.",
         "Portfolio Review (Chapter 7 Results), O&M planning, and Power BI page 3 — Plant Health Dashboard. Feeds directly into the Plant Availability Tier Classifier training data.",
         "Green cells (>95%) = high performers — no action needed. Yellow (85–95%) = watch list. Orange/red (<80%) = intervention candidates. Read each row left-to-right to see whether a plant is improving, stable, or declining over time.",
-        "Azito Power (Natural Gas, 713 MW) consistently delivers 95%+ availability — the portfolio's most reliable revenue anchor. Droogfontein and Klipheuwel show slight 2024 dip, signalling potential ageing equipment."
+        "Ebrie Lagoon Power (Natural Gas, 713 MW) consistently delivers 95%+ availability — the portfolio's most reliable revenue anchor. Droogfontein and Klipheuwel show slight 2024 dip, signalling potential ageing equipment."
     ),
     (
         "03_generation_by_technology.png", "Chart 03",

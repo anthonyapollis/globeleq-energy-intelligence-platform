@@ -1,20 +1,20 @@
 ﻿PlantKey,PlantCode,PlantName,City,Province,Country,Region,ProjectStatus,PrimaryTechnology,NameplateCapacity,CapacityUnit,StorageCapacityMWh,BrochureAnnualGenerationGWh,BrochureHomesEquivalent,BrochureCO2AvoidedTonnes,OfftakerName,AgreementType,AgreementTermYears,SourceNotes
-1,ARC,ARC Solar Power,Aswan,,Egypt,Northern Africa,Operating,Solar PV,66,MWp,,,,,Egyptian Electricity and Transmission Company (EETC),Power Purchase Agreement,25.0,Remote monitoring from Cape Town; asset management and O&M oversight.
-2,ARIES,Aries Solar Power,Kenhardt,Northern Cape,South Africa,Southern Africa,Operating,Solar PV,11,MWp,,21.0,6300.0,,Eskom,Power Purchase Agreement,20.0,Globeleq is majority shareholder and responsible for asset management.
-3,AZITO,Azito Power,Abidjan,,Côte d’Ivoire,West Africa,Operating,Natural Gas,713,MW,,,,,Government of Côte d’Ivoire,Concession Agreement,20.0,Natural gas supplied from offshore gas fields; Globeleq majority owner.
-4,BOSHOF,Boshof Solar Power,Boshof,Free State,South Africa,Southern Africa,Operating,Solar PV,66,MWp,,130.0,38900.0,,Eskom,Power Purchase Agreement,20.0,"Asset management, operations and maintenance."
-5,CUAMBA,Cuamba Solar PV + BESS,Cuamba,,Mozambique,Southern Africa,Operating,Solar PV + BESS,19,MWp,7.0,,21800.0,172000.0,,,,First IPP in Mozambique to integrate utility-scale storage.
-6,DEAAR,De Aar Solar Power,De Aar,Northern Cape,South Africa,Southern Africa,Operating,Solar PV,50,MWp,,93.0,28000.0,,Eskom,Power Purchase Agreement,20.0,"Asset management, operations and maintenance."
-7,DIBAMBA,Dibamba Power,Douala,,Cameroon,West Africa,Operating,Heavy Fuel Oil,88,MW,,,,,ENEO,Tolling Agreement,20.0,Government of Cameroon holds remaining shares.
-8,DROOG,Droogfontein Solar Power,Kimberley,Northern Cape,South Africa,Southern Africa,Operating,Solar PV,50,MWp,,90.0,27000.0,,Eskom,Power Purchase Agreement,20.0,Asset management and maintenance.
-9,JBAY,Jeffreys Bay Wind Farm,Jeffreys Bay,Eastern Cape,South Africa,Southern Africa,Operating,Wind,138,MW,,448.0,114100.0,,,,,60 turbines at 2.3 MW each.
-10,KLIP,Klipheuwel Wind Farm,Caledon,Western Cape,South Africa,Southern Africa,Operating,Wind,27,MW,,86.0,25600.0,,,,,9 turbines at 3 MW each.
-11,KONK,Konkoonsies Solar Power,Pofadder,Northern Cape,South Africa,Southern Africa,Operating,Solar PV,11,MWp,,21.0,6300.0,,Eskom,Power Purchase Agreement,20.0,Asset management.
-12,KRIBI,Kribi Power,Kribi,,Cameroon,West Africa,Operating,Natural Gas,216,MW,,,,,Cameroon National Grid,Power Purchase Agreement,20.0,Natural gas from the offshore Sanaga South gas field.
-13,MALINDI,Malindi Solar Power,Malindi,,Kenya,East Africa,Operating,Solar PV,52,MWp,,,,,Kenya Power,Power Purchase Agreement,20.0,Utility-scale solar plant in Kenya's coastal area.
-14,MOCUBA,Mocuba Solar,Mocuba,Zambezia,Mozambique,Southern Africa,Operating,Solar PV,41,MWp,,,,,EDM,Power Purchase Agreement,25.0,Construction completed in August 2019.
-15,SONGAS,Songas,Dar es Salaam,,Tanzania,East Africa,Operating,Natural Gas,190,MW,,,,,Tanzania National Grid,Power Purchase Agreement,20.0,Includes gas processing and a 225 km pipeline.
-16,SOUTPAN,Soutpan Solar Power,Vivo,Limpopo,South Africa,Southern Africa,Operating,Solar PV,31,MWp,,60.0,17800.0,,Eskom,Power Purchase Agreement,20.0,Brochure text appears to contain a unit typo ('60 Wh'); model uses 60 GWh.
-17,WINNERGY,Winnergy Solar Power,Aswan,,Egypt,Northern Africa,Operating,Solar PV,25,MWp,,,,,Egyptian Electricity and Transmission Company (EETC),Power Purchase Agreement,25.0,Co-shareholder Al Tawakol GILA; remote monitoring from Cape Town.
-18,CTT,Central Térmica de Temane,Temane,,Mozambique,Southern Africa,In Construction,Natural Gas,450,MW,,,1500000.0,,EDM,Tolling Agreement,25.0,Brochure expected first power in 2024; status is a brochure snapshot and must be verified.
-19,MENENGAI,Menengai Geothermal Plant,Nakuru County,,Kenya,East Africa,In Construction,Geothermal,35,MW,,,,,Kenya National Grid,,,Steam supplied by GDC; Toyota Tsusho is EPC contractor; brochure expected operations in 2025.
+1,MRS,Marsa Alam Solar,Aswan,,Egypt,Northern Africa,Operating,Solar PV,64,MWp,,,,,Egyptian Electricity and Transmission Company (EETC),Power Purchase Agreement,25.0,Remote monitoring from Cape Town; asset management and O&M oversight.
+2,OVS,Orange Valley Solar,Kenhardt,Northern Cape,South Africa,Southern Africa,Operating,Solar PV,12,MWp,,21.0,6300.0,,Eskom,Power Purchase Agreement,20.0,Baobab Power is majority shareholder and responsible for asset management.
+3,EBL,Ebrie Lagoon Power,Abidjan,,Côte d’Ivoire,West Africa,Operating,Natural Gas,705,MW,,,,,Government of Côte d’Ivoire,Concession Agreement,20.0,Natural gas supplied from offshore gas fields; Baobab Power majority owner.
+4,FSS,Free State Sun Park,Boshof,Free State,South Africa,Southern Africa,Operating,Solar PV,68,MWp,,130.0,38900.0,,Eskom,Power Purchase Agreement,20.0,"Asset management, operations and maintenance."
+5,NSS,Niassa Solar Storage,Cuamba,,Mozambique,Southern Africa,Operating,Solar PV + BESS,18,MWp,7.0,,21800.0,172000.0,,,,First IPP in Mozambique to integrate utility-scale storage.
+6,HTM,Hantam Solar Power,De Aar,Northern Cape,South Africa,Southern Africa,Operating,Solar PV,52,MWp,,93.0,28000.0,,Eskom,Power Purchase Agreement,20.0,"Asset management, operations and maintenance."
+7,WES,Wouri Estuary Power,Douala,,Cameroon,West Africa,Operating,Heavy Fuel Oil,85,MW,,,,,ENEO,Tolling Agreement,20.0,Government of Cameroon holds remaining shares.
+8,DMC,Diamond Coast Solar,Kimberley,Northern Cape,South Africa,Southern Africa,Operating,Solar PV,48,MWp,,90.0,27000.0,,Eskom,Power Purchase Agreement,20.0,Asset management and maintenance.
+9,CSF,Cape St Francis Wind Farm,Jeffreys Bay,Eastern Cape,South Africa,Southern Africa,Operating,Wind,135,MW,,448.0,114100.0,,,,,60 turbines at 2.3 MW each.
+10,ORW,Overberg Ridge Wind Farm,Caledon,Western Cape,South Africa,Southern Africa,Operating,Wind,28,MW,,86.0,25600.0,,,,,9 turbines at 3 MW each.
+11,BSL,Bushmanland Solar Power,Pofadder,Northern Cape,South Africa,Southern Africa,Operating,Solar PV,10,MWp,,21.0,6300.0,,Eskom,Power Purchase Agreement,20.0,Asset management.
+12,SGD,Sanaga Delta Power,Kribi,,Cameroon,West Africa,Operating,Natural Gas,210,MW,,,,,Cameroon National Grid,Power Purchase Agreement,20.0,Natural gas from the offshore Sanaga South gas field.
+13,WTC,Watamu Coast Solar,Malindi,,Kenya,East Africa,Operating,Solar PV,50,MWp,,,,,Kenya Power,Power Purchase Agreement,20.0,Utility-scale solar plant in Kenya's coastal area.
+14,ZSF,Zambezia Sun Fields,Mocuba,Zambezia,Mozambique,Southern Africa,Operating,Solar PV,40,MWp,,,,,EDM,Power Purchase Agreement,25.0,Construction completed in August 2019.
+15,RGP,Rufiji Gas Power,Dar es Salaam,,Tanzania,East Africa,Operating,Natural Gas,185,MW,,,,,Tanzania National Grid,Power Purchase Agreement,20.0,Includes gas processing and a 225 km pipeline.
+16,LVS,Limpopo Valley Solar,Vivo,Limpopo,South Africa,Southern Africa,Operating,Solar PV,30,MWp,,60.0,17800.0,,Eskom,Power Purchase Agreement,20.0,Brochure text appears to contain a unit typo ('60 Wh'); model uses 60 GWh.
+17,NBS,Nubian Sands Solar,Aswan,,Egypt,Northern Africa,Operating,Solar PV,24,MWp,,,,,Egyptian Electricity and Transmission Company (EETC),Power Purchase Agreement,25.0,Co-shareholder Al Tawakol GILA; remote monitoring from Cape Town.
+18,IHG,Inhambane Gas Power,Temane,,Mozambique,Southern Africa,In Construction,Natural Gas,440,MW,,,1500000.0,,EDM,Tolling Agreement,25.0,Brochure expected first power in 2024; status is a brochure snapshot and must be verified.
+19,NRG,Nakuru Rift Geothermal,Nakuru County,,Kenya,East Africa,In Construction,Geothermal,33,MW,,,,,Kenya National Grid,,,Steam supplied by GDC; Toyota Tsusho is EPC contractor; brochure expected operations in 2025.

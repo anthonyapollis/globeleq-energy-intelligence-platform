@@ -1,4 +1,4 @@
-# Globeleq Energy Portfolio Data Model
+# Baobab Power Energy Portfolio Data Model
 
 ## Scope
 This model represents an African independent power producer that invests in, develops, owns,
@@ -23,11 +23,11 @@ operates and maintains utility-scale power assets. It covers:
   because that unit is consistent with the surrounding plant descriptions.
 
 ## Files
-- `globeleq_energy_dw.sql`: SQL Server warehouse DDL, seed dimensions, views and indexes.
-- `Globeleq_PowerBI_Measures.dax`: Power BI measures.
-- `globeleq_erd.mmd`: Mermaid ERD.
+- `baobab_power_energy_dw.sql`: SQL Server warehouse DDL, seed dimensions, views and indexes.
+- `Baobab_Power_PowerBI_Measures.dax`: Power BI measures.
+- `baobab_power_erd.mmd`: Mermaid ERD.
 - Dimension and fact CSV files for ETL testing.
-- `globeleq_energy_model.zip`: complete package.
+- `baobab_power_energy_model.zip`: complete package.
 
 ## Recommended Power BI model
 Use one-to-many, single-direction relationships:

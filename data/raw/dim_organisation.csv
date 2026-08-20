@@ -1,7 +1,7 @@
 ﻿OrganisationKey,OrganisationName,OrganisationType
-1,Globeleq,Developer / Owner / Operator
-2,British International Investment (BII),Shareholder
-3,Norfund,Shareholder
+1,Baobab Power,Developer / Owner / Operator
+2,Meridian Development Partners,Shareholder
+3,Nordic Impact Fund,Shareholder
 4,Eskom,Off-taker / Utility
 5,Egyptian Electricity and Transmission Company (EETC),Off-taker / Utility
 6,Government of Côte d’Ivoire,Government / Concession Counterparty
@@ -11,10 +11,10 @@
 10,Kenya Power,Off-taker / Utility
 11,EDM,Off-taker / Utility
 12,Tanzania National Grid,Off-taker / Grid
-13,Al Tawakol GILA,Co-shareholder / O&M Partner
+13,Delta Solar Partners,Co-shareholder / O&M Partner
 14,Kenya National Grid,Off-taker / Grid
-15,Geothermal Development Company (GDC),Steam Supplier
-16,Toyota Tsusho Corporation,EPC Contractor
-17,African Development Bank,Lender
-18,Trade and Development Bank,Lender
-19,Finnfund,Lender
+15,Rift Steam Supply Co,Steam Supplier
+16,Continental EPC Group,EPC Contractor
+17,Pan-African Infrastructure Bank,Lender
+18,Regional Trade Finance Bank,Lender
+19,Baltic Development Fund,Lender

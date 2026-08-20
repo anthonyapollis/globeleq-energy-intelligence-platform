@@ -1,9 +1,9 @@
 /*
 =============================================================
-Globeleq Energy Intelligence Platform
+Baobab Power Energy Intelligence Platform
 V2 Upgrade: Meter Data Quality + Forecast Model Registry
 =============================================================
-Run AFTER globeleq_energy_dw.sql.
+Run AFTER baobab_power_energy_dw.sql.
 Adds 9 new tables and 6 new BI views without modifying
 any existing tables, columns, constraints or indexes.
 
@@ -28,7 +28,7 @@ New BI views
   bi.vw_ForecastModelRegistry
 =============================================================
 */
-USE GlobeleqEnergyDW;
+USE BaobabPowerEnergyDW;
 GO
 
 -- ============================================================
@@ -587,7 +587,7 @@ GROUP BY
     fm.PrimaryFeatures, fm.Notes;
 GO
 
-PRINT 'Globeleq V2 Upgrade complete.';
+PRINT 'Baobab Power V2 Upgrade complete.';
 PRINT '  New tables: DimTime, DimMeter, DimForecastModel, DimForecastFeature,';
 PRINT '              BridgeForecastModelFeature, FactMeterReadingHourly,';
 PRINT '              FactDataQualityEvent, FactForecastDaily,';

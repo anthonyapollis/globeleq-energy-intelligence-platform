@@ -2,7 +2,7 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "globeleq-ebook",
+      "name": "baobab-power-ebook",
       "autoPort": true,
       "runtimeExecutable": "python",
       "runtimeArgs": ["-m", "http.server", "--directory", "ebook"],

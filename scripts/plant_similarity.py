@@ -1,4 +1,4 @@
-"""Content-based "similar plants" recommender for the Globeleq Energy
+"""Content-based "similar plants" recommender for the Baobab Power Energy
 Intelligence Platform.
 
 There's no "customer purchase history" concept in a power-plant portfolio
